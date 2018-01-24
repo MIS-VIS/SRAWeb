@@ -16,13 +16,11 @@ class DVController extends Controller{
 
 
     public function index(DvSearchRequest $request, DV $disbVchr){
-        $key = $disbVchr->sanitize($request->q);
-        if(strlen($key) <= 9){
-            $dvMyList = $disbVchr->search($key, 10);
-            Input::flash();
-            return view('admin.dv.dv-myList', compact('dvMyList'));
-        }
-        return redirect()->back(); 
+        $key = $disbVchr->sanitize($request->search);
+        $dvMyList = $disbVchr->search($key, 10);
+        Input::flash();
+        return view('admin.dv.dv-myList', compact('dvMyList'));
+        return redirect()->back();
     }
 
 

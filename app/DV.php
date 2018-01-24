@@ -113,9 +113,9 @@ class DV extends Model{
 
 
     public function sanitize( $string = null ) {
-        $chars = array(" ", "_");
+        $chars = array(" ", "+");
         $string = str_replace($chars, "", $string);
-        $string = preg_replace('/[^ \w-]/', '', $string);
+        $string = preg_replace('/[^a-z0-9]/i', '', $string);
         $string = htmlspecialchars($string);
         $string = strip_tags($string);
         return $string;
@@ -140,7 +140,7 @@ class DV extends Model{
 
     public static function getCreatedDefaultsAttribute(){
         return array(
-            'doc_no' => 'DV-' . rand(0000001, 999999),
+            'doc_no' => 'DV' . rand(1000000, 9999999),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'machine_created' => gethostname(),

@@ -42,7 +42,7 @@
 						        {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
 						        	<div class="row align-items-center">
 								        <div class="col-sm-3">
-								            <input type="search" class="form-control" placeholder="Search Doc No." name="q" value="{{ old('q') }}">
+								            <input type="search" class="form-control" placeholder="Search Doc No." name="search" value="{{ old('search') }}">
 								            <small class="text-danger">{{ $errors->first('q') }}</small>
 								        </div>
 								        <div class="col-sm-1">
@@ -60,7 +60,7 @@
 			        <div class="col-auto">
 			            <div class="row no-gutters align-items-center">
 			            	<div>
-					            <a href="{{ route('admin.dv.index') }}" class="btn btn-fab btn-sm btn-success" >
+					            <a href="{{ route('admin.dv.index') }}" class="btn btn-fab btn-sm btn-primary">
 					            	<i class="icon icon-refresh s-4"></i>
 					            </a>
 					        </div>
