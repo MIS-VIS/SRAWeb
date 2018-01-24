@@ -20,7 +20,6 @@ class DVController extends Controller{
         $dvMyList = $disbVchr->search($key, 10);
         Input::flash();
         return view('admin.dv.dv-myList', compact('dvMyList'));
-        return redirect()->back();
     }
 
 
