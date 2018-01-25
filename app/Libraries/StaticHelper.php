@@ -15,4 +15,8 @@ class StaticHelper {
     	return array('SIDA' => 'SIDA', 'Corporate' => 'Corporate');
     }
 
+    public static function selectProjectId(){
+    	return array('BACOLOD CITY' => '1', 'QUEZON CITY' => '2');
+    }
+
 }

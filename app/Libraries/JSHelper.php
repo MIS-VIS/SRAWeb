@@ -72,8 +72,8 @@ class JSHelper {
 		            var divContents = $("#'.$div.'").html();
 		            var printWindow = window.open("", "", "height=800,width=1500");
 		            printWindow.document.write("<html><head><title></title>");
-		            printWindow.document.write('.$string.'<link type="text/css" rel="stylesheet" href="http://10.36.1.12:8000/template/css/main.css">'.$string.');
-		            printWindow.document.write('.$string.'<link type="text/css" rel="stylesheet" href="http://10.36.1.12:8000/template/css/custom.css">'.$string.');
+		            printWindow.document.write('.$string.'<link type="text/css" rel="stylesheet" href="http://'.$_SERVER['HTTP_HOST'].'/template/css/main.css">'.$string.');
+		            printWindow.document.write('.$string.'<link type="text/css" rel="stylesheet" href="http://'.$_SERVER['HTTP_HOST'].'/template/css/custom.css">'.$string.');
 		            printWindow.document.write("</head><body>");
 		            printWindow.document.write(divContents);
 		            printWindow.document.write("</body></html>");
@@ -139,8 +139,9 @@ class JSHelper {
       			$(document).ready(function() {
 	    			$("#'. $id .'").priceFormat({
 		                prefix: "",
-		                thousandsSeparator: ",",
-		                clearOnEmpty: true
+		                thousandsSeparator: "",
+		                clearOnEmpty: true,
+		                allowNegative: true
             		});
             	});
   			</script>';

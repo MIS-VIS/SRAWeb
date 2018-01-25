@@ -17,16 +17,16 @@ class DVController extends Controller{
 
     public function index(DvSearchRequest $request, DV $disbVchr){
         $key = $disbVchr->sanitize($request->search);
-        $dvMyList = $disbVchr->search($key, 10);
+        $dvUserList = $disbVchr->search($key, 10);
         Input::flash();
-        return view('admin.dv.dv-myList', compact('dvMyList'));
+        return view('admin.dv.dv-userList', compact('dvUserList'));
     }
 
 
 
 
     public function create(DV $disbVchr){
-        return view('admin.dv.dv-add', compact('dvCount'));
+        return view('admin.dv.dv-add');
     }
 
    
@@ -49,7 +49,7 @@ class DVController extends Controller{
         $dv = $disbVchr->hunt($slug);
         if(count($dv) > 0){
             Session::flash('print', 'You can now Print your voucher!');
-            return view('admin.dv.dv-add-print')->with('dv', $dv);
+            return view('admin.dv.dv-print')->with('dv', $dv);
         } 
         return abort(404);
     }

@@ -1,9 +1,9 @@
 @extends('layout.guest-master')
 
 @section('content')
-    <div id="login" class="p-8">
+    <div id="login" style="margin-top:-90px;">
         <div class="form-wrapper md-elevation-8 p-8">
-            <div class="logo bg-secondary">
+            <div style="padding-top:30px;">
                 <img src="{{ asset('template/images/logos/sra.png') }}" style="width:135px;">
             </div>
             <div class="title mt-4 mb-8">Log in to your account</div>
