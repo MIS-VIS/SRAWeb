@@ -24,7 +24,7 @@
               @if($menu->is_dropdown == false)
 
                 <li class="nav-item">
-                    <a class="nav-link ripple {!! NavHelper::menuStatus($menu->route ,'active') !!}" href="{{ route($menu->route) }}"
+                    <a class="nav-link ripple {!! ContentHelper::menuStatus($menu->route ,'active') !!}" href="{{ route($menu->route) }}"
                        data-page-url="/user-interface-page-layouts-blank.html">
                         <i class="{{ $menu->icon }}"></i>
                         <span>{{ $menu->name }}</span>
@@ -39,12 +39,12 @@
                       <span>{{ $menu->name }}</span>
                     </a>
 
-                    <ul id="{{ $menu->data_target }}" class="collapse {!! NavHelper::menuStatus($menu->route, 'show') !!}" role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
+                    <ul id="{{ $menu->data_target }}" class="collapse {!! ContentHelper::menuStatus($menu->route, 'show') !!}" role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
 
                         @foreach($menu->submenu as $submenu)
 
                           <li class="nav-item">
-                            <a class="nav-link ripple {!! NavHelper::menuStatus($submenu->route, 'active') !!}" href="{{ route($submenu->route) }}">
+                            <a class="nav-link ripple {!! ContentHelper::menuStatus($submenu->route, 'active') !!}" href="{{ route($submenu->route) }}">
                                   <span>{{ $submenu->name }}</span>
                               </a>
                           </li>

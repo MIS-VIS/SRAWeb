@@ -3,7 +3,7 @@
 namespace App\Libraries;
 use Route;
 
-class StaticHelper {
+class SelectHelper {
 
 
     public static function selectMOP(){
@@ -18,5 +18,7 @@ class StaticHelper {
     public static function selectProjectId(){
     	return array('BACOLOD CITY' => '1', 'QUEZON CITY' => '2');
     }
+
+
 
 }

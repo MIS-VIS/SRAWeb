@@ -18,7 +18,6 @@
                     '', 'mb-4', 'password', 'Password', 'password', 'password', old('password'), 'required', $errors->first('password'), ''
                 ) !!}
 
-
                 {!! FormHelper::alert(Session::has('unmatch'), Session::get('unmatch'), 'danger') !!}
                 {!! FormHelper::alert(Session::has('unactivated'), Session::get('unactivated'), 'danger') !!}
                 {!! FormHelper::alert(Session::has('multilog'), Session::get('multilog'), 'danger') !!}

@@ -120,15 +120,6 @@ class FormHelper {
 
 
 
-    public static function modalButton($class, $target, $name){
-      return'<button type="button" class="my-4 mx-auto fuse-ripple-ready btn '. $class .'" data-toggle="modal" data-target="#'.$target.'">
-                    '. $name .'
-              </button>';
-      
-    }
-
-
-
     public static function padding($class){
       return '<div class="form-group '.$class.'">
               </div>';
@@ -144,6 +135,7 @@ class FormHelper {
                 </div>';
       
     }
+
 
 
 }

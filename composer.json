@@ -30,9 +30,8 @@
         },
         "files" : [
             "app/Libraries/FormHelper.php",
-            "app/Libraries/NavHelper.php",
             "app/Libraries/ContentHelper.php",
-            "app/Libraries/StaticHelper.php",
+            "app/Libraries/SelectHelper.php",
             "app/Libraries/JSHelper.php"
         ]
     },

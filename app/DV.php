@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 
@@ -83,23 +84,48 @@ class DV extends Model{
 
 
 
-
-    public function sluggable(){
-        return [
-            'slug' => [
-                'source' => [ 'dv_proj_code', 'HashedSlug']
-            ]
-        ];
+    public function searchSanitize( $string = null ) {
+        $string = preg_replace('/[^ \w]+/', '', $string);
+        $string = str_replace(" ", "+", $string);
+        $string = htmlspecialchars($string);
+        $string = strip_tags($string);
+        return $string;
     }
 
 
 
 
-    public function search($key, $paginate){
-        return $this->where('doc_no', 'LIKE', '%'. $key .'%')
-                    ->where('user_id', Auth::user()->user_id)
-                    ->orderBy('updated_at', 'desc')
-                    ->paginate($paginate);
+    public function filterSanitize( $string = null ) {
+        $char = array("'", " ");
+        $string = str_replace($char, "", $string);
+        $string = htmlspecialchars($string);
+        $string = strip_tags($string);
+        return $string;
+    }
+
+
+    public function userFilter(Request $request, $paginate){
+        $dv = $this->newQuery();
+        
+        $search = $this->searchSanitize($request->search);
+        $project_code = $this->filterSanitize($request->project_code);
+        $fund_source = $this->filterSanitize($request->fund_source);
+
+        if(!$search == null){
+            $dv->where('doc_no', 'LIKE', '%'. $search .'%');   
+        }
+
+        if(!$request->project_code == null){
+            $dv->where('dv_proj_code', '=', $project_code);
+        }
+
+        if(!$request->fund_source == null){
+            $dv->where('dv_fund_source', '=', $fund_source);
+        }
+
+        return $dv->where('user_id', Auth::user()->user_id)
+                  ->orderBy('updated_at', 'DESC')
+                  ->paginate($paginate);
     }
 
 
@@ -111,16 +137,13 @@ class DV extends Model{
 
 
 
-
-    public function sanitize( $string = null ) {
-        $chars = array(" ", "+");
-        $string = str_replace($chars, "", $string);
-        $string = preg_replace('/[^a-z0-9]/i', '', $string);
-        $string = htmlspecialchars($string);
-        $string = strip_tags($string);
-        return $string;
+    public function sluggable(){
+        return [
+            'slug' => [
+                'source' => [ 'dv_proj_code', 'HashedSlug']
+            ]
+        ];
     }
-
 
 
 

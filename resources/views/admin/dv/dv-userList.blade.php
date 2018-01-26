@@ -27,14 +27,50 @@
 	<div class="page-content row p-6">
         <div class="col-12">
             <div class="card">
-				<div class="page-content">
-					<div class="toolbar row no-gutters align-items-center p-4 p-sm-6">
+				<div class="page-content" style="margin-bottom:-25px;">
+					<div class="toolbar row no-gutters align-items-center p-sm-3">
 				        <div class="col">
-				            <div class="row no-gutters align-items-center">
-				                <div class="col-lg-12">
-				                	<span>Filters:</span>
+
+				        	{!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
+				            <div class="row no-gutters">
+
+				                <div class="form-group col-md-1">
+				                	<span><strong>Filter:</strong></span>
 	    						</div>
+
+
+				                <div class="form-group col-md-3">
+	    						    <small>Project Code </small>
+				                    <select name="project_code" id="project_code">
+				                        <option value="">None</option>
+				                        @foreach($burProjectsAcctCode as $data)
+				                        	<option value="{{ $data->acct_code }}" {{ old('project_code') == $data->acct_code ? 'selected' : ''}}>{{ $data->acct_code }}</option>
+				                        @endforeach
+				                    </select>
+				                    <small class="text-danger"></small>
+				                </div>
+
+
+				                <div class="form-group col-md-2">
+	    						    <small>Fund Source</small>
+				                    <select name="fund_source" id="fund_source">
+				                        <option value="">None</option>
+				                        <option value="SIDA" {{ old('fund_source') == "SIDA" ? 'selected' : ''}}>SIDA</option>
+				                        <option value="Corporate" {{ old('fund_source') == "Corporate" ? 'selected' : ''}}>CORPORATE</option>
+				                    </select>
+				                    <small class="text-danger"></small>
+				                </div>
+
+
+				                <div class="form-group col-md-1">
+						            <button type="submit" class="btn btn-secondary">
+						            	Filter&nbsp;<i class="icon-filter s-4"></i>
+						        	</button>
+						        </div>
+
 				            </div>
+				            {!! Form::close() !!}
+
 				        </div>
 				    </div>
 				</div>
@@ -159,12 +195,12 @@
 				            <div class="row no-gutters align-items-center">
 				            	<div class="col-lg-6">
 				                	<span>
-				                		<strong>Displaying {{ $dvUserList->firstItem() }} - {{ $dvUserList->lastItem() }} out of {{ $dvUserList->total()}} Records</strong>
+				                		<strong>Displaying {{ $dvUserList->firstItem() > 0 ? $dvUserList->firstItem() : 0 }} - {{ $dvUserList->lastItem() > 0 ? $dvUserList->lastItem() : 0 }} out of {{ $dvUserList->total()}} Records</strong>
 				                	</span>
 	    						</div>
 				                <div class="col-lg-6">
 				                	<nav aria-label="..." style="float:right;">
-				                		{!! $dvUserList->appends(array('q' => Input::get('q')))->render('vendor.pagination.bootstrap-4') !!}
+				                		{!! $dvUserList->appends(['search'=>Input::get('search'), 'station'=>Input::get('station'), 'project_code' => Input::get('project_code'), 'fund_source' => Input::get('fund_source')])->render('vendor.pagination.bootstrap-4') !!}
 				                	</nav>
 	    						</div>
 				            </div>
@@ -181,3 +217,9 @@
 
 @endsection
 
+
+@section('scripts')
+    {!! JSHelper::SelectSearch('project_code') !!}
+    {!! JSHelper::SelectSearch('station') !!}
+    {!! JSHelper::SelectSearch('fund_source') !!}
+@endsection

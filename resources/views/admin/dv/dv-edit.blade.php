@@ -33,15 +33,15 @@
                     {!! FormHelper::padding('col-md-12') !!}
 
                     {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', StaticHelper::selectProjectId(), $dv->dv_project_id, $errors->first('dv_project_id'), 'required'
+                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', SelectHelper::selectProjectId(), $dv->dv_project_id, $errors->first('dv_project_id'), 'required'
                     ) !!}
 
                     {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', StaticHelper::selectFundSource(), $dv->dv_fund_source, $errors->first('dv_fund_source'), 'required'
+                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', SelectHelper::selectFundSource(), $dv->dv_fund_source, $errors->first('dv_fund_source'), 'required'
                     ) !!}
 
                     {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_mop', 'Mode of Payment:', 'dv_mop', StaticHelper::selectMOP(), $dv->dv_mop, $errors->first('dv_mop'), ''
+                        'col-md-4', 'dv_mop', 'Mode of Payment:', 'dv_mop', SelectHelper::selectMOP(), $dv->dv_mop, $errors->first('dv_mop'), ''
                     ) !!}
 
                     {!! FormHelper::textBox(
@@ -119,34 +119,33 @@
 
                 {!! Form::close() !!}
 
-                </div>
             </div>
         </div>
     </div>
 </div>
 
+@endsection
 
 
-    @section('modals')
 
-        @if(Session::has('success'))
-            {!! ContentHelper::modalConfirmUpdate('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('success') , '', route('admin.dv.index'), route('admin.dv.show', Session::get('slug')) ) !!}
-        @endif
+@section('modals')
 
-    @endsection
+    @if(Session::has('success'))
+        {!! ContentHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('success'), route('admin.dv.show', Session::get('slug')) ) !!}
+    @endif
 
-
-    @section('scripts')
-        {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/admin/dv-add/response-unit/', 'dept_unit', 'dept_unit') !!}
-        {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/admin/dv-add/response-accountCode/', 'acct_code', 'acct_code') !!}
-        {!! JSHelper::AjaxSelectToInput('dv_certified_by', 'dv_certified_by_position', '/admin/dv-add/response-certPos/', 'position') !!}
-        {!! JSHelper::AjaxSelectToInput('dv_approved_by', 'dv_approved_by_position', '/admin/dv-add/response-apprPos/', 'position') !!}
-        {!! JSHelper::ModalShow('dvConfirmUpdate') !!}
-        {!! JSHelper::RichText('dv_explanation') !!}
-        {!! JSHelper::SelectSearch('dv_certified_by') !!}
-        {!! JSHelper::SelectSearch('dv_approved_by') !!}
-        {!! JSHelper::PriceInput('dv_amount') !!}
-    @endsection
+@endsection
 
 
+
+@section('scripts')
+    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/admin/dv-add/response-unit/', 'dept_unit', 'dept_unit') !!}
+    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/admin/dv-add/response-accountCode/', 'acct_code', 'acct_code') !!}
+    {!! JSHelper::AjaxSelectToInput('dv_certified_by', 'dv_certified_by_position', '/admin/dv-add/response-certPos/', 'position') !!}
+    {!! JSHelper::AjaxSelectToInput('dv_approved_by', 'dv_approved_by_position', '/admin/dv-add/response-apprPos/', 'position') !!}
+    {!! JSHelper::ModalShow('dvConfirmUpdate') !!}
+    {!! JSHelper::RichText('dv_explanation') !!}
+    {!! JSHelper::SelectSearch('dv_certified_by') !!}
+    {!! JSHelper::SelectSearch('dv_approved_by') !!}
+    {!! JSHelper::PriceInput('dv_amount') !!}
 @endsection

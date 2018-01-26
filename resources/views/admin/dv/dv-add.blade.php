@@ -33,15 +33,15 @@
     				{!! FormHelper::padding('col-md-12') !!}
 
                     {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', StaticHelper::selectProjectId(), old('dv_project_id'), $errors->first('dv_project_id'), 'required'
+                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', SelectHelper::selectProjectId(), old('dv_project_id'), $errors->first('dv_project_id'), 'required'
                     ) !!}
 
                     {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', StaticHelper::selectFundSource(), old('dv_fund_source'), $errors->first('dv_fund_source'), 'required'
+                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', SelectHelper::selectFundSource(), old('dv_fund_source'), $errors->first('dv_fund_source'), 'required'
                     ) !!}
 
                     {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_mop', 'Mode of Payment:', 'dv_mop', StaticHelper::selectMOP(), old('dv_mop'), $errors->first('dv_mop'), ''
+                        'col-md-4', 'dv_mop', 'Mode of Payment:', 'dv_mop', SelectHelper::selectMOP(), old('dv_mop'), $errors->first('dv_mop'), ''
                     ) !!}
 
                     {!! FormHelper::textBox(
@@ -71,6 +71,12 @@
                     {!! FormHelper::dropdownDynamic(
                         'col-md-2','dv_proj_code', 'Account Code:', 'dv_proj_code', $burProjectsAcctCode, 'acct_code', 'acct_code', old('dv_proj_code'), $errors->first('dv_proj_code'), 'required'
                     ) !!}
+                    <div class="col-md-12">
+                        <div class="alert alert-warning fade show" role="alert">
+                            Note: Please put your computations in the <strong>Explanation Field</strong>, and the Total/Net of your computation in the <strong>Amount Field.</strong>
+                        </div>
+                    </div>
+                    
 
                     {!! FormHelper::textArea(
                         'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', old('dv_explanation'), $errors->first('dv_explanation'), 'required', '30'
@@ -118,34 +124,33 @@
 
     			{!! Form::close() !!}
                 
-                </div>
-		    </div>
-        </div>
+            </div>
+	    </div>
     </div>
 </div>
 
+@endsection
 
 
-    @section('modals')
 
-        @if(Session::has('success'))
-            {!! ContentHelper::modalConfirmAdd('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('success') , route('admin.dv.create'), route('admin.dv.index'), route('admin.dv.show', Session::get('slug')) ) !!}
-        @endif
+@section('modals')
 
-    @endsection
+    @if(Session::has('success'))
+        {!! ContentHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('success'), route('admin.dv.show', Session::get('slug')) ) !!}
+    @endif
 
-
-    @section('scripts')
-        {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/admin/dv-add/response-unit/', 'dept_unit', 'dept_unit') !!}
-        {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/admin/dv-add/response-accountCode/', 'acct_code', 'acct_code') !!}
-        {!! JSHelper::AjaxSelectToInput('dv_certified_by', 'dv_certified_by_position', '/admin/dv-add/response-certPos/', 'position') !!}
-        {!! JSHelper::AjaxSelectToInput('dv_approved_by', 'dv_approved_by_position', '/admin/dv-add/response-apprPos/', 'position') !!}
-        {!! JSHelper::ModalShow('dvConfirmAdd') !!}
-        {!! JSHelper::RichText('dv_explanation') !!}
-        {!! JSHelper::SelectSearch('dv_certified_by') !!}
-        {!! JSHelper::SelectSearch('dv_approved_by') !!}
-        {!! JSHelper::PriceInput('dv_amount') !!}
-    @endsection
+@endsection
 
 
+
+@section('scripts')
+    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/admin/dv-add/response-unit/', 'dept_unit', 'dept_unit') !!}
+    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/admin/dv-add/response-accountCode/', 'acct_code', 'acct_code') !!}
+    {!! JSHelper::AjaxSelectToInput('dv_certified_by', 'dv_certified_by_position', '/admin/dv-add/response-certPos/', 'position') !!}
+    {!! JSHelper::AjaxSelectToInput('dv_approved_by', 'dv_approved_by_position', '/admin/dv-add/response-apprPos/', 'position') !!}
+    {!! JSHelper::ModalShow('dvConfirmAdd') !!}
+    {!! JSHelper::RichText('dv_explanation') !!}
+    {!! JSHelper::SelectSearch('dv_certified_by') !!}
+    {!! JSHelper::SelectSearch('dv_approved_by') !!}
+    {!! JSHelper::PriceInput('dv_amount') !!}
 @endsection

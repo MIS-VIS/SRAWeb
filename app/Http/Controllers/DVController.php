@@ -16,8 +16,7 @@ class DVController extends Controller{
 
 
     public function index(DvSearchRequest $request, DV $disbVchr){
-        $key = $disbVchr->sanitize($request->search);
-        $dvUserList = $disbVchr->search($key, 10);
+        $dvUserList = $disbVchr->userFilter($request, 10);
         Input::flash();
         return view('admin.dv.dv-userList', compact('dvUserList'));
     }

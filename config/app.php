@@ -239,9 +239,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 
         'FormHelper' => App\Libraries\FormHelper::class,
-        'NavHelper' => App\Libraries\NavHelper::class,
         'ContentHelper' => App\Libraries\ContentHelper::class,
-        'StaticHelper' => App\Libraries\StaticHelper::class,
+        'SelectHelper' => App\Libraries\SelectHelper::class,
         'JSHelper' => App\Libraries\JSHelper::class,
 
     ],
