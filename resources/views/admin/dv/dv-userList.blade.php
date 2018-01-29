@@ -38,7 +38,6 @@
 				                	<span><strong>Filter:</strong></span>
 	    						</div>
 
-
 				                <div class="form-group col-md-3">
 	    						    <small>Project Code </small>
 				                    <select name="project_code" id="project_code">
@@ -47,9 +46,7 @@
 				                        	<option value="{{ $data->acct_code }}" {{ old('project_code') == $data->acct_code ? 'selected' : ''}}>{{ $data->acct_code }}</option>
 				                        @endforeach
 				                    </select>
-				                    <small class="text-danger"></small>
 				                </div>
-
 
 				                <div class="form-group col-md-2">
 	    						    <small>Fund Source</small>
@@ -58,9 +55,7 @@
 				                        <option value="SIDA" {{ old('fund_source') == "SIDA" ? 'selected' : ''}}>SIDA</option>
 				                        <option value="Corporate" {{ old('fund_source') == "Corporate" ? 'selected' : ''}}>CORPORATE</option>
 				                    </select>
-				                    <small class="text-danger"></small>
 				                </div>
-
 
 				                <div class="form-group col-md-1">
 						            <button type="submit" class="btn btn-secondary">
@@ -80,32 +75,34 @@
 
 
 
+
 	<div class="page-content row p-6">
         <div class="col-12">
             <div class="card">	
 				<div class="page-content">
 				    <div class="toolbar row no-gutters align-items-center p-4 p-sm-6">
+
+
 				        <div class="col">
 				            <div class="row no-gutters align-items-center">
 				                <div class="col-lg-12">
-
 							        {!! Form::open(['route' => 'admin.dv.userIndex', 'method' => 'GET']) !!}
 							        	<div class="row align-items-center">
-									        <div class="col-sm-3">
+									        <div class="col-sm-2">
 									            <input type="search" class="form-control" placeholder="Search Doc No." name="search" value="{{ old('search') }}">
 									            <small class="text-danger">{{ $errors->first('search') }}</small>
 									        </div>
 									        <div class="col-sm-1">
-									            <button type="submit" class="btn btn-primary">
-									            	Search&nbsp;<i class="icon icon-magnify s-4"></i>
+									            <button type="submit" class="btn btn-fab btn-sm btn-primary">
+									            	<i class="icon icon-magnify s-4"></i>
 									        	</button>
 									        </div>
 									    </div>
 									{!! Form::close() !!}
-
 	    						</div>
 				            </div>
 				        </div>
+
 
 				        <div class="col-auto">
 				            <div class="row no-gutters align-items-center">
@@ -115,8 +112,10 @@
 				            </div>
 				        </div>
 
+
 				    </div>
-				    
+
+
 				    <div class="thread-list">
 				    	<div class="page-content">
 					        <div class="page-content-card">
@@ -184,11 +183,15 @@
 					        </div>
 	    				</div>
 			   		</div>
+
+
 			   		@if($dvUserList->isEmpty())
 	                    <div class="alert alert-danger fade show" role="alert">
 		                    No Records Found!
 		                </div>
 	            	@endif
+
+
 			   		<div class="divider"></div>
 			   		<div class="toolbar row no-gutters align-items-center p-sm-3">
 				        <div class="col">
@@ -200,18 +203,18 @@
 	    						</div>
 				                <div class="col-lg-6">
 				                	<nav aria-label="..." style="float:right;">
-				                		{!! $dvUserList->appends(['search'=>Input::get('search'), 'station'=>Input::get('station'), 'project_code' => Input::get('project_code'), 'fund_source' => Input::get('fund_source')])->render('vendor.pagination.bootstrap-4') !!}
+				                		{!! $dvUserList->appends(['search'=>Input::get('search'), 'project_code' => Input::get('project_code'), 'fund_source' => Input::get('fund_source')])->render('vendor.pagination.bootstrap-4') !!}
 				                	</nav>
 	    						</div>
 				            </div>
 				        </div>
 				    </div>
 
+
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
 
 
@@ -220,6 +223,5 @@
 
 @section('scripts')
     {!! JSHelper::SelectSearch('project_code') !!}
-    {!! JSHelper::SelectSearch('station') !!}
-    {!! JSHelper::SelectSearch('fund_source') !!}
+    {!! JSHelper::SelectNormal('fund_source') !!}
 @endsection

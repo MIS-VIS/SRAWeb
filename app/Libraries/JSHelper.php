@@ -123,6 +123,19 @@ class JSHelper {
 
 
 
+    public static function SelectNormal($id){
+      return '<script>
+    			$(document).ready(function() {
+        			$("#'.$id.'").select2({
+        				 minimumResultsForSearch: -1
+        			});
+    			});
+  			</script>';
+    }
+
+
+
+
     public static function ModalShow($id){
       return '<script>
     			$(document).ready(function() {

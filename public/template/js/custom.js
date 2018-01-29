@@ -1,6 +1,6 @@
 /** DATEPICKER **/
  $('#datepicker .date').datepicker({
-        'format': 'yyyy-mm-dd',
+        'format': 'mm-dd-yyyy',
         'autoclose': true
  });
 

@@ -85,7 +85,7 @@ class DV extends Model{
 
     public function searchSanitize( $string = null ) {
         $string = preg_replace('/[^ \w]+/', '', $string);
-        $string = str_replace(" ", "+", $string);
+        $string = str_replace(" ", "%", $string);
         $string = htmlspecialchars($string);
         $string = strip_tags($string);
         return $string;
@@ -103,7 +103,7 @@ class DV extends Model{
 
 
 
-    public function userFilter(Request $request, $paginate){
+    public function userIndexFilter(Request $request, $paginate){
         $dv = $this->newQuery();
         $search = $this->searchSanitize($request->search);
         $project_code = $this->filterSanitize($request->project_code);
@@ -113,16 +113,54 @@ class DV extends Model{
             $dv->where('doc_no', 'LIKE', '%'. $search .'%');   
         }
 
-        if(!$request->project_code == null){
+        if(!$project_code == null){
             $dv->where('dv_proj_code', '=', $project_code);
         }
 
-        if(!$request->fund_source == null){
+        if(!$fund_source == null){
             $dv->where('dv_fund_source', '=', $fund_source);
         }
 
         return $dv->where('user_id', Auth::user()->user_id)
                   ->orderBy('updated_at', 'DESC')
+                  ->paginate($paginate);
+    }
+
+
+
+
+    public function indexFilter(Request $request, $paginate){
+        $dv = $this->newQuery();
+        $search = $this->searchSanitize($request->search);
+        $fund_source = $this->filterSanitize($request->fund_source);
+        $station = $this->filterSanitize($request->station);
+        $department = $this->filterSanitize($request->department);
+        $project_code = $this->filterSanitize($request->project_code);
+        
+        if(!$search == null){
+            $dv->where('doc_no', 'LIKE', '%'. $search .'%')
+               ->orwhere('dv_payee', 'LIKE', '%'. $search .'%')
+               ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
+               ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');   
+        }
+
+        if(!$fund_source == null){
+            $dv->where('dv_fund_source', '=', $fund_source);
+        }
+
+        if(!$station == null){
+            $dv->where('dv_project_id', '=', $station);
+        }
+
+        if(!$department == null){
+            $dv->where('dv_dept_code', '=', $department);
+        }
+
+        if(!$project_code == null){
+            $dv->where('dv_proj_code', '=', $project_code);
+        }
+
+        return $dv->orderBy('updated_at', 'DESC')
                   ->paginate($paginate);
     }
 
