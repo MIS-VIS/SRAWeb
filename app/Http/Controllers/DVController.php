@@ -16,10 +16,18 @@ class DVController extends Controller{
 
 
     public function index(DvSearchRequest $request, DV $disbVchr){
+        return view('admin.dv.dv-list');
+    }
+
+
+
+
+    public function userIndex(DvSearchRequest $request, DV $disbVchr){
         $dvUserList = $disbVchr->userFilter($request, 10);
         Input::flash();
         return view('admin.dv.dv-userList', compact('dvUserList'));
     }
+
 
 
 
@@ -84,13 +92,6 @@ class DVController extends Controller{
 
     public function destroy($id){
         
-    }
-
-
-
-
-    public function filter(){
-        return "Hello";
     }
 
 

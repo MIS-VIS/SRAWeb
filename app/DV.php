@@ -50,7 +50,6 @@ class DV extends Model{
 
 
 
-
     protected $attributes = [
         'slug' => null ,
         'doc_no' => null,
@@ -94,7 +93,6 @@ class DV extends Model{
 
 
 
-
     public function filterSanitize( $string = null ) {
         $char = array("'", " ");
         $string = str_replace($char, "", $string);
@@ -104,9 +102,9 @@ class DV extends Model{
     }
 
 
+
     public function userFilter(Request $request, $paginate){
         $dv = $this->newQuery();
-        
         $search = $this->searchSanitize($request->search);
         $project_code = $this->filterSanitize($request->project_code);
         $fund_source = $this->filterSanitize($request->fund_source);
@@ -184,6 +182,7 @@ class DV extends Model{
             'ip_updated' => request()->ip(),
         );
     }
+
 
 
 

@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ route('admin.dv.index') }}" class="btn btn-secondary fuse-ripple-ready">
+                    <a href="{{ route('admin.dv.userIndex') }}" class="btn btn-secondary fuse-ripple-ready">
                         <i style="font-size:15px;" class="icon icon-file-multiple"></i> Go to My List
                     </a>
                 </div>

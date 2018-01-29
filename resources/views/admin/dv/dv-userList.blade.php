@@ -31,7 +31,7 @@
 					<div class="toolbar row no-gutters align-items-center p-sm-3">
 				        <div class="col">
 
-				        	{!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
+				        	{!! Form::open(['route' => 'admin.dv.userIndex', 'method' => 'GET']) !!}
 				            <div class="row no-gutters">
 
 				                <div class="form-group col-md-1">
@@ -89,7 +89,7 @@
 				            <div class="row no-gutters align-items-center">
 				                <div class="col-lg-12">
 
-							        {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
+							        {!! Form::open(['route' => 'admin.dv.userIndex', 'method' => 'GET']) !!}
 							        	<div class="row align-items-center">
 									        <div class="col-sm-3">
 									            <input type="search" class="form-control" placeholder="Search Doc No." name="search" value="{{ old('search') }}">
@@ -109,7 +109,7 @@
 
 				        <div class="col-auto">
 				            <div class="row no-gutters align-items-center">
-					            <a href="{{ route('admin.dv.index') }}" class="btn btn-fab btn-sm btn-primary">
+					            <a href="{{ route('admin.dv.userIndex') }}" class="btn btn-fab btn-sm btn-primary">
 					            	<i class="icon icon-refresh s-4"></i>
 					            </a>
 				            </div>

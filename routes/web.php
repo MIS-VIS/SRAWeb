@@ -13,6 +13,7 @@ Route::group(['prefix'=>'admin', 'as' => 'admin.' , 'middleware' => 'admin'], fu
 	Route::get('/', 'HomeController@index')->name('home');
 
 	// DV
+	Route::get('/dv/userList', 'DVController@userIndex')->name('dv.userIndex');
 	Route::resource('dv', 'DVController');
 	// DV Ajax Requests
 	Route::get('/dv-add/response-unit/{id}', 'AjaxController@dvAddUnitDropdown')->name('dv.add.responseUnit');
