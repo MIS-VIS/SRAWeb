@@ -25,7 +25,7 @@ class ContentHelper{
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLiveLabel">'. $title .'</h5>
+                            <h5 class="modal-title" id="exampleModalLiveLabel"> '. $title .'</h5>
                         </div>
                         <div class="modal-body">
                             <span style="font-size:17px;">'.$content.'</span>
@@ -40,8 +40,37 @@ class ContentHelper{
     }
 
 
+
+
+
+    public static function modalDelete($id){
+      return' <div id="'. $id .'" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLiveLabel"><i class="icon-alert"></i> Confirmation</h5>
+                        </div>
+                        <div class="modal-body">
+                            <span style="font-size:17px;">Are you sure, you want to delete this record?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-secondary fuse-ripple-ready" role="button" data-dismiss="modal">Cancel</a>
+                            <button id="delete-btn" class="btn btn-danger fuse-ripple-ready" role="button">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+    }
+
+
+
+
+
+
     public static function menuStatus($routeName, $status){
       return Route::currentRouteNamed($routeName) ? $status : '';
     }
+
+
 
 }

@@ -83,6 +83,7 @@ class DV extends Model{
 
 
 
+
     public function searchSanitize( $string = null ) {
         $string = preg_replace('/[^ \w]+/', '', $string);
         $string = str_replace(" ", "%", $string);
@@ -90,6 +91,7 @@ class DV extends Model{
         $string = strip_tags($string);
         return $string;
     }
+
 
 
 
@@ -103,11 +105,14 @@ class DV extends Model{
 
 
 
+
     public function userIndexFilter(Request $request, $paginate){
         $dv = $this->newQuery();
         $search = $this->searchSanitize($request->search);
         $project_code = $this->filterSanitize($request->project_code);
         $fund_source = $this->filterSanitize($request->fund_source);
+        $fromDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->fromDate)));
+        $toDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->toDate)));
 
         if(!$search == null){
             $dv->where('doc_no', 'LIKE', '%'. $search .'%');   
@@ -121,10 +126,15 @@ class DV extends Model{
             $dv->where('dv_fund_source', '=', $fund_source);
         }
 
+        if(!$request->fromDate == null || !$request->toDate == null){
+            $dv->whereBetween('created_at', [$fromDate, $toDate]);
+        }
+
         return $dv->where('user_id', Auth::user()->user_id)
                   ->orderBy('updated_at', 'DESC')
                   ->paginate($paginate);
     }
+
 
 
 
@@ -135,11 +145,16 @@ class DV extends Model{
         $fund_source = $this->filterSanitize($request->fund_source);
         $station = $this->filterSanitize($request->station);
         $department = $this->filterSanitize($request->department);
+        $unit = $this->filterSanitize($request->unit);
         $project_code = $this->filterSanitize($request->project_code);
-        
+        $fromDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->fromDate)));
+        $toDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->toDate)));
+            
         if(!$search == null){
             $dv->where('doc_no', 'LIKE', '%'. $search .'%')
                ->orwhere('dv_payee', 'LIKE', '%'. $search .'%')
+               ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
+               ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
                ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
                ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');   
         }
@@ -156,8 +171,16 @@ class DV extends Model{
             $dv->where('dv_dept_code', '=', $department);
         }
 
+        if(!$unit == null){
+            $dv->where('dv_unit_code', '=', $unit);
+        }
+
         if(!$project_code == null){
             $dv->where('dv_proj_code', '=', $project_code);
+        }
+
+        if(!$request->fromDate == null || !$request->toDate == null){
+            $dv->whereBetween('created_at', [$fromDate, $toDate]);
         }
 
         return $dv->orderBy('updated_at', 'DESC')
@@ -167,9 +190,11 @@ class DV extends Model{
 
 
 
+
     public function hunt($slug){
         return $this->where('slug', $slug)->firstOrFail();
     }
+
 
 
 
@@ -183,9 +208,11 @@ class DV extends Model{
 
 
 
+
     public function getHashedSlugAttribute(){
         return md5(microtime());
     }
+
 
 
 
@@ -213,6 +240,7 @@ class DV extends Model{
 
 
 
+
     public static function getUpdatedDefaultsAttribute(){
         return array(
             'updated_at' => Carbon::now(),
@@ -220,6 +248,7 @@ class DV extends Model{
             'ip_updated' => request()->ip(),
         );
     }
+
 
 
 

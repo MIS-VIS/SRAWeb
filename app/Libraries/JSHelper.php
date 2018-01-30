@@ -162,4 +162,61 @@ class JSHelper {
 
 
 
+
+
+    public static function ModalCallDelete($parent, $id){
+    $string = "'";
+      return '<script>
+			        $('. $string .' '. $parent .' '. $string .').on("click", ".formDelete", function(e){
+			            e.preventDefault();
+			            var $form=$(this);
+			            $("#'. $id .'").modal("show")
+			                .on("click", "#delete-btn", function(){
+			                    $form.submit();
+			                });
+			        });
+			   </script>';
+    }
+
+
+
+
+
+    public static function Snackbar($message){
+      return '<script>
+			    new PNotify({
+	                text    : "'. $message .'",
+	                confirm : {
+	                    confirm: true,
+	                    buttons: [
+	                        {
+	                            text    : "Dismiss",
+	                            addClass: "btn btn-link",
+	                            click   : function (notice)
+	                            {
+	                                notice.remove();
+	                            }
+	                        },
+	                        null
+	                    ]
+	                },
+	                buttons : {
+	                    closer : false,
+	                    sticker: false
+	                },
+	                animate : {
+	                    animate  : true,
+	                    in_class : "slideInDown",
+	                    out_class: "slideOutUp"
+	                },
+	                addclass: "md multiline"
+	            });
+			   </script>';
+    }
+
+
+
+
+
+
 }

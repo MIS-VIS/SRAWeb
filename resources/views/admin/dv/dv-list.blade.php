@@ -21,8 +21,8 @@
 
         <div class="page-content-wrapper">
 
+            {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
             <aside class="page-sidebar p-6">
-
 
                 <div class="page-sidebar-card">
                     <div class="header p-4">
@@ -34,66 +34,63 @@
                     <div class="divider"></div>
                         <div class="content">
                             <div class="p-2">
-                                {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
                                     
-                                    <div class="col-md-12 row" style="margin-bottom:15px;">
-                                        <small>Fund Source</small><br>
-                                        <select name="fund_source" id="fund_source" class="form-control">
-                                            <option value="">None</option>
-                                            <option value="SIDA" {{ old('fund_source') == "SIDA" ? 'selected' : ''}}>SIDA</option>
-                                            <option value="Corporate" {{ old('fund_source') == "Corporate" ? 'selected' : ''}}>CORPORATE</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-12 row" style="margin-bottom:15px;">
-                                        <small>Station</small><br>
-                                        <select name="station" id="station" class="form-control">
-                                            <option value="">None</option>
-                                            <option value="1" {{ old('station') == 1 ? 'selected' : ''}}>Bacolod City</option>
-                                            <option value="2" {{ old('station') == 2 ? 'selected' : ''}}>Quezon City</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div class="col-md-12 row" style="margin-bottom:15px;">
-                                        <small>Department</small><br>
-                                        <select name="department" id="department" class="form-control">
-                                            <option value="">None</option>
-                                            @foreach($burProjectsDeptId as $data)
-                                                <option value="{{ $data->dept_id }}" {{ old('department') == $data->dept_id ? 'selected' : ''}}>{{ $data->dept_id }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-
-                                    <div class="col-md-12 row" style="margin-bottom:15px;">
-                                        <small>Unit</small><br>
-                                        <select name="unit" id="unit" class="form-control">
-                                            <option value="">None</option>
-                                            @foreach($departmentsDeptUnit as $data)
-                                                <option value="{{ $data->dept_unit }}" {{ old('unit') == $data->dept_unit ? 'selected' : ''}}>{{ $data->dept_unit }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-
-                                    <div class="col-md-12 row" style="margin-bottom:15px;">
-                                        <small>Project Code </small>
-                                        <select name="project_code" id="project_code" class="form-control">
-                                            <option value="">None</option>
-                                            @foreach($burProjectsAcctCode as $data)
-                                                <option value="{{ $data->acct_code }}" {{ old('project_code') == $data->acct_code ? 'selected' : ''}}>{{ $data->acct_code }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-12 row" style="margin-bottom:15px;">
-                                    <button type="submit" class="btn btn-secondary btn-sm">
-                                        Filter
-                                    </button>
+                                <div class="col-md-12 row" style="margin-bottom:15px;">
+                                    <small>Fund Source</small><br>
+                                    <select name="fund_source" id="fund_source" class="form-control" onchange="this.form.submit()">
+                                        <option value="">None</option>
+                                        <option value="SIDA" {{ old('fund_source') == "SIDA" ? 'selected' : ''}}>SIDA</option>
+                                        <option value="Corporate" {{ old('fund_source') == "Corporate" ? 'selected' : ''}}>CORPORATE</option>
+                                    </select>
+                                    <small class="text-danger">{{ $errors->first('fund_source') }}</small>
                                 </div>
 
-                                {!! Form::close() !!}
+                                <div class="col-md-12 row" style="margin-bottom:15px;">
+                                    <small>Station</small><br>
+                                    <select name="station" id="station" class="form-control" onchange="this.form.submit()">
+                                        <option value="">None</option>
+                                        <option value="1" {{ old('station') == 1 ? 'selected' : ''}}>Bacolod City</option>
+                                        <option value="2" {{ old('station') == 2 ? 'selected' : ''}}>Quezon City</option>
+                                    </select>
+                                    <small class="text-danger">{{ $errors->first('station') }}</small>
+                                </div>
+
+
+                                <div class="col-md-12 row" style="margin-bottom:15px;">
+                                    <small>Department</small><br>
+                                    <select name="department" id="department" class="form-control" onchange="this.form.submit()">
+                                        <option value="">None</option>
+                                        @foreach($burProjectsDeptId as $data)
+                                            <option value="{{ $data->dept_id }}" {{ old('department') == $data->dept_id ? 'selected' : ''}}>{{ $data->dept_id }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small class="text-danger">{{ $errors->first('department') }}</small>
+                                </div>
+
+
+                                <div class="col-md-12 row" style="margin-bottom:15px;">
+                                    <small>Unit</small><br>
+                                    <select name="unit" id="unit" class="form-control" onchange="this.form.submit()">
+                                        <option value="">None</option>
+                                        @foreach($departmentsDeptUnit as $data)
+                                            <option value="{{ $data->dept_unit }}" {{ old('unit') == $data->dept_unit ? 'selected' : ''}}>{{ $data->dept_unit }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small class="text-danger">{{ $errors->first('unit') }}</small>
+                                </div>
+
+
+                                <div class="col-md-12 row" style="margin-bottom:15px;">
+                                    <small>Project Code </small>
+                                    <select name="project_code" id="project_code" class="form-control" onchange="this.form.submit()">
+                                        <option value="">None</option>
+                                        @foreach($burProjectsAcctCode as $data)
+                                            <option value="{{ $data->acct_code }}" {{ old('project_code') == $data->acct_code ? 'selected' : ''}}>{{ $data->acct_code }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small class="text-danger">{{ $errors->first('project_code') }}</small>
+                                </div>
+
                             </div>
                         </div>
                 </div>
@@ -111,26 +108,25 @@
                     <div class="divider"></div>
                         <div class="content">
                             <div class="p-2">
-                                {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
-                                    <div class="col-md-12 row" id="datepicker" style="margin-bottom:15px;"">
-                                        <label for="fromDate" style="color:#696969;"><strong>From</strong></label>
-                                        <input type="text" class="form-control is-valid date" id="fromDate" name="fromDate" value="{{ old('fromDate') }}" placeholder="mm-dd-yyyy" required>
-                                        <small class="text-danger"></small>
-                                    </div>
 
-                                    <div class="col-md-12 row" id="datepicker" style="margin-bottom:15px;"">
-                                        <label for="fromDate" style="color:#696969;"><strong>To</strong></label>
-                                        <input type="text" class="form-control is-valid date" id="fromDate" name="fromDate" value="{{ old('fromDate') }}" placeholder="mm-dd-yyyy" required>
-                                        <small class="text-danger"></small>
-                                    </div>
+                                <div class="col-md-12 row" id="datepicker" style="margin-bottom:15px;"">
+                                    <label for="fromDate" style="color:#696969;"><strong>From</strong></label>
+                                    <input type="text" class="form-control is-valid date" id="fromDate" name="fromDate" value="{{ old('fromDate') }}" placeholder="dd-mm-yyyy" required>
+                                    <small class="text-danger">{{ $errors->first('fromDate') }}</small>
+                                </div>
 
-                                    <div class="col-md-12 row" style="margin-bottom:15px;">
-                                        <button type="submit" class="btn btn-secondary btn-sm">
-                                            Filter
-                                        </button>
-                                    </div>
+                                <div class="col-md-12 row" id="datepicker" style="margin-bottom:15px;"">
+                                    <label for="toDate" style="color:#696969;"><strong>To</strong></label>
+                                    <input type="text" class="form-control is-valid date" id="toDate" name="toDate" value="{{ old('toDate') }}" placeholder="dd-mm-yyyy" required>
+                                    <small class="text-danger">{{ $errors->first('toDate') }}</small>
+                                </div>
 
-                                {!! Form::close() !!}
+                                <div class="col-md-12 row" style="margin-bottom:15px;">
+                                    <button type="submit" class="btn btn-secondary btn-sm">
+                                        Filter
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                 </div>
@@ -138,6 +134,7 @@
 
             </aside>
 
+             {!! Form::close() !!}
 
             <div class="page-content p-sm-6" style="margin-bottom:1000px;">
                 <div class="contacts-list card">
@@ -171,15 +168,15 @@
 
                     @foreach($dvList as $data)
 
-                    <div class="thread ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread">
+                    <div class="thread ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord">
                         <div class="info col px-6">
                             <div class="name row no-gutters align-items-center">
                                 <img class="avatar mr-2" src="{{ asset('template/images/avatars/profile.jpg') }}"/>
-                                <span class="">{{ $data->dv_payee }}</span>
+                                <span>&nbsp;<strong>{{ $data->dv_payee }}</strong></span>
                             </div>
 
                             <div class="message">
-                                <p style="margin-top:5px; font-size:16px;">{!! str_limit(strip_tags($data->dv_explanation),75) !!}</p>
+                                <p style="margin-top:5px;">Explanation: <strong>{!! str_limit(strip_tags($data->dv_explanation),75) !!}</strong></p>
                                 <p style="margin-top:-10px;">Doc No: <strong>{{ $data->doc_no }}</strong></p>
                                 <p style="margin-top:-10px;">Fund Source: <strong>{{ $data->dv_fund_source }}</strong></p>
                                 <div class="labels">
@@ -199,15 +196,21 @@
                         <div class="col-12 col-sm-auto d-flex flex-sm-column justify-content-center align-items-center">
                             <div class="time mb-2" style="font-size:17px; padding-bottom:15px;">{{ Carbon::parse($data->created_at)->format('M d, Y') }}</div>
                             <div class="actions row no-gutters">
+
                                 <a href="{{ route('admin.dv.edit', $data->slug) }}" type="button" class="btn btn-fab btn-sm btn-secondary">
                                     <i class="icon-pencil s-4"></i>
                                 </a>&nbsp;
+
                                 <a href="{{ route('admin.dv.show', $data->slug) }}" type="button" class="btn btn-fab btn-sm btn-info">
                                     <i class="icon-printer s-4"></i>
                                 </a>&nbsp;
-                                <a href="" type="button" class="btn btn-fab btn-sm btn-danger">
-                                    <i class="icon-trash s-4"></i>
-                                </a>
+
+                                {!! Form::open(['method' => 'delete', 'route' => ['admin.dv.destroy', $data->slug], 'class' =>'formDelete']) !!}
+                                    <button href="" type="submit" class="btn btn-fab btn-sm btn-danger">
+                                        <i class="icon-trash s-4"></i>
+                                    </button>
+                                {!! Form::close() !!}
+
                             </div>
                         </div>
                     </div>
@@ -232,7 +235,16 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <nav aria-label="..." style="float:right;">
-                                        {!! $dvList->appends(['search'=>Input::get('search'), 'fund_source' => Input::get('fund_source'), 'station'=>Input::get('station'), 'department' => Input::get('department'), 'unit' => Input::get('unit'), 'project_code' => Input::get('project_code') ])->render('vendor.pagination.bootstrap-4') !!}
+                                        {!! $dvList->appends([
+                                                    'search'=>Input::get('search'), 
+                                                    'fund_source' => Input::get('fund_source'), 
+                                                    'station'=>Input::get('station'), 
+                                                    'department' => Input::get('department'), 
+                                                    'unit' => Input::get('unit'), 
+                                                    'project_code' => Input::get('project_code'),
+                                                    'fromDate' => Input::get('fromDate'),
+                                                    'toDate' => Input::get('toDate'), ])
+                                                    ->render('vendor.pagination.bootstrap-4') !!}
                                     </nav>
                                 </div>
                             </div>
@@ -248,10 +260,22 @@
 
 @endsection
 
+
+@section('modals')
+    {!! ContentHelper::modalDelete('deleteDv') !!}
+@endsection
+
+
 @section('scripts')
     {!! JSHelper::SelectSearch('project_code') !!}
     {!! JSHelper::SelectSearch('department') !!}
     {!! JSHelper::SelectNormal('fund_source') !!}
     {!! JSHelper::SelectNormal('station') !!}
     {!! JSHelper::SelectSearch('unit') !!}
+    {!! JSHelper::ModalCallDelete('div[data-form="dvRecord"]', 'deleteDv') !!}
+    @if(Session::has('success'))
+       {!! JSHelper::Snackbar('Record Successfully Deleted !') !!}
+    @endif
+
+
 @endsection

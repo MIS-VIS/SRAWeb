@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use App\DV as DV;
 use Illuminate\Http\Request;
 use App\Http\Requests\DvFormRequest;
-use App\Http\Requests\DvSearchRequest;
+use App\Http\Requests\DvFilterRequest;
 use Illuminate\Support\Facades\Input;
 use Session;
 use Auth;
@@ -15,7 +15,7 @@ class DVController extends Controller{
     
 
 
-    public function index(DvSearchRequest $request, DV $disbVchr){
+    public function index(DvFilterRequest $request, DV $disbVchr){
         $dvList = $disbVchr->indexFilter($request, 10);
         Input::flash();
         return view('admin.dv.dv-list', compact('dvList'));
@@ -24,12 +24,11 @@ class DVController extends Controller{
 
 
 
-    public function userIndex(DvSearchRequest $request, DV $disbVchr){
+    public function userIndex(DvFilterRequest $request, DV $disbVchr){
         $dvUserList = $disbVchr->userIndexFilter($request, 10);
         Input::flash();
         return view('admin.dv.dv-userList', compact('dvUserList'));
     }
-
 
 
 
@@ -56,7 +55,7 @@ class DVController extends Controller{
 
     public function show($slug, DV $disbVchr){
         $dv = $disbVchr->hunt($slug);
-        if(count($dv) > 0){
+        if(count($dv) == 1){
             Session::flash('print', 'You can now Print your voucher!');
             return view('admin.dv.dv-print')->with('dv', $dv);
         } 
@@ -68,7 +67,7 @@ class DVController extends Controller{
 
     public function edit($slug, DV $disbVchr){
         $dv = $disbVchr->hunt($slug);
-        if(count($dv) > 0){
+        if(count($dv) == 1){
             Session::flash('print', 'You can now Edit your voucher!');
             return view('admin.dv.dv-edit')->with('dv', $dv);
         } 
@@ -80,7 +79,7 @@ class DVController extends Controller{
 
     public function update(DVFormRequest $request, $slug, DV $disbVchr){
         $dv = $disbVchr->hunt($slug);
-        if(count($dv) > 0){
+        if(count($dv) == 1){
             $dv->update($request->all() + $disbVchr->updatedDefaults);
             Session::flash('slug', $dv->slug);
             Session::flash('success', 'Your data has been successfully updated!');
@@ -92,8 +91,14 @@ class DVController extends Controller{
     
 
 
-    public function destroy($id){
-        
+    public function destroy($slug, DV $disbVchr){
+        $dv = $disbVchr->hunt($slug);
+        if(count($dv) == 1){
+            $dv->delete();
+            Session::flash('success', 'Your data has been successfully Deleted!');
+            return redirect()->back();
+        }
+        return abort(404);
     }
 
 
