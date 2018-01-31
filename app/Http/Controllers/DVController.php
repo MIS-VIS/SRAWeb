@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Input;
 use Session;
 use Auth;
 
+
+use Carbon\Carbon;
+
 class DVController extends Controller{
     
 
@@ -30,6 +33,12 @@ class DVController extends Controller{
         return view('admin.dv.dv-userList', compact('dvUserList'));
     }
 
+
+
+    public function incomings(){
+        $dv = DV::all();
+        return view('admin.dv.dv-incomings', compact('dv'));
+    }
 
 
 
@@ -95,13 +104,11 @@ class DVController extends Controller{
         $dv = $disbVchr->hunt($slug);
         if(count($dv) == 1){
             $dv->delete();
-            Session::flash('success', 'Your data has been successfully Deleted!');
+            Session::flash('deleted', 'Your data has been successfully Deleted!');
             return redirect()->back();
         }
         return abort(404);
     }
-
-
 
 
 }

@@ -9,10 +9,10 @@
                          id="dropdownUserMenu"
                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar-wrapper">
-                            <img class="avatar" src="{{ asset('template/images/avatars/profile.jpg') }}">
+                            <div class="avatar mr-2 bg-blue">{!! substr(Auth::user()->firstname, 0, 1) !!}</div>
                         </div>
                         @if(Auth::check())
-                            <span class="username mx-3 d-none d-md-block">{{Auth::user()->firstname}}</span>
+                            <span class="username mx-3 d-none d-md-block">{{ Auth::user()->firstname }}</span>
                         @endif
                     </div>
                     <div class="dropdown-menu" aria-labelledby="dropdownUserMenu">

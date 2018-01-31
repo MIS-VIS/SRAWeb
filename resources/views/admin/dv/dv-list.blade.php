@@ -171,7 +171,7 @@
                     <div class="thread ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord">
                         <div class="info col px-6">
                             <div class="name row no-gutters align-items-center">
-                                <img class="avatar mr-2" src="{{ asset('template/images/avatars/profile.jpg') }}"/>
+                                <div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
                                 <span>&nbsp;<strong>{{ $data->dv_payee }}</strong></span>
                             </div>
 
@@ -180,13 +180,13 @@
                                 <p style="margin-top:-10px;">Doc No: <strong>{{ $data->doc_no }}</strong></p>
                                 <p style="margin-top:-10px;">Fund Source: <strong>{{ $data->dv_fund_source }}</strong></p>
                                 <div class="labels">
-                                    <div class="label badge bg-primary-300">
+                                    <div class="label badge badge-default" style="background-color:#607D8B;">
                                         <span style="font-size:14px;">Department: <strong>{{ $data->dv_dept_code }}</strong></span>
                                     </div>
-                                    <div class="label badge bg-primary-400">
+                                    <div class="label badge badge-default" style="background-color:#607D8B;">
                                         <span style="font-size:14px;">Unit: <strong>{{ $data->dv_unit_code }}</strong></span>
                                     </div>
-                                    <div class="label badge bg-primary">
+                                    <div class="label badge badge-default" style="background-color:#607D8B;">
                                         <span style="font-size:14px;">Project Code: <strong>{{ $data->dv_proj_code }}</strong></span>
                                     </div>
                                 </div>
@@ -196,12 +196,15 @@
                         <div class="col-12 col-sm-auto d-flex flex-sm-column justify-content-center align-items-center">
                             <div class="time mb-2" style="font-size:17px; padding-bottom:15px;">{{ Carbon::parse($data->created_at)->format('M d, Y') }}</div>
                             <div class="actions row no-gutters">
+                                <a href="" class="btn btn-fab btn-sm btn-info">
+                                    <i class="icon-message-settings-variant s-4"></i>
+                                </a>&nbsp;
 
-                                <a href="{{ route('admin.dv.edit', $data->slug) }}" type="button" class="btn btn-fab btn-sm btn-secondary">
+                                <a href="{{ route('admin.dv.edit', $data->slug) }}" class="btn btn-fab btn-sm btn-secondary">
                                     <i class="icon-pencil s-4"></i>
                                 </a>&nbsp;
 
-                                <a href="{{ route('admin.dv.show', $data->slug) }}" type="button" class="btn btn-fab btn-sm btn-info">
+                                <a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-success-600 text-auto">
                                     <i class="icon-printer s-4"></i>
                                 </a>&nbsp;
 
@@ -235,6 +238,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <nav aria-label="..." style="float:right;">
+
                                         {!! $dvList->appends([
                                                     'search'=>Input::get('search'), 
                                                     'fund_source' => Input::get('fund_source'), 
@@ -244,7 +248,9 @@
                                                     'project_code' => Input::get('project_code'),
                                                     'fromDate' => Input::get('fromDate'),
                                                     'toDate' => Input::get('toDate'), ])
-                                                    ->render('vendor.pagination.bootstrap-4') !!}
+                                                    ->render('vendor.pagination.bootstrap-4') 
+                                        !!}
+                                        
                                     </nav>
                                 </div>
                             </div>
@@ -273,7 +279,7 @@
     {!! JSHelper::SelectNormal('station') !!}
     {!! JSHelper::SelectSearch('unit') !!}
     {!! JSHelper::ModalCallDelete('div[data-form="dvRecord"]', 'deleteDv') !!}
-    @if(Session::has('success'))
+    @if(Session::has('deleted'))
        {!! JSHelper::Snackbar('Record Successfully Deleted !') !!}
     @endif
 

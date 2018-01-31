@@ -188,10 +188,10 @@
 					                            <td><span class="badge badge-success">Pending</span></td>
 					                            <td>{{ Carbon::parse($data->created_at)->format('M d, Y') }}</td>
 					                            <td>
-					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" type="button" class="btn btn-info btn-fab btn-sm">
+					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-info btn-fab btn-sm">
 					                                    <i class="icon icon-eye-outline s-4"></i>
 					                                </a>
-					                                <a href="{{ route('admin.dv.edit', $data->slug) }}" type="button" class="btn btn-secondary btn-fab btn-sm">
+					                                <a href="{{ route('admin.dv.edit', $data->slug) }}" class="btn btn-secondary btn-fab btn-sm">
 					                                    <i class="icon icon-pencil s-4"></i>
 					                                </a>
 					                            </td>
@@ -223,13 +223,16 @@
 	    						</div>
 				                <div class="col-lg-6">
 				                	<nav aria-label="..." style="float:right;">
+
 				                		{!! $dvUserList->appends([
                                                         'search'=>Input::get('search'),
                                                         'fund_source' => Input::get('fund_source'),
                                                         'project_code' => Input::get('project_code'),
                                                         'fromDate' => Input::get('fromDate'),
                                                         'toDate' => Input::get('toDate')])
-                                                       ->render('vendor.pagination.bootstrap-4') !!}
+                                                       ->render('vendor.pagination.bootstrap-4') 
+                                        !!}
+                                        
 				                	</nav>
 	    						</div>
 				            </div>

@@ -106,39 +106,6 @@ class DV extends Model{
 
 
 
-    public function userIndexFilter(Request $request, $paginate){
-        $dv = $this->newQuery();
-        $search = $this->searchSanitize($request->search);
-        $project_code = $this->filterSanitize($request->project_code);
-        $fund_source = $this->filterSanitize($request->fund_source);
-        $fromDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->fromDate)));
-        $toDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->toDate)));
-
-        if(!$search == null){
-            $dv->where('doc_no', 'LIKE', '%'. $search .'%');   
-        }
-
-        if(!$project_code == null){
-            $dv->where('dv_proj_code', '=', $project_code);
-        }
-
-        if(!$fund_source == null){
-            $dv->where('dv_fund_source', '=', $fund_source);
-        }
-
-        if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('created_at', [$fromDate, $toDate]);
-        }
-
-        return $dv->where('user_id', Auth::user()->user_id)
-                  ->orderBy('updated_at', 'DESC')
-                  ->paginate($paginate);
-    }
-
-
-
-
-
     public function indexFilter(Request $request, $paginate){
         $dv = $this->newQuery();
         $search = $this->searchSanitize($request->search);
@@ -187,6 +154,37 @@ class DV extends Model{
                   ->paginate($paginate);
     }
 
+
+
+
+    public function userIndexFilter(Request $request, $paginate){
+        $dv = $this->newQuery();
+        $search = $this->searchSanitize($request->search);
+        $project_code = $this->filterSanitize($request->project_code);
+        $fund_source = $this->filterSanitize($request->fund_source);
+        $fromDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->fromDate)));
+        $toDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->toDate)));
+
+        if(!$search == null){
+            $dv->where('doc_no', 'LIKE', '%'. $search .'%');   
+        }
+
+        if(!$project_code == null){
+            $dv->where('dv_proj_code', '=', $project_code);
+        }
+
+        if(!$fund_source == null){
+            $dv->where('dv_fund_source', '=', $fund_source);
+        }
+
+        if(!$request->fromDate == null || !$request->toDate == null){
+            $dv->whereBetween('created_at', [$fromDate, $toDate]);
+        }
+
+        return $dv->where('user_id', Auth::user()->user_id)
+                  ->orderBy('updated_at', 'DESC')
+                  ->paginate($paginate);
+    }
 
 
 
