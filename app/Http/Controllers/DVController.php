@@ -35,9 +35,10 @@ class DVController extends Controller{
 
 
 
-    public function incomings(){
-        $dv = DV::all();
-        return view('admin.dv.dv-incomings', compact('dv'));
+    public function incomings(DvFilterRequest $request, DV $disbVchr){
+        $dvIncomings = $disbVchr->incomingsFilter($request ,10);
+        Input::flash();
+        return view('admin.dv.dv-incomings', compact('dvIncomings'));
     }
 
 

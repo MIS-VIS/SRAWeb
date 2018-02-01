@@ -188,9 +188,9 @@
 					                            <td><span class="badge badge-success">Pending</span></td>
 					                            <td>{{ Carbon::parse($data->created_at)->format('M d, Y') }}</td>
 					                            <td>
-					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-info btn-fab btn-sm">
-					                                    <i class="icon icon-eye-outline s-4"></i>
-					                                </a>
+					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-success-600 text-auto">
+                                                        <i class="icon-printer s-4"></i>
+                                                    </a>&nbsp;
 					                                <a href="{{ route('admin.dv.edit', $data->slug) }}" class="btn btn-secondary btn-fab btn-sm">
 					                                    <i class="icon icon-pencil s-4"></i>
 					                                </a>

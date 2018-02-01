@@ -114,16 +114,18 @@ class DV extends Model{
         $department = $this->filterSanitize($request->department);
         $unit = $this->filterSanitize($request->unit);
         $project_code = $this->filterSanitize($request->project_code);
-        $fromDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->fromDate)));
-        $toDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->toDate)));
+        $fromDate = Carbon::parse($this->filterSanitize($request->fromDate))->format('Y-m-d');
+        $toDate = Carbon::parse($this->filterSanitize($request->toDate))->format('Y-m-d h:i:s');
             
         if(!$search == null){
-            $dv->where('doc_no', 'LIKE', '%'. $search .'%')
-               ->orwhere('dv_payee', 'LIKE', '%'. $search .'%')
-               ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
-               ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
-               ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
-               ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');   
+            $dv->where(function ($dv) use ($search) {
+                            $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
+                       });
         }
 
         if(!$fund_source == null){
@@ -162,9 +164,8 @@ class DV extends Model{
         $search = $this->searchSanitize($request->search);
         $project_code = $this->filterSanitize($request->project_code);
         $fund_source = $this->filterSanitize($request->fund_source);
-        $fromDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->fromDate)));
-        $toDate = date('Y-m-d h:i:s', strtotime($this->filterSanitize($request->toDate)));
-
+        $fromDate = Carbon::parse($this->filterSanitize($request->fromDate))->format('Y-m-d');
+        $toDate = Carbon::parse($this->filterSanitize($request->toDate))->format('Y-m-d h:i:s');
         if(!$search == null){
             $dv->where('doc_no', 'LIKE', '%'. $search .'%');   
         }
@@ -184,6 +185,37 @@ class DV extends Model{
         return $dv->where('user_id', Auth::user()->user_id)
                   ->orderBy('updated_at', 'DESC')
                   ->paginate($paginate);
+    }
+
+
+
+
+    public function incomingsFilter(Request $request, $pagination){
+        $dv = $this->newQuery();
+        $department = $this->filterSanitize($request->department);
+        $timeNow = Carbon::now()->format('Y-m-d');
+        $search = $this->searchSanitize($request->search);
+
+        if(!$search == null){
+            $dv->where(function ($dv) use ($search) {
+                            $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
+                               ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
+                       });
+        }
+
+        if(!$department == null){
+            $dv->where('dv_dept_code', '=', $department);
+        }
+
+        return $dv->whereDate('created_at', $timeNow)
+                  ->orderBy('created_at', 'DESC')
+                  ->paginate($pagination)
+                  ->appends(['department' => $department]);
+        
     }
 
 
