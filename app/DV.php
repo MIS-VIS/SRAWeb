@@ -17,6 +17,7 @@ class DV extends Model{
     protected $dates = ['created_at', 'updated_at'];
 
 
+
     protected $fillable = [
         'slug',
         'doc_no',
@@ -152,7 +153,7 @@ class DV extends Model{
             $dv->whereBetween('created_at', [$fromDate, $toDate]);
         }
 
-        return $dv->orderBy('updated_at', 'DESC')
+        return $dv->orderBy('created_at', 'DESC')
                   ->paginate($paginate);
     }
 
@@ -183,7 +184,7 @@ class DV extends Model{
         }
 
         return $dv->where('user_id', Auth::user()->user_id)
-                  ->orderBy('updated_at', 'DESC')
+                  ->orderBy('created_at', 'DESC')
                   ->paginate($paginate);
     }
 

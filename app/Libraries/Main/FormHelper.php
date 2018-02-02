@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries;
+namespace App\Libraries\Main;
 use Route;
 use App\Departments as dept;
 

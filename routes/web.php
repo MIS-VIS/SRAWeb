@@ -15,6 +15,7 @@ Route::group(['prefix'=>'admin', 'as' => 'admin.' , 'middleware' => 'admin'], fu
 	// DV Routes
 	Route::get('/dv/incomings', 'DVController@incomings')->name('dv.incomings');
 	Route::get('/dv/userList', 'DVController@userIndex')->name('dv.userIndex');
+	Route::post('/dv/setDvNo', 'DVController@setDvNo')->name('dv.setDvNo');
 	Route::resource('dv', 'DVController');
 
 	// DV Ajax Requests

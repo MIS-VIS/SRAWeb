@@ -29,10 +29,10 @@
             "App\\": "app/"
         },
         "files" : [
-            "app/Libraries/FormHelper.php",
-            "app/Libraries/ContentHelper.php",
-            "app/Libraries/SelectHelper.php",
-            "app/Libraries/JSHelper.php"
+            "app/Libraries/Main/FormHelper.php",
+            "app/Libraries/Main/ContentHelper.php",
+            "app/Libraries/Main/SelectHelper.php",
+            "app/Libraries/Main/JSHelper.php"
         ]
     },
     "autoload-dev": {

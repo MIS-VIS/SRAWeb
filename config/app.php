@@ -238,10 +238,10 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 
-        'FormHelper' => App\Libraries\FormHelper::class,
-        'ContentHelper' => App\Libraries\ContentHelper::class,
-        'SelectHelper' => App\Libraries\SelectHelper::class,
-        'JSHelper' => App\Libraries\JSHelper::class,
+        'FormHelper' => App\Libraries\Main\FormHelper::class,
+        'ContentHelper' => App\Libraries\Main\ContentHelper::class,
+        'SelectHelper' => App\Libraries\Main\SelectHelper::class,
+        'JSHelper' => App\Libraries\Main\JSHelper::class,
 
     ],
 

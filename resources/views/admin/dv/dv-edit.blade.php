@@ -125,8 +125,8 @@
 
 @section('modals')
 
-    @if(Session::has('success'))
-        {!! ContentHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('success'), route('admin.dv.show', Session::get('slug')) ) !!}
+    @if(Session::has('updated'))
+        {!! ContentHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('updated'), route('admin.dv.show', Session::get('slug')) ) !!}
     @endif
 
 @endsection

@@ -26,8 +26,6 @@
         <div class="page-content-card" id="'.$id.'">
             <div class="p-5 col-12">
 
-
-			@if(Session::has('print'))
 			<div class="preview">
 				<div class="preview-elements">
 			        <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -533,7 +531,6 @@
 			    	</div>
 				</div>
 			</div>
-			@endif
 
 		</div>
 	</div>

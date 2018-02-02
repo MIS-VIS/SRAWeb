@@ -16,18 +16,18 @@ class DvFormRequest extends FormRequest{
 
     public function rules(){
         return [
-            'dv_fund_source'=>'required|string',
-            'dv_payee'=>'required|string',
-            'dv_tin'=>'required|string',
-            'dv_address'=>'required|string',
-            'dv_dept_code'=>'required|string',
-            'dv_proj_code'=>'required|string',
+            'dv_fund_source'=>'required|string|max:20',
+            'dv_payee'=>'required|string|max:100',
+            'dv_tin'=>'required|string|max:20',
+            'dv_address'=>'required|string|max:100',
+            'dv_dept_code'=>'required|string|max:20',
+            'dv_proj_code'=>'required|string|max:20',
             'dv_explanation'=>'required',
-            'dv_amount'=>'required|string',
-            'dv_certified_by'=>'required|string',
-            'dv_certified_by_position'=>'required|string',
-            'dv_approved_by'=>'required|string',
-            'dv_approved_by_position'=>'required|string'
+            'dv_amount'=>'required|string|max:20',
+            'dv_certified_by'=>'required|string|max:100',
+            'dv_certified_by_position'=>'required|string|max:100',
+            'dv_approved_by'=>'required|string|max:100',
+            'dv_approved_by_position'=>'required|string|max:100'
         ];
     }
 
@@ -37,36 +37,49 @@ class DvFormRequest extends FormRequest{
 	    return [
             'dv_fund_source.required'  => 'Fund Source field is required.',
 	        'dv_fund_source.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_fund_source.max'  => 'The Fund Source field may not be greater than 20 characters.',
 
             'dv_payee.required'  => 'Payee field is required.',
             'dv_payee.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_payee.max'  => 'The Payee field may not be greater than 100 characters.',
 	        
             'dv_tin.required'  => 'TIN field is required.',
             'dv_tin.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_tin.max'  => 'The TIN field may not be greater than 20 characters.',
 	        
             'dv_address.required'  => 'Address field is required.',
             'dv_address.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_address.max'  => 'The Address field may not be greater than 100 characters.',
             
             'dv_dept_code.required'  => 'Department field is required.',
             'dv_dept_code.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_dept_code.max'  => 'The Department field may not be greater than 20 characters.',
 	        
             'dv_proj_code.required'  => 'Account Code field is required.',
             'dv_proj_code.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_proj_code.max'  => 'The Account Code field may not be greater than 20 characters.',
 	        
             'dv_explanation.required'  => 'Explanation field is required.',
 	        
             'dv_amount.required'  => 'Amount field is required.',
             'dv_amount.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_amount.max'  => 'The Amount field may not be greater than 20 characters.',
 	        
             'dv_certified_by.required'  => 'Certified by field is required.',
             'dv_certified_by.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_certified_by.max'  => 'The Certified by field may not be greater than 100 characters.',
+
             'dv_certified_by_position.required'  => 'Certified by position field is required.',
             'dv_certified_by_position.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_certified_by_position.max'  => 'The Position field may not be greater than 100 characters.',
 	        
             'dv_approved_by.required'  => 'Approved by field is required.',
             'dv_approved_by.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_approved_by.max'  => 'The Approved by field may not be greater than 100 characters.',
+
 	        'dv_approved_by_position.required'  => 'Approved by position field is required.',
             'dv_approved_by_position.string'  => 'Invalid Input! You must enter a string value.',
+            'dv_approved_by_position.max'  => 'The Position by field may not be greater than 100 characters.',
 	    ];
 	}
 

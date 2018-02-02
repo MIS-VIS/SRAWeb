@@ -130,7 +130,9 @@
                         {{ $data->dv_payee }}
                     </div>
                     <div class="notes mt-1">
-                        {!! str_limit(strip_tags($data->dv_explanation),75) !!}
+                        <span style="margin-top:-10px;">DV No: <strong>{!! $data->dv_no == null ? '<span class="text-danger">Not Set</span>' : $data->dv_no !!}</strong></span>
+                        <br>
+                        <span style="margin-top:-10px;">DV No: <strong>{!! str_limit(strip_tags($data->dv_explanation),75) !!}</strong></span>
                     </div>
                     <div class="tags">
                         <div class="tag badge mt-2 mr-1">
@@ -160,7 +162,13 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <a href="{{ route('admin.dv.show', $data->slug) }}" class="btn bg-success-600 text-auto btn-sm">View</a>
+                    <a href="#" class="btn btn-fab btn-sm btn-info" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">
+                        <i class="icon-attachment s-4"></i>
+                    </a>
+                    &nbsp;
+                    <a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-success-600 text-auto">
+                        <i class="icon-printer s-4"></i>
+                    </a> 
                 </div>
             </div>
         @endforeach
@@ -191,4 +199,44 @@
 </div>
 </div>
 
+@endsection
+
+@section('modals')
+    <div id="setDvNo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLiveLabel">Set DV No.</h5>
+                    </div>
+                    <div class="modal-body" id="set_dv_no_body">
+                        {!! Form::open(['route' => 'admin.dv.setDvNo', 'method' => 'POST']) !!}
+                            <div class="form-group">
+                                <label for="recipient-name" class="form-control-label">DV No.</label>
+                                <input type="hidden" class="form-control" name="slug" id="slug"/>
+                                <input type="text" class="form-control" name="dv_no" id="dv_no"/>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-secondary fuse-ripple-ready" role="button" data-dismiss="modal">Cancel</a>
+                                <button href="" class="btn btn-primary fuse-ripple-ready" type="submit">Set</button>
+                             </div>
+                            
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    
+    <script>
+        $(document).on("click", "#dv_no_button", function () {
+            var slug = $(this).data('slug');
+            var value = $(this).data('value');
+            $("#set_dv_no_body #slug").val( slug );
+            $("#set_dv_no_body #dv_no").val( value );
+        });
+    </script>
+    
 @endsection

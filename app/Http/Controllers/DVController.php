@@ -2,59 +2,75 @@
 
 namespace App\Http\Controllers;
 
-
-use App\DV as DV;
-use Illuminate\Http\Request;
+use App\DV;
 use App\Http\Requests\DvFormRequest;
 use App\Http\Requests\DvFilterRequest;
+use App\Http\Requests\DvSetDvNoRequest;
 use Illuminate\Support\Facades\Input;
 use Session;
 use Auth;
 
 
-use Carbon\Carbon;
-
 class DVController extends Controller{
     
 
+    protected $dv;
 
-    public function index(DvFilterRequest $request, DV $disbVchr){
-        $dvList = $disbVchr->indexFilter($request, 10);
+
+    public function __construct(DV $dv){
+        $this->dv = $dv;
+    }
+
+
+
+    public function index(DvFilterRequest $request){
+        $dvList = $this->dv->indexFilter($request, 10);
         Input::flash();
         return view('admin.dv.dv-list', compact('dvList'));
     }
 
 
 
+    public function setDvNo(DvSetDvNoRequest $request){
+        $dv = $this->dv->hunt($request->slug);
+        if(count($dv) == 1){
+            $dv->update(['dv_no' => $request->dv_no] + $this->dv->updatedDefaults);
+            Session::flash('set', 'DV No. Successfully Set !');
+            return redirect()->back();
+        }
+        return abort(404);
+    }
 
-    public function userIndex(DvFilterRequest $request, DV $disbVchr){
-        $dvUserList = $disbVchr->userIndexFilter($request, 10);
+
+
+    public function userIndex(DvFilterRequest $request){
+        $dvUserList = $this->dv->userIndexFilter($request, 10);
         Input::flash();
         return view('admin.dv.dv-userList', compact('dvUserList'));
     }
 
 
 
-    public function incomings(DvFilterRequest $request, DV $disbVchr){
-        $dvIncomings = $disbVchr->incomingsFilter($request ,10);
+    public function incomings(DvFilterRequest $request){
+        $dvIncomings = $this->dv->incomingsFilter($request ,10);
         Input::flash();
         return view('admin.dv.dv-incomings', compact('dvIncomings'));
     }
 
 
 
-    public function create(DV $disbVchr){
+    public function create(){
         return view('admin.dv.dv-add');
     }
 
    
 
 
-    public function store(DVFormRequest $request, DV $disbVchr){
+    public function store(DVFormRequest $request){
         if($request){
-            $dv = $disbVchr->create($request->all() + $disbVchr->createdDefaults);
+            $dv = $this->dv->create($request->all() + $this->dv->createdDefaults);
             Session::flash('slug', $dv->slug);
-            Session::flash('success', 'Your data has been successfully saved!');
+            Session::flash('created', 'Your data has been successfully saved!');
             return redirect()->back();
         }
         return route('admin.dv.create');
@@ -63,10 +79,9 @@ class DVController extends Controller{
     
 
 
-    public function show($slug, DV $disbVchr){
-        $dv = $disbVchr->hunt($slug);
+    public function show($slug){
+        $dv = $this->dv->hunt($slug);
         if(count($dv) == 1){
-            Session::flash('print', 'You can now Print your voucher!');
             return view('admin.dv.dv-print')->with('dv', $dv);
         } 
         return abort(404);
@@ -75,10 +90,9 @@ class DVController extends Controller{
     
 
 
-    public function edit($slug, DV $disbVchr){
-        $dv = $disbVchr->hunt($slug);
+    public function edit($slug){
+        $dv = $this->dv->hunt($slug);
         if(count($dv) == 1){
-            Session::flash('print', 'You can now Edit your voucher!');
             return view('admin.dv.dv-edit')->with('dv', $dv);
         } 
         return abort(404);
@@ -87,12 +101,12 @@ class DVController extends Controller{
     
 
 
-    public function update(DVFormRequest $request, $slug, DV $disbVchr){
-        $dv = $disbVchr->hunt($slug);
+    public function update(DVFormRequest $request, $slug){
+        $dv = $this->dv->hunt($slug);
         if(count($dv) == 1){
-            $dv->update($request->all() + $disbVchr->updatedDefaults);
+            $dv->update($request->all() + $this->dv->updatedDefaults);
             Session::flash('slug', $dv->slug);
-            Session::flash('success', 'Your data has been successfully updated!');
+            Session::flash('updated', 'Your data has been successfully updated!');
             return view('admin.dv.dv-edit')->with('dv', $dv);
         }
         return abort(404);
@@ -101,8 +115,8 @@ class DVController extends Controller{
     
 
 
-    public function destroy($slug, DV $disbVchr){
-        $dv = $disbVchr->hunt($slug);
+    public function destroy($slug){
+        $dv = $this->dv->hunt($slug);
         if(count($dv) == 1){
             $dv->delete();
             Session::flash('deleted', 'Your data has been successfully Deleted!');
@@ -110,6 +124,8 @@ class DVController extends Controller{
         }
         return abort(404);
     }
+
+
 
 
 }

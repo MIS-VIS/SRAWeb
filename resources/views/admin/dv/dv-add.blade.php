@@ -130,8 +130,8 @@
 
 @section('modals')
 
-    @if(Session::has('success'))
-        {!! ContentHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('success'), route('admin.dv.show', Session::get('slug')) ) !!}
+    @if(Session::has('created'))
+        {!! ContentHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('created'), route('admin.dv.show', Session::get('slug')) ) !!}
     @endif
 
 @endsection
