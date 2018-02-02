@@ -217,48 +217,4 @@ class JSHelper {
 
 
 
-
-    public static function XMLHttpLoad(){
-    	return '<script type="text/javascript">
-				  function update(){
-				    http = false;
-				    if (window.XMLHttpRequest){
-				      http = new XMLHttpRequest();
-				      if (http.overrideMimeType){
-				        http.overrideMimeType("text/plain");
-				      }
-				    }else if (window.ActiveXObject){ 
-				      try{
-				        http = new ActiveXObject("Msxml2.XMLHTTP");
-				      }
-				      catch (e){
-				        try{
-				          http = new ActiveXObject("Microsoft.XMLHTTP");
-				        }
-				        catch (e){}
-				      }
-				    }
-				    if (!http){
-				      alert("Cannot create an XMLHTTP instance");
-				      return false;
-				    }
-				      
-				      http.open("GET", window.location.href , false);
-				      http.setRequestHeader("Cache-Control", "no-cache");
-				      http.send(null);
-				      document.documentElement.innerHTML = http.responseText;
-				  }
-				  
-				  
-				  update();
-				  setInterval(function(){
-				      update();
-				  }, 10000);
-
-				</script>';
-    }
-
-
-
-
 }
