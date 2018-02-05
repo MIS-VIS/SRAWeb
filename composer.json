@@ -32,7 +32,8 @@
             "app/Libraries/Main/FormHelper.php",
             "app/Libraries/Main/ContentHelper.php",
             "app/Libraries/Main/SelectHelper.php",
-            "app/Libraries/Main/JSHelper.php"
+            "app/Libraries/Main/JSHelper.php",
+            "app/Libraries/Statics/DVUtil.php"
         ]
     },
     "autoload-dev": {

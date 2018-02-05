@@ -120,57 +120,66 @@
 
 <div class="page-content-card" id="test">
     <div class="toolbar d-flex align-items-center justify-content-between p-4 p-sm-10">
+        <div class="col-md-10"></div>
+        <div class="col-auto">
+            <div class="row no-gutters align-items-center">
+                <a href="{{ route('admin.dv.incomings') }}" class="btn btn-fab btn-sm btn-primary">
+                    <i class="icon icon-refresh s-4"></i>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="todo-items">
         @foreach($dvIncomings as $data)
-            <div class="todo-item pr-2 py-4 ripple row no-gutters flex-wrap flex-sm-nowrap align-items-center">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
-                <div class="info col px-4">
-                    <div class="title">
-                        {{ $data->dv_payee }}
-                    </div>
-                    <div class="notes mt-1">
-                        <span style="margin-top:-10px;">DV No: <strong>{!! $data->dv_no == null ? '<span class="text-danger">Not Set</span>' : $data->dv_no !!}</strong></span>
-                        <br>
-                        <span style="margin-top:-10px;">DV No: <strong>{!! str_limit(strip_tags($data->dv_explanation),75) !!}</strong></span>
-                    </div>
-                    <div class="tags">
-                        <div class="tag badge mt-2 mr-1">
-                            <div class="row no-gutters align-items-center">
-                                <div class="tag-color mr-2" style="background-color: #388E3C"></div>
-                                <div class="tag-label">Department: <strong>{{ $data->dv_dept_code }}</strong></div>
+                <div class="todo-item pr-2 py-4 ripple row no-gutters flex-wrap flex-sm-nowrap align-items-center" 
+                    style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc" : ''!!}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
+                    <div class="info col px-4">
+                        <div class="title">
+                            {{ $data->dv_payee }}
+                        </div>
+                        <div class="notes mt-1">
+                            <span style="margin-top:-10px;">DV No: <strong>{!! $data->dv_no == null ? '<span class="text-danger">Not Set</span>' : $data->dv_no !!}</strong></span>
+                            <br>
+                            <span style="margin-top:-10px;">DV No: <strong>{!! str_limit(strip_tags($data->dv_explanation),75) !!}</strong></span>
+                        </div>
+                        <div class="tags">
+                            <div class="tag badge mt-2 mr-1">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="tag-color mr-2" style="background-color: #388E3C"></div>
+                                    <div class="tag-label">Department: <strong>{{ $data->dv_dept_code }}</strong></div>
+                                </div>
+                            </div>
+                            <div class="tag badge mt-2 mr-1">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="tag-color mr-2" style="background-color: #9C27B0"></div>
+                                    <div class="tag-label">Project Code: <strong>{{ $data->dv_proj_code }}</strong></div>
+                                </div>
+                            </div>
+                            <div class="tag badge mt-2 mr-1">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="tag-color mr-2" style="background-color: #FF9800"></div>
+                                    <div class="tag-label">Fund Source: <strong>{{ $data->dv_fund_source }}</strong></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="tag badge mt-2 mr-1">
-                            <div class="row no-gutters align-items-center">
-                                <div class="tag-color mr-2" style="background-color: #9C27B0"></div>
-                                <div class="tag-label">Project Code: <strong>{{ $data->dv_proj_code }}</strong></div>
-                            </div>
-                        </div>
-                        <div class="tag badge mt-2 mr-1">
-                            <div class="row no-gutters align-items-center">
-                                <div class="tag-color mr-2" style="background-color: #FF9800"></div>
-                                <div class="tag-label">Fund Source: <strong>{{ $data->dv_fund_source }}</strong></div>
-                            </div>
-                        </div>
                     </div>
-                </div>
 
-                <div class="buttons col-12 col-sm-auto d-flex align-items-center justify-content-end" style="margin-right:20px;">
-                    <span style="font-size:16px;">{{ Carbon::parse($data->created_at)->diffForHumans() }}</span>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    <a href="#" class="btn btn-fab btn-sm btn-info" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">
-                        <i class="icon-attachment s-4"></i>
-                    </a>
-                    &nbsp;
-                    <a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-success-600 text-auto">
-                        <i class="icon-printer s-4"></i>
-                    </a> 
+                    <div class="buttons col-12 col-sm-auto d-flex align-items-center justify-content-end" style="margin-right:20px;">
+                        <span style="font-size:16px;">{{ Carbon::parse($data->created_at)->diffForHumans() }}</span>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <a href="#" class="btn btn-fab btn-sm btn-info" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">
+                            <i class="icon-attachment s-4"></i>
+                        </a>
+                        &nbsp;
+                        <a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-success-600 text-auto">
+                            <i class="icon-printer s-4"></i>
+                        </a> 
+                    </div>
                 </div>
-            </div>
         @endforeach
 
         @if($dvIncomings->isEmpty())
@@ -230,6 +239,10 @@
 
 @section('scripts')
     
+    @if(Session::has('set'))
+       {!! JSHelper::Snackbar(Session::get('set')) !!}
+    @endif
+
     <script>
         $(document).on("click", "#dv_no_button", function () {
             var slug = $(this).data('slug');

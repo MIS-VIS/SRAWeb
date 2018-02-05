@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use App\Libraries\Statics\DVUtil;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
@@ -11,11 +12,12 @@ use Auth;
 class DV extends Model{
 
 
+
     protected $table = 'dv';
+    protected $dates = ['created_at', 'updated_at'];
     public $timestamps = false;
     use Sluggable;
-    protected $dates = ['created_at', 'updated_at'];
-
+    
 
 
     protected $fillable = [
@@ -85,102 +87,86 @@ class DV extends Model{
 
 
 
-    public function searchSanitize( $string = null ) {
-        $string = preg_replace('/[^ \w]+/', '', $string);
-        $string = str_replace(" ", "%", $string);
-        $string = htmlspecialchars($string);
-        $string = strip_tags($string);
-        return $string;
-    }
+    public function dates(Request $request){
 
+        return [
+            'fromDate' => Carbon::parse(DVUtil::filterSanitize($request->fromDate))->format('Y-m-d'), 
+            'toDate' => Carbon::parse(DVUtil::filterSanitize($request->toDate))->format('Y-m-d h:i:s')
+        ];
 
-
-
-    public function filterSanitize( $string = null ) {
-        $char = array("'", " ");
-        $string = str_replace($char, "", $string);
-        $string = htmlspecialchars($string);
-        $string = strip_tags($string);
-        return $string;
     }
 
 
 
 
     public function indexFilter(Request $request, $paginate){
+
         $dv = $this->newQuery();
-        $search = $this->searchSanitize($request->search);
-        $fund_source = $this->filterSanitize($request->fund_source);
-        $station = $this->filterSanitize($request->station);
-        $department = $this->filterSanitize($request->department);
-        $unit = $this->filterSanitize($request->unit);
-        $project_code = $this->filterSanitize($request->project_code);
-        $fromDate = Carbon::parse($this->filterSanitize($request->fromDate))->format('Y-m-d');
-        $toDate = Carbon::parse($this->filterSanitize($request->toDate))->format('Y-m-d h:i:s');
-            
+        $dates = $this->dates($request);
+        $search = $request->search;
+        
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
-                            $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
-                       });
+                $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
+            });
         }
 
-        if(!$fund_source == null){
-            $dv->where('dv_fund_source', '=', $fund_source);
+        if(!$request->fund_source == null){
+            $dv->where('dv_fund_source', '=', $request->fund_source);
         }
 
-        if(!$station == null){
-            $dv->where('dv_project_id', '=', $station);
+        if(!$request->station == null){
+            $dv->where('dv_project_id', '=', $request->station);
         }
 
-        if(!$department == null){
-            $dv->where('dv_dept_code', '=', $department);
+        if(!$request->department == null){
+            $dv->where('dv_dept_code', '=', $request->department);
         }
 
-        if(!$unit == null){
-            $dv->where('dv_unit_code', '=', $unit);
+        if(!$request->unit == null){
+            $dv->where('dv_unit_code', '=', $request->unit);
         }
 
-        if(!$project_code == null){
-            $dv->where('dv_proj_code', '=', $project_code);
+        if(!$request->project_code == null){
+            $dv->where('dv_proj_code', '=', $request->project_code);
         }
 
-        if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('created_at', [$fromDate, $toDate]);
+        if(!$dates['fromDate'] == null || !$dates['toDate'] == null){
+            $dv->whereBetween('created_at', [$dates['fromDate'], $dates['toDate']]);
         }
 
         return $dv->orderBy('created_at', 'DESC')
                   ->paginate($paginate);
+
     }
+
 
 
 
 
     public function userIndexFilter(Request $request, $paginate){
         $dv = $this->newQuery();
-        $search = $this->searchSanitize($request->search);
-        $project_code = $this->filterSanitize($request->project_code);
-        $fund_source = $this->filterSanitize($request->fund_source);
-        $fromDate = Carbon::parse($this->filterSanitize($request->fromDate))->format('Y-m-d');
-        $toDate = Carbon::parse($this->filterSanitize($request->toDate))->format('Y-m-d h:i:s');
-        if(!$search == null){
-            $dv->where('doc_no', 'LIKE', '%'. $search .'%');   
+        $dates = $this->dates($request);
+
+        if(!$request->search == null){
+            $dv->where('doc_no', 'LIKE', '%'. $request->search .'%');   
         }
 
-        if(!$project_code == null){
-            $dv->where('dv_proj_code', '=', $project_code);
+        if(!$request->project_code == null){
+            $dv->where('dv_proj_code', '=', $request->project_code);
         }
 
-        if(!$fund_source == null){
-            $dv->where('dv_fund_source', '=', $fund_source);
+        if(!$request->fund_source == null){
+            $dv->where('dv_fund_source', '=', $request->fund_source);
         }
 
-        if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('created_at', [$fromDate, $toDate]);
+        if(!$dates['fromDate'] == null || !$dates['toDate'] == null){
+            $dv->whereBetween('created_at', [$dates['fromDate'], $dates['toDate']]);
         }
 
         return $dv->where('user_id', Auth::user()->user_id)
@@ -191,31 +177,31 @@ class DV extends Model{
 
 
 
+
     public function incomingsFilter(Request $request, $pagination){
         $dv = $this->newQuery();
-        $department = $this->filterSanitize($request->department);
-        $timeNow = Carbon::now()->format('Y-m-d');
-        $search = $this->searchSanitize($request->search);
+        $dates = $this->dates($request);
+        $search = $request->search;
 
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
-                            $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
-                               ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
-                       });
+                $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
+                   ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
+            });
         }
 
-        if(!$department == null){
-            $dv->where('dv_dept_code', '=', $department);
+        if(!$request->department == null){
+            $dv->where('dv_dept_code', '=', $request->department);
         }
 
-        return $dv->whereDate('created_at', $timeNow)
+        return $dv->whereDate('created_at', Carbon::now()->format('Y-m-d'))
                   ->orderBy('created_at', 'DESC')
                   ->paginate($pagination)
-                  ->appends(['department' => $department]);
+                  ->appends(['department' => $request->department]);
         
     }
 
@@ -256,7 +242,7 @@ class DV extends Model{
 
 
     public static function getCreatedDefaultsAttribute(){
-        return array(
+        return [
             'doc_no' => 'DV' . rand(1000000, 9999999),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -265,7 +251,7 @@ class DV extends Model{
             'ip_created' => request()->ip(), 
             'ip_updated' => request()->ip(), 
             'user_id' => Auth::user()->user_id,
-        );
+        ];
     }
 
 

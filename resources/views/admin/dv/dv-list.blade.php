@@ -168,7 +168,8 @@
 
                     @foreach($dvList as $data)
 
-                    <div class="thread ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord">
+                    <div class="thread ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord" 
+                    style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc" : '' !!}">
                         <div class="info col px-6">
                             <div class="name row no-gutters align-items-center">
                                 <div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>

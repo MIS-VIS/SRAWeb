@@ -35,6 +35,7 @@ class DVController extends Controller{
         $dv = $this->dv->hunt($request->slug);
         if(count($dv) == 1){
             $dv->update(['dv_no' => $request->dv_no] + $this->dv->updatedDefaults);
+            Session::flash('slug', $dv->slug);
             Session::flash('set', 'DV No. Successfully Set !');
             return redirect()->back();
         }
