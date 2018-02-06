@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
-use App\Departments as Dept;
-use App\BurProjects as Bp;
-use App\Employees as Emp;
+use App\Departments;
+use App\BurProjects;
+use App\Employees;
 
 class AjaxController extends Controller{
 
 
-    public function dvAddUnitDropdown(Request $request, $id){
+    public function dvAddUnitDropdown(Request $request, $id, Departments $departments){
 	    if($request->Ajax()){
-	    	$dept = Dept::select('dept_unit')->where('dept_id', $id)->get();
+	    	$dept = $departments->select('dept_unit')->where('dept_id', $id)->get();
 	    	return json_encode($dept);
 	    }
 	    return abort(403);
@@ -22,9 +20,9 @@ class AjaxController extends Controller{
 
 
 
-    public function dvAddAccountCodeDropdown(Request $request, $id){
+    public function dvAddAccountCodeDropdown(Request $request, $id, BurProjects $burProjects){
     	if($request->Ajax()){
-	    	$acct_code = Bp::select('acct_code')->where('dept_id', $id)->get();
+	    	$acct_code = $burProjects->select('acct_code')->where('dept_id', $id)->get();
 	    	return json_encode($acct_code);
 	    }
 	    return abort(403);
@@ -32,9 +30,9 @@ class AjaxController extends Controller{
 
 
 
-	public function dvAddEmpPosText(Request $request, $id){
+	public function dvAddEmpPosText(Request $request, $id, Employees $employees){
     	if($request->Ajax()){
-	    	$cert_pos = Emp::select('position')->where('emp_name', $id)->get();
+	    	$cert_pos = $employees->select('position')->where('emp_name', $id)->get();
 	    	return json_encode($cert_pos);
 	    }
 	    return abort(403);

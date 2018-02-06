@@ -17,8 +17,6 @@ class DvFilterRequest extends FormRequest{
 
     public function rules(){
 
-        $this->sanitize();
-
         return [
             'search'=>'string|nullable',
             'fund_source'=>'string|nullable',
@@ -31,6 +29,7 @@ class DvFilterRequest extends FormRequest{
         ];
 
     }
+
 
 
 
@@ -51,41 +50,7 @@ class DvFilterRequest extends FormRequest{
     }
 
 
-    
 
-    public function sanitize(){
-
-        $attributes = $this->all();
-
-        if(array_key_exists('search', $attributes)){
-            $attributes['search'] = DVUtil::searchSanitize($attributes['search']);
-        }
-
-        if(array_key_exists('fund_source', $attributes)){
-            $attributes['fund_source'] = DVUtil::filterSanitize($attributes['fund_source']);
-        }
-
-        if(array_key_exists('station', $attributes)){
-            $attributes['station'] = DVUtil::filterSanitize($attributes['station']);
-        }
-
-        if(array_key_exists('department', $attributes)){
-            $attributes['department'] = DVUtil::filterSanitize($attributes['department']);
-        }
-
-        if(array_key_exists('unit', $attributes)){
-            $attributes['unit'] = DVUtil::filterSanitize($attributes['unit']);
-        }
-
-        if(array_key_exists('project_code', $attributes)){
-            $attributes['project_code'] = DVUtil::filterSanitize($attributes['project_code']);
-        }
-
-        $this->replace($attributes); 
-    }
-
-
-    
 
 
 }

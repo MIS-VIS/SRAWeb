@@ -31,19 +31,6 @@ class DVController extends Controller{
 
 
 
-    public function setDvNo(DvSetDvNoRequest $request){
-        $dv = $this->dv->hunt($request->slug);
-        if(count($dv) == 1){
-            $dv->update(['dv_no' => $request->dv_no] + $this->dv->updatedDefaults);
-            Session::flash('slug', $dv->slug);
-            Session::flash('set', 'DV No. Successfully Set !');
-            return redirect()->back();
-        }
-        return abort(404);
-    }
-
-
-
     public function userIndex(DvFilterRequest $request){
         $dvUserList = $this->dv->userIndexFilter($request, 10);
         Input::flash();
@@ -56,6 +43,19 @@ class DVController extends Controller{
         $dvIncomings = $this->dv->incomingsFilter($request ,10);
         Input::flash();
         return view('admin.dv.dv-incomings', compact('dvIncomings'));
+    }
+
+
+
+    public function setDvNo(DvSetDvNoRequest $request){
+        $dv = $this->dv->hunt($request->slug);
+        if(count($dv) == 1){
+            $dv->update(['dv_no' => $request->dv_no] + $this->dv->updatedDefaults);
+            Session::flash('slug', $dv->slug);
+            Session::flash('set', 'DV No. Successfully Set !');
+            return redirect()->back();
+        }
+        return abort(404);
     }
 
 
@@ -113,7 +113,7 @@ class DVController extends Controller{
         return abort(404);
     }
 
-    
+
 
 
     public function destroy($slug){

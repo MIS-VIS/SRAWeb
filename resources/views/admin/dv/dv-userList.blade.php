@@ -147,6 +147,12 @@
 					                            </div>
 					                        </th>
 
+                                            <th>
+                                                <div class="table-header">
+                                                    <span class="column-title">DV No.</span>
+                                                </div>
+                                            </th>
+
 					                        <th>
 					                            <div class="table-header">
 					                                <span class="column-title">Explanation</span>
@@ -156,12 +162,6 @@
 					                        <th>
 					                            <div class="table-header">
 					                                <span class="column-title">Project Code</span>
-					                            </div>
-					                        </th>
-
-					                        <th>
-					                            <div class="table-header">
-					                                <span class="column-title">Status</span>
 					                            </div>
 					                        </th>
 
@@ -183,9 +183,9 @@
 					                	@foreach($dvUserList as $data)
 					                        <tr>
 					                        	<td>{!! $data->doc_no !!}</td>
+                                                <td>{!! $data->dv_no == '' ? '<span class="badge badge-danger">Not Set</span></td>' : $data->dv_no !!}
 					                            <td>{!! str_limit(strip_tags($data->dv_explanation),50) !!}</td>
 					                            <td>{!! $data->dv_proj_code !!}</td>
-					                            <td><span class="badge badge-success">Pending</span></td>
 					                            <td>{{ Carbon::parse($data->created_at)->format('M d, Y') }}</td>
 					                            <td>
 					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-success-600 text-auto">

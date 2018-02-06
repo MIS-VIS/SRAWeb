@@ -142,5 +142,11 @@
     {!! JSHelper::RichText('dv_explanation') !!}
     {!! JSHelper::SelectSearch('dv_certified_by') !!}
     {!! JSHelper::SelectSearch('dv_approved_by') !!}
+    {!! JSHelper::SelectSearch('dv_dept_code') !!}
+    {!! JSHelper::SelectSearch('dv_unit_code') !!}
+    {!! JSHelper::SelectSearch('dv_proj_code') !!}
+    {!! JSHelper::SelectNormal('dv_project_id') !!}
+    {!! JSHelper::SelectNormal('dv_fund_source') !!}
+    {!! JSHelper::SelectNormal('dv_mop') !!}
     {!! JSHelper::PriceInput('dv_amount') !!}
 @endsection

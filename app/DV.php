@@ -12,12 +12,11 @@ use Auth;
 class DV extends Model{
 
 
-
     protected $table = 'dv';
     protected $dates = ['created_at', 'updated_at'];
     public $timestamps = false;
     use Sluggable;
-    
+
 
 
     protected $fillable = [
@@ -50,6 +49,7 @@ class DV extends Model{
         'ip_updated',
         'user_id'
     ];  
+
 
 
 
@@ -87,11 +87,20 @@ class DV extends Model{
 
 
 
-    public function dates(Request $request){
+
+    public function filtersRequest(Request $request){
 
         return [
+
+            'search' => DVUtil::searchSanitize($request->search),
+            'fund_source' => DVUtil::filterSanitize($request->fund_source),
+            'station' => DVUtil::filterSanitize($request->station),
+            'department' => DVUtil::filterSanitize($request->department),
+            'unit' => DVUtil::filterSanitize($request->unit),
+            'project_code' => DVUtil::filterSanitize($request->project_code),
             'fromDate' => Carbon::parse(DVUtil::filterSanitize($request->fromDate))->format('Y-m-d'), 
             'toDate' => Carbon::parse(DVUtil::filterSanitize($request->toDate))->format('Y-m-d h:i:s')
+
         ];
 
     }
@@ -99,11 +108,12 @@ class DV extends Model{
 
 
 
+
     public function indexFilter(Request $request, $paginate){
 
         $dv = $this->newQuery();
-        $dates = $this->dates($request);
-        $search = $request->search;
+        $filter = $this->filtersRequest($request);
+        $search = $filter['search'];
         
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
@@ -116,32 +126,33 @@ class DV extends Model{
             });
         }
 
-        if(!$request->fund_source == null){
-            $dv->where('dv_fund_source', '=', $request->fund_source);
+        if(!$filter['fund_source'] == null){
+            $dv->where('dv_fund_source', '=', $filter['fund_source']);
         }
 
-        if(!$request->station == null){
-            $dv->where('dv_project_id', '=', $request->station);
+        if(!$filter['station'] == null){
+            $dv->where('dv_project_id', '=', $filter['station']);
         }
 
-        if(!$request->department == null){
-            $dv->where('dv_dept_code', '=', $request->department);
+        if(!$filter['department'] == null){
+            $dv->where('dv_dept_code', '=', $filter['department']);
         }
 
-        if(!$request->unit == null){
-            $dv->where('dv_unit_code', '=', $request->unit);
+        if(!$filter['unit'] == null){
+            $dv->where('dv_unit_code', '=', $filter['unit']);
         }
 
-        if(!$request->project_code == null){
-            $dv->where('dv_proj_code', '=', $request->project_code);
+        if(!$filter['project_code'] == null){
+            $dv->where('dv_proj_code', '=', $filter['project_code']);
+        }
+        
+        if(!$request->fromDate == null || !$request->toDate == null){
+            $dv->whereBetween('created_at', [$filter['fromDate'], $filter['toDate']]);
         }
 
-        if(!$dates['fromDate'] == null || !$dates['toDate'] == null){
-            $dv->whereBetween('created_at', [$dates['fromDate'], $dates['toDate']]);
-        }
 
         return $dv->orderBy('created_at', 'DESC')
-                  ->paginate($paginate);
+                  ->paginate($paginate); 
 
     }
 
@@ -150,28 +161,30 @@ class DV extends Model{
 
 
     public function userIndexFilter(Request $request, $paginate){
+
         $dv = $this->newQuery();
-        $dates = $this->dates($request);
+        $filter = $this->filtersRequest($request);
 
-        if(!$request->search == null){
-            $dv->where('doc_no', 'LIKE', '%'. $request->search .'%');   
+        if(!$filter['search'] == null){
+            $dv->where('doc_no', 'LIKE', '%'. $filter['search'] .'%');   
         }
 
-        if(!$request->project_code == null){
-            $dv->where('dv_proj_code', '=', $request->project_code);
+        if(!$filter['project_code'] == null){
+            $dv->where('dv_proj_code', '=', $filter['project_code']);
         }
 
-        if(!$request->fund_source == null){
-            $dv->where('dv_fund_source', '=', $request->fund_source);
+        if(!$filter['fund_source'] == null){
+            $dv->where('dv_fund_source', '=', $filter['fund_source']);
         }
 
-        if(!$dates['fromDate'] == null || !$dates['toDate'] == null){
-            $dv->whereBetween('created_at', [$dates['fromDate'], $dates['toDate']]);
+        if(!$request->fromDate == null || !$request->toDate == null){
+            $dv->whereBetween('created_at', [$filter['fromDate'], $filter['toDate']]);
         }
 
         return $dv->where('user_id', Auth::user()->user_id)
                   ->orderBy('created_at', 'DESC')
                   ->paginate($paginate);
+
     }
 
 
@@ -180,9 +193,8 @@ class DV extends Model{
 
     public function incomingsFilter(Request $request, $pagination){
         $dv = $this->newQuery();
-        $dates = $this->dates($request);
-        $search = $request->search;
-
+        $filter = $this->filtersRequest($request);
+        $search = $filter['search'];
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
                 $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
@@ -194,16 +206,17 @@ class DV extends Model{
             });
         }
 
-        if(!$request->department == null){
-            $dv->where('dv_dept_code', '=', $request->department);
+        if(!$filter['department'] == null){
+            $dv->where('dv_dept_code', '=', $filter['department']);
         }
 
         return $dv->whereDate('created_at', Carbon::now()->format('Y-m-d'))
                   ->orderBy('created_at', 'DESC')
                   ->paginate($pagination)
-                  ->appends(['department' => $request->department]);
+                  ->appends(['department' => $request->department]);        
         
     }
+
 
 
 
@@ -211,6 +224,7 @@ class DV extends Model{
     public function hunt($slug){
         return $this->where('slug', $slug)->firstOrFail();
     }
+
 
 
 
@@ -226,6 +240,7 @@ class DV extends Model{
 
 
 
+
     public function getHashedSlugAttribute(){
         return md5(microtime());
     }
@@ -237,6 +252,7 @@ class DV extends Model{
     public function getRouteKeyName(){
         return 'slug';
     }
+
 
 
 

@@ -9,6 +9,7 @@ use Session;
 class AdminMiddleware{
 
 
+
     public function handle($request, Closure $next){
         if(Auth::check()){
             if(Auth::user()->is_logged == true){
@@ -21,6 +22,7 @@ class AdminMiddleware{
         Session::flash('check', 'Please log-in to start your session!');
         return redirect('/');
     }
+
 
 
 }

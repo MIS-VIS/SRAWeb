@@ -141,7 +141,7 @@
                         <div class="notes mt-1">
                             <span style="margin-top:-10px;">DV No: <strong>{!! $data->dv_no == null ? '<span class="text-danger">Not Set</span>' : $data->dv_no !!}</strong></span>
                             <br>
-                            <span style="margin-top:-10px;">DV No: <strong>{!! str_limit(strip_tags($data->dv_explanation),75) !!}</strong></span>
+                            <span style="margin-top:-10px;">Explanation: <strong>{!! str_limit(strip_tags($data->dv_explanation),75) !!}</strong></span>
                         </div>
                         <div class="tags">
                             <div class="tag badge mt-2 mr-1">

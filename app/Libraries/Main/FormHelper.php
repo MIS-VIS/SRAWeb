@@ -17,7 +17,7 @@ class FormHelper {
       }
 
         return'<div class="form-group '. $class .'">
-                  <input type="'.$type.'" name="'.$name.'" class="form-control" id="'.$name.'" aria-describedby="'.$name.'" '.$required.'>
+                  <input type="'.$type.'" name="'.$name.'" class="form-control" id="'.$name.'" value="'. $value .'" aria-describedby="'.$name.'" '.$required.'>
                   <label for="'.$name.'" class="col-form-label">'.$label.'</label>
                   <small class="text-danger">'. $errors .'</small>
                </div>';
