@@ -26,7 +26,7 @@ class DVController extends Controller{
     public function index(DvFilterRequest $request){
         $dvList = $this->dv->indexFilter($request, 10);
         Input::flash();
-        return view('admin.dv.dv-list', compact('dvList'));
+        return view('admin.dv.dv-index', compact('dvList'));
     }
 
 
@@ -34,7 +34,7 @@ class DVController extends Controller{
     public function userIndex(DvFilterRequest $request){
         $dvUserList = $this->dv->userIndexFilter($request, 10);
         Input::flash();
-        return view('admin.dv.dv-userList', compact('dvUserList'));
+        return view('admin.dv.dv-userIndex', compact('dvUserList'));
     }
 
 
@@ -61,7 +61,7 @@ class DVController extends Controller{
 
 
     public function create(){
-        return view('admin.dv.dv-add');
+        return view('admin.dv.dv-create');
     }
 
    
@@ -83,7 +83,7 @@ class DVController extends Controller{
     public function show($slug){
         $dv = $this->dv->hunt($slug);
         if(count($dv) == 1){
-            return view('admin.dv.dv-print')->with('dv', $dv);
+            return view('admin.dv.dv-show')->with('dv', $dv);
         } 
         return abort(404);
     }

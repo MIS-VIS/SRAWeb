@@ -88,6 +88,13 @@ class DV extends Model{
 
 
 
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
+
+
+
     public function filtersRequest(Request $request){
 
         return [
@@ -243,14 +250,6 @@ class DV extends Model{
 
     public function getHashedSlugAttribute(){
         return md5(microtime());
-    }
-
-
-
-
-
-    public function getRouteKeyName(){
-        return 'slug';
     }
 
 

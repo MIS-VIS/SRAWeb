@@ -12,6 +12,9 @@ Route::group(['prefix'=>'admin', 'as' => 'admin.' , 'middleware' => 'admin'], fu
 	Route::post('/', 'LoginController@logout')->name('logout');
 	Route::get('/', 'HomeController@index')->name('home');
 
+	//User Routes
+	Route::resource('user', 'UserController');
+
 	// DV Routes
 	Route::get('/dv/incomings', 'DVController@incomings')->name('dv.incomings');
 	Route::get('/dv/userList', 'DVController@userIndex')->name('dv.userIndex');
