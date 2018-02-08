@@ -44,8 +44,7 @@ class DV extends Model{
         'created_at',
         'updated_at',
         'machine_created',
-        'machine_updated',
-        'ip_created',
+        'machine_updated',        'ip_created',
         'ip_updated',
         'user_id'
     ];  
