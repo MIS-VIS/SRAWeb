@@ -13,7 +13,7 @@ class EmployeesComposer{
 
     public function compose($view){
 
-    	$employees = Employees::select('emp_name')->get();
+    	$employees = Employees::select('emp_name','firstname', 'middlename', 'lastname')->get();
         $view->with('employees', $employees);
 
     }

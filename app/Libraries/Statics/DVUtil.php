@@ -50,6 +50,36 @@ class DVUtil {
     }
 
 
+    //Employee Custom Dropdown
+
+    public static function employeeDropdown($class, $name, $label, $id, $array, $var1, $var2, $var3, $var4, $oldValue ,$errors, $required){
+      return  '<div class="form-group '.$class.'">
+                  <label for="'.$name.'" style="padding-bottom: 8.5px; color:#696969;"><strong>'.$label.'</strong></label>
+                  <select class="form-control is-valid" id="'.$id.'" name="'.$name.'" '.$required.'>
+                      <option value="">Select</option>
+                      '. self::employeeOptions($array, $var1, $var2, $var3, $var4, $oldValue) .'
+                  </select>
+                  <small class="text-danger">'. $errors .'</small>
+              </div>';
+    }
+
+
+    public static function employeeOptions($array, $var1, $var2, $var3, $var4, $oldValue){
+      $string = '';
+      foreach($array as $value){
+        $string .= '<option value="'. $value->$var1 .'" '. self::condition($value->var1, $oldValue) .'>'. $value->$var2 .' '. substr($value->$var3, 0, 1) .'. '.$value->$var4.'</option>';
+      }
+      return $string;
+    }
+
+
+    public static function condition($var1, $oldValue){
+        $selected = "selected";
+        $empty = "";
+        return $var1 == $oldValue ? $empty : $selected;
+    }
+
+
 
 
 }

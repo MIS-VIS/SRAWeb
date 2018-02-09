@@ -115,8 +115,8 @@
 								<div class="col-sm-1" style="border-style:solid; border-top-style: none; padding:17px;">
 									<center><span style="font-size:16px; margin-left:-20px;"><strong>Payee:</strong></span></center>
 								</div>
-								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding-top:17px;">
-									<span style="font-size:18px;"><strong>{!! $dv->dv_payee !!}</strong></span>
+								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding-top:2px;">
+									<span style="font-size:16px;"><strong>{!! strtoupper($dv->dv_payee) !!}</strong></span>
 								</div>
 								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none;">
 									<span style="font-size:13px;"><strong>TIN/Employee No.:</strong></span><br>
@@ -157,14 +157,14 @@
 								</div>
 
 
-								<div class="col-sm-9" style="border-style:solid; border-top-style: none; height:31em;">
+								<div class="col-sm-9" style="border-style:solid; border-top-style: none; height:35em;">
 									<div class="row" style="padding-left:10px; padding-top:10px;">
 										<pre style="font-family:Arial; font-size:16px; white-space: pre-wrap; white-space: -moz-pre-wrap;  white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;">{!! $dv->dv_explanation !!}</pre>
 									</div>
 								</div>
-								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none; height:31em;">
+								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none; height:35em;">
 									<div class="row" style="padding-left:10px; padding-top:10px;">
-										<span style="font-size:20px;  position: static; padding-left:60px;"><strong>{!! $dv->dv_amount !!}</strong></span>
+										<span style="font-size:20px;  position: static; padding-left:60px;"><strong>{!! number_format($dv->dv_amount, 2) !!}</strong></span>
 									</div>
 								</div>
 
@@ -181,7 +181,7 @@
 										<span style="border:solid; border-top-style: none; border-left-style: none;"><strong>&nbsp;B&nbsp;</strong></span>
 										<span style="padding-left:10px; padding-top:5px; font-size:16px;"><strong>Approved for Payment</strong></span>
 									</div>
-									<span style="padding-left:250px; font-size:25px;"><strong>{!! $dv->dv_amount !!}</strong></span>
+									<span style="padding-left:250px; font-size:25px;"><strong>{!! number_format($dv->dv_amount, 2) !!}</strong></span>
 								</div>
 
 
@@ -197,16 +197,16 @@
 								</div>
 
 
-								<div class="col-sm-1" style="border-style:solid; border-top-style: none; padding:0px; padding-top:7px; padding-bottom:7px;">
+								<div class="col-sm-1" style="border-style:solid; border-top-style: none; padding:0px; padding-top:5px; padding-bottom:5px;">
 									<span style="font-size:11px; font-weight:bold;">Printed Name:</span>
 								</div>
-								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; padding:0px; margin-top:5px;">
+								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; padding:0px; margin-top:0px;">
 									<center><span style="font-size:17px; font-weight:bold;">{!! $dv->dv_certified_by !!}</span></center>
 								</div>
-								<div class="col-sm-1" style="border-style:solid; border-top-style: none; padding:0px; padding-top:7px; padding-bottom:7px;">
+								<div class="col-sm-1" style="border-style:solid; border-top-style: none; padding:0px; padding-top:5px; padding-bottom:5px;">
 									<span style="font-size:11px; font-weight:bold;">Printed Name:</span>
 								</div>
-								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding:0px; margin-top:5px;">
+								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding:0px; margin-top:0px;">
 									<center><span style="font-size:17px; font-weight:bold;">{!! $dv->dv_approved_by !!}</span></center>
 								</div>
 
@@ -220,7 +220,7 @@
 											<center><span style="font-size:17px;"><strong>{!! $dv->dv_certified_by_position !!}</strong></span></center>
 										</div>
 										<div class="col-sm-12" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; border-bottom-style: none;">
-											<center><span style="font-size:11px; font-weight: bold;">Head, Accounting Unit/Authorized Representative</span></center>
+											<center><span style="font-size:12px; font-weight: bold;">Head, Accounting Unit/Authorized Representative</span></center>
 										</div>
 									</div>
 								</div>
@@ -233,7 +233,7 @@
 											<center><span style="font-size:17px;"><strong>{!! $dv->dv_approved_by_position !!}</strong></span></center>
 										</div>
 										<div class="col-sm-12" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; border-bottom-style: none;">
-											<center><span style="font-size:11px; font-weight: bold;">Agency Head / Authorized Representative</span></center>
+											<center><span style="font-size:12px; font-weight: bold;">Agency Head / Authorized Representative</span></center>
 										</div>
 									</div>
 								</div>
@@ -281,11 +281,11 @@
 
 								<div class="col-sm-9" style="border-style:solid; border-top-style: none;">
 									<div class="row">
+
 										<div class="col-md-1" style="border:solid; padding-bottom:10px; border-left-style: none; border-top-style: none; padding:1px; padding-top:10px; padding-bottom:10px;">
 											<span style="font-size:13px; font-weight: bold;">Signature:</span>
 										</div>
-										<div class="col-md-4" style="border:solid; border-left-style: none; border-top-style: none;">
-										</div>
+										<div class="col-md-4" style="border:solid; border-left-style: none; border-top-style: none;"></div>
 										<div class="col-md-2" style="border:solid; border-left-style: none; border-top-style: none; padding:2px;">
 											<span style="font-size:12px; font-weight: bold;">Date:</span>
 										</div>
@@ -522,7 +522,7 @@
 						</div>
 						<br><br>
 						<center>
-							<button class="btn btn-success fuse-ripple-ready" id="backBtn">
+							<button class="btn btn-success-600 text-auto fuse-ripple-ready" id="backBtn">
 								<span style="color:white;"> <i style="font-size:18px;" class="icon icon-printer"></i> Print</span>
 							</button>
 						</center>

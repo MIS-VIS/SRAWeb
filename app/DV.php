@@ -20,8 +20,9 @@ class DV extends Model{
     protected $fillable = [
         'slug',
         'doc_no',
-        'dv_project_id',
         'dv_no', 
+        'dv_date', 
+        'dv_project_id',
         'dv_fund_source',
         'dv_mop',
         'dv_payee',
@@ -54,8 +55,9 @@ class DV extends Model{
     protected $attributes = [
         'slug' => null ,
         'doc_no' => null,
-        'dv_project_id' => null,
         'dv_no' => null,
+        'dv_date' => null,
+        'dv_project_id' => null,
         'dv_fund_source' => null,
         'dv_mop' => null,
         'dv_payee' => null,
@@ -103,8 +105,8 @@ class DV extends Model{
             'department' => DVUtil::filterSanitize($request->department),
             'unit' => DVUtil::filterSanitize($request->unit),
             'project_code' => DVUtil::filterSanitize($request->project_code),
-            'fromDate' => Carbon::parse(DVUtil::filterSanitize($request->fromDate))->format('Y-m-d 01:00:00'),
-            'toDate' => Carbon::parse(DVUtil::filterSanitize($request->toDate))->format('Y-m-d 24:00:00')
+            'fromDate' => Carbon::parse(DVUtil::filterSanitize($request->fromDate))->format('Y-m-d'),
+            'toDate' => Carbon::parse(DVUtil::filterSanitize($request->toDate))->format('Y-m-d')
 
         ];
 
@@ -119,7 +121,7 @@ class DV extends Model{
         $dv = $this->newQuery();
         $filter = $this->filtersRequest($request);
         $search = $filter['search'];
-        dd(Carbon::now()->format('Y-m-d 24:00:00'));
+
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
                 $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
@@ -152,7 +154,7 @@ class DV extends Model{
         }
         
         if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('created_at', [$filter['fromDate'], $filter['toDate']]);
+            $dv->whereBetween('dv_date', [$filter['fromDate'], $filter['toDate']]);
         }
 
 
@@ -183,7 +185,7 @@ class DV extends Model{
         }
 
         if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('created_at', [$filter['fromDate'], $filter['toDate']]);
+            $dv->whereBetween('dv_date', [$filter['fromDate'], $filter['toDate']]);
         }
 
         return $dv->where('user_id', Auth::user()->user_id)
@@ -215,7 +217,7 @@ class DV extends Model{
             $dv->where('dv_dept_code', '=', $filter['department']);
         }
 
-        return $dv->whereDate('created_at', Carbon::now()->format('Y-m-d'))
+        return $dv->whereDate('dv_date', Carbon::now()->format('Y-m-d'))
                   ->orderBy('created_at', 'DESC')
                   ->paginate($pagination)
                   ->appends(['department' => $request->department]);        
@@ -257,6 +259,7 @@ class DV extends Model{
     public static function getCreatedDefaultsAttribute(){
         return [
             'doc_no' => 'DV' . rand(1000000, 9999999),
+            'dv_date' => Carbon::now()->format('Y-m-d'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'machine_created' => gethostname(),
@@ -280,6 +283,11 @@ class DV extends Model{
     }
 
 
+
+
+    public static function mergeAmount(Request $request){
+        return $request->merge( [ 'dv_amount' => str_replace(',', '', $request['dv_amount']) ] );
+    }
 
 
 

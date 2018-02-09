@@ -152,7 +152,7 @@ class JSHelper {
       			$(document).ready(function() {
 	    			$("#'. $id .'").priceFormat({
 		                prefix: "",
-		                thousandsSeparator: "",
+		                thousandsSeparator: ",",
 		                clearOnEmpty: true,
 		                allowNegative: true
             		});

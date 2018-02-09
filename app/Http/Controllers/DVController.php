@@ -69,6 +69,7 @@ class DVController extends Controller{
 
     public function store(DVFormRequest $request){
         if($request){
+            $this->dv->mergeAmount($request);
             $dv = $this->dv->create($request->all() + $this->dv->createdDefaults);
             Session::flash('slug', $dv->slug);
             Session::flash('created', 'Your data has been successfully saved!');
@@ -105,6 +106,7 @@ class DVController extends Controller{
     public function update(DVFormRequest $request, $slug){
         $dv = $this->dv->hunt($slug);
         if(count($dv) == 1){
+            $this->dv->mergeAmount($request);
             $dv->update($request->all() + $this->dv->updatedDefaults);
             Session::flash('slug', $dv->slug);
             Session::flash('updated', 'Your data has been successfully updated!');
