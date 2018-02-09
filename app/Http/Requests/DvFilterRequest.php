@@ -43,8 +43,6 @@ class DvFilterRequest extends FormRequest{
             'department.string'  => 'Invalid Input! You must enter a valid value',
             'unit.string'  => 'Invalid Input! You must enter a valid value',
             'project_code.string'  => 'Invalid Input! You must enter a valid value',
-            'fromDate.date_format'  => 'Invalid Input! You must enter a valid value',
-            'toDate.date_format'  => 'Invalid Input! You must enter a valid value',
         ];
 
     }

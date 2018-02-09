@@ -105,8 +105,8 @@ class DV extends Model{
             'department' => DVUtil::filterSanitize($request->department),
             'unit' => DVUtil::filterSanitize($request->unit),
             'project_code' => DVUtil::filterSanitize($request->project_code),
-            'fromDate' => Carbon::parse(DVUtil::filterSanitize($request->fromDate))->format('Y-m-d'), 
-            'toDate' => Carbon::parse(DVUtil::filterSanitize($request->toDate))->format('Y-m-d h:i:s')
+            'fromDate' => Carbon::parse(DVUtil::filterSanitize($request->fromDate))->format('Y-m-d 01:00:00'),
+            'toDate' => Carbon::parse(DVUtil::filterSanitize($request->toDate))->format('Y-m-d 24:00:00')
 
         ];
 
@@ -121,7 +121,7 @@ class DV extends Model{
         $dv = $this->newQuery();
         $filter = $this->filtersRequest($request);
         $search = $filter['search'];
-        
+        dd(Carbon::now()->format('Y-m-d 24:00:00'));
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
                 $dv->where('dv_payee', 'LIKE', '%'. $search .'%')

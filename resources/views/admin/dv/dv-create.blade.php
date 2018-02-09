@@ -26,97 +26,119 @@
                 {!! Form::open(['route' => 'admin.dv.store', 'method' => 'POST', 'class' => 'row', 'id' => 'dvForm']) !!}
 
     				{!! FormHelper::padding('col-md-12') !!}
+                    <div class="col-md-12 px-8">
+                        <div class="card">
+                            <div class="card-body px-8">
+                                <div class="row">
+                                {!! FormHelper::dropdownStatic(
+                                    'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', DVUtil::selectProjectId(), old('dv_project_id'), $errors->first('dv_project_id'), 'required'
+                                ) !!}
 
-                    {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', SelectHelper::selectProjectId(), old('dv_project_id'), $errors->first('dv_project_id'), 'required'
-                    ) !!}
+                                {!! FormHelper::dropdownStatic(
+                                    'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', DVUtil::selectFundSource(), old('dv_fund_source'), $errors->first('dv_fund_source'), 'required'
+                                ) !!}
 
-                    {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', SelectHelper::selectFundSource(), old('dv_fund_source'), $errors->first('dv_fund_source'), 'required'
-                    ) !!}
-
-                    {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_mop', 'Mode of Payment:', 'dv_mop', SelectHelper::selectMOP(), old('dv_mop'), $errors->first('dv_mop'), ''
-                    ) !!}
-
-                    {!! FormHelper::textBox(
-                        'up', 'col-md-6', 'dv_payee', 'Payee:', 'text', 'dv_payee', old('dv_payee'), 'required', $errors->first('dv_payee')
-                    ) !!}
-
-                    {!! FormHelper::textBox(
-                        'up', 'col-md-3', 'dv_tin', 'Tin/Employee No:', 'text', 'dv_tin', old('dv_tin'), 'required', $errors->first('dv_tin')
-                    ) !!}
-
-                    {!! FormHelper::textBox(
-                        'up', 'col-md-3', 'dv_bur_no', 'BUR No:', 'text', 'dv_bur_no', old('dv_bur_no'), '', $errors->first('dv_bur_no')
-                    ) !!}
-
-                    {!! FormHelper::textBox(
-                        'up', 'col-md-6', 'dv_address', 'Address:', 'text', 'dv_address', old('dv_address'), 'required', $errors->first('dv_address')
-                    ) !!}
-
-                    {!! FormHelper::dropdownDynamic(
-                        'col-md-2', 'dv_dept_code', 'Department:', 'dv_dept_code', $burProjectsDeptId, 'dept_id', 'dept_id', old('dv_dept_code') , $errors->first('dv_dept_code'), 'required'
-                    ) !!}
-
-                    {!! FormHelper::dropdownDynamic(
-                        'col-md-2', 'dv_unit_code', 'Unit:', 'dv_unit_code', $departmentsDeptUnit, 'dept_unit', 'dept_unit', old('dv_unit_code') , $errors->first('dv_unit_code'), ''
-                    ) !!}
-
-                    {!! FormHelper::dropdownDynamic(
-                        'col-md-2','dv_proj_code', 'Account Code:', 'dv_proj_code', $burProjectsAcctCode, 'acct_code', 'acct_code', old('dv_proj_code'), $errors->first('dv_proj_code'), 'required'
-                    ) !!}
-                    <div class="col-md-12">
-                        <div class="alert alert-warning fade show" role="alert">
-                            Note: Please put your computations in the <strong>Explanation Field</strong>, and the Total/Net of your computation in the <strong>Amount Field.</strong>
+                                {!! FormHelper::dropdownStatic(
+                                    'col-md-4', 'dv_mop', 'Mode of Payment:', 'dv_mop', DVUtil::selectMOP(), old('dv_mop'), $errors->first('dv_mop'), ''
+                                ) !!}
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-md-12 px-8 pt-10">
+                        <div class="card">
+                            <div class="card-body px-8 pt-6">
+                                <div class="row">
+
+                                {!! FormHelper::textBox(
+                                    'up', 'col-md-6', 'dv_payee', 'Payee:', 'text', 'dv_payee', old('dv_payee'), 'required', $errors->first('dv_payee')
+                                ) !!}
+
+                                {!! FormHelper::textBox(
+                                    'up', 'col-md-3', 'dv_tin', 'Tin/Employee No:', 'text', 'dv_tin', old('dv_tin'), 'required', $errors->first('dv_tin')
+                                ) !!}
+
+                                {!! FormHelper::textBox(
+                                    'up', 'col-md-3', 'dv_bur_no', 'BUR No:', 'text', 'dv_bur_no', old('dv_bur_no'), '', $errors->first('dv_bur_no')
+                                ) !!}
+
+                                {!! FormHelper::textBox(
+                                    'up', 'col-md-6', 'dv_address', 'Address:', 'text', 'dv_address', old('dv_address'), 'required', $errors->first('dv_address')
+                                ) !!}
+
+                                {!! FormHelper::dropdownDynamic(
+                                    'col-md-2', 'dv_dept_code', 'Department:', 'dv_dept_code', $burProjectsDeptId, 'dept_id', 'dept_id', old('dv_dept_code') , $errors->first('dv_dept_code'), 'required'
+                                ) !!}
+
+                                {!! FormHelper::dropdownDynamic(
+                                    'col-md-2', 'dv_unit_code', 'Unit:', 'dv_unit_code', $departmentsDeptUnit, 'dept_unit', 'dept_unit', old('dv_unit_code') , $errors->first('dv_unit_code'), ''
+                                ) !!}
+
+                                {!! FormHelper::dropdownDynamic(
+                                    'col-md-2','dv_proj_code', 'Account Code:', 'dv_proj_code', $burProjectsAcctCode, 'acct_code', 'acct_code', old('dv_proj_code'), $errors->first('dv_proj_code'), 'required'
+                                ) !!}
+
+
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning fade show" role="alert">
+                                        Note: Please put your computations in the <strong>Explanation Field</strong>, and the Total/Net of your computation in the <strong>Amount Field.</strong>
+                                    </div>
+                                </div>
                     
 
-                    {!! FormHelper::textArea(
-                        'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', old('dv_explanation'), $errors->first('dv_explanation'), 'required', '30'
-                    ) !!}
+                                {!! FormHelper::textArea(
+                                    'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', old('dv_explanation'), $errors->first('dv_explanation'), 'required', '30'
+                                ) !!}
 
-                    {!! FormHelper::textBox(
-                        'up', 'col-md-3', 'dv_amount', 'Amount:', 'text', 'dv_amount', old('dv_amount'), 'required', $errors->first('dv_amount')
-                    ) !!}
+                                {!! FormHelper::textBox(
+                                    'up', 'col-md-3', 'dv_amount', 'Amount:', 'text', 'dv_amount', old('dv_amount'), 'required', $errors->first('dv_amount')
+                                ) !!}
 
-                    <div class="col-md-6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 px-8 pt-10">
                         <div class="card">
                             <div class="card-body">
                             <h4 class="card-title">Certified</h4>
+                                <div class="row">
+                                    {!! FormHelper::dropdownDynamic(
+                                        'col-md-12', 'dv_certified_by', 'Name:', 'dv_certified_by', $employees, 'emp_name', 'emp_name', old('dv_certified_by'), $errors->first('dv_certified_by'), 'required'
+                                    ) !!} 
 
-                            {!! FormHelper::dropdownDynamic(
-                                'col-md-12', 'dv_certified_by', 'Name:', 'dv_certified_by', $employees, 'emp_name', 'emp_name', old('dv_certified_by'), $errors->first('dv_certified_by'), 'required'
-                            ) !!} 
-
-                            {!! FormHelper::readOnly(
-                                'col-md-12', 'dv_certified_by_position', 'Position:', '', old('dv_certified_by_position')
-                            ) !!}
-
+                                    {!! FormHelper::readOnly(
+                                        'col-md-12', 'dv_certified_by_position', 'Position:', '', old('dv_certified_by_position')
+                                    ) !!}
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6" id="">
+                    <div class="col-md-6 px-8 pt-10">
                         <div class="card">
                             <div class="card-body">
                             <h4 class="card-title">Approved</h4>
+                                <div class="row">
+                                    {!! FormHelper::dropdownDynamic(
+                                        'col-md-12', 'dv_approved_by', 'Name:', 'dv_approved_by', $employees, 'emp_name', 'emp_name', old('dv_approved_by') , $errors->first('dv_approved_by'), 'required'
+                                    ) !!} 
 
-                            {!! FormHelper::dropdownDynamic(
-                                'col-md-12', 'dv_approved_by', 'Name:', 'dv_approved_by', $employees, 'emp_name', 'emp_name', old('dv_approved_by') , $errors->first('dv_approved_by'), 'required'
-                            ) !!} 
-
-                            {!! FormHelper::readOnly(
-                                'col-md-12', 'dv_approved_by_position', 'Position:', '', old('dv_approved_by_position')
-                            ) !!}
-
+                                    {!! FormHelper::readOnly(
+                                        'col-md-12', 'dv_approved_by_position', 'Position:', '', old('dv_approved_by_position')
+                                    ) !!}
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {!! FormHelper::submitButton('btn-secondary ', 'Save', 'dv-submit') !!}
-
+                    <div class="pl-4">
+                        {!! FormHelper::submitButton('btn-secondary ', 'Save', 'dv-submit') !!}
+                    </div>
+                    
     			{!! Form::close() !!}
                 
             </div>

@@ -141,46 +141,23 @@
 					            <table class="table dataTable">
 					                <thead>
 					                    <tr>
-					                    	<th>
-					                            <div class="table-header">
-					                                <span class="column-title">Doc No.</span>
-					                            </div>
-					                        </th>
 
-                                            <th>
-                                                <div class="table-header">
-                                                    <span class="column-title">DV No.</span>
-                                                </div>
-                                            </th>
+                                            @foreach(DVUtil::userIndexTableHeader() as $data)
 
-					                        <th>
-					                            <div class="table-header">
-					                                <span class="column-title">Explanation</span>
-					                            </div>
-					                        </th>
+    					                    	<th>
+    					                            <div class="table-header">
+    					                                <span class="column-title">{!! $data !!}</span>
+    					                            </div>
+    					                        </th>
 
-					                        <th>
-					                            <div class="table-header">
-					                                <span class="column-title">Project Code</span>
-					                            </div>
-					                        </th>
-
-					                        <th>
-					                            <div class="table-header">
-					                                <span class="column-title">Created</span>
-					                            </div>
-					                        </th>
-
-					                        <th>
-					                            <div class="table-header">
-					                                <span class="column-title">Actions</span>
-					                            </div>
-					                        </th>
+                                            @endforeach
 
 					                    </tr>
 					                </thead>
 					                <tbody>
+
 					                	@foreach($dvUserList as $data)
+
 					                        <tr>
 					                        	<td>{!! $data->doc_no !!}</td>
                                                 <td>{!! $data->dv_no == '' ? '<span class="badge badge-danger">Not Set</span></td>' : $data->dv_no !!}
@@ -188,15 +165,17 @@
 					                            <td>{!! $data->dv_proj_code !!}</td>
 					                            <td>{{ Carbon::parse($data->created_at)->format('M d, Y') }}</td>
 					                            <td>
-					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-success-600 text-auto">
-                                                        <i class="icon-printer s-4"></i>
+					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-light">
+                                                        <i class="icon-printer s-5"></i>
                                                     </a>&nbsp;
-					                                <a href="{{ route('admin.dv.edit', $data->slug) }}" class="btn btn-secondary btn-fab btn-sm">
-					                                    <i class="icon icon-pencil s-4"></i>
+					                                <a href="{{ route('admin.dv.edit', $data->slug) }}" class="btn btn-fab btn-sm bg-light">
+					                                    <i class="icon icon-pencil s-5"></i>
 					                                </a>
 					                            </td>
 					                        </tr>
+
 					                    @endforeach
+
 									</tbody>
 					            </table>
 					        </div>
@@ -218,7 +197,9 @@
 				            <div class="row no-gutters align-items-center">
 				            	<div class="col-lg-6">
 				                	<span>
+
 				                		<strong>Displaying {{ $dvUserList->firstItem() > 0 ? $dvUserList->firstItem() : 0 }} - {{ $dvUserList->lastItem() > 0 ? $dvUserList->lastItem() : 0 }} out of {{ $dvUserList->total()}} Records</strong>
+                                        
 				                	</span>
 	    						</div>
 				                <div class="col-lg-6">
