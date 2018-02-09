@@ -9,7 +9,7 @@ class Departments extends Model{
     
     protected $table = 'department';
     public $timestamps = false;
-    public $sample = 1;
+    public $sample = 2;
 
 
     protected $attributes = [
