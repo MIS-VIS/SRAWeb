@@ -8,6 +8,7 @@ class Departments extends Model{
     
     protected $table = 'department';
     public $timestamps = false;
+    public $sample = false;
 
 
     protected $attributes = [
