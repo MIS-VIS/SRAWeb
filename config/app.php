@@ -241,7 +241,6 @@ return [
         //MAIN
         'FormHelper' => App\Libraries\Main\FormHelper::class,
         'ContentHelper' => App\Libraries\Main\ContentHelper::class,
-        'SelectHelper' => App\Libraries\Main\SelectHelper::class,
         'JSHelper' => App\Libraries\Main\JSHelper::class,
 
         //STATICS
