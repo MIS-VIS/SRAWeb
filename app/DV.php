@@ -11,12 +11,10 @@ use Auth;
 
 class DV extends Model{
 
-
     protected $table = 'dv';
     protected $dates = ['created_at', 'updated_at'];
     public $timestamps = false;
     use Sluggable;
-
 
 
     protected $fillable = [

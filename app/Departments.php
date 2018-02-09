@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Departments extends Model{
     
+    
     protected $table = 'department';
     public $timestamps = false;
+    public $sample = 1;
 
 
     protected $attributes = [
@@ -17,4 +19,5 @@ class Departments extends Model{
         'created_at' => '',
         'created_by' => '',
     ];
+
 }

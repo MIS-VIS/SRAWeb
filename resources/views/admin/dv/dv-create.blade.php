@@ -14,7 +14,7 @@
                         <div class="logo-text">
                             <div class="h4">Create Voucher</div>
                             <div class="">Please fill up the necessary fields.</div>
-                        </div>
+                        </div
                     </div>
                 </div>
             </div>
