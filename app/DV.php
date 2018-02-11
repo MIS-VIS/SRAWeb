@@ -89,24 +89,20 @@ class DV extends Model{
 
 
     public function getRouteKeyName(){
+
         return 'slug';
+
     }
 
 
 
 
-    public function filtersRequest(Request $request){
+    public function dateRequests(Request $request){
 
         return [
 
-            'search' => DVUtil::searchSanitize($request->search),
-            'fund_source' => DVUtil::filterSanitize($request->fund_source),
-            'station' => DVUtil::filterSanitize($request->station),
-            'department' => DVUtil::filterSanitize($request->department),
-            'unit' => DVUtil::filterSanitize($request->unit),
-            'project_code' => DVUtil::filterSanitize($request->project_code),
-            'fromDate' => Carbon::parse(DVUtil::filterSanitize($request->fromDate))->format('Y-m-d'),
-            'toDate' => Carbon::parse(DVUtil::filterSanitize($request->toDate))->format('Y-m-d')
+            'fromDate' => Carbon::parse($request->fromDate)->format('Y-m-d'),
+            'toDate' => Carbon::parse($request->toDate)->format('Y-m-d')
 
         ];
 
@@ -115,12 +111,11 @@ class DV extends Model{
 
 
 
-
     public function indexFilter(Request $request, $paginate){
 
         $dv = $this->newQuery();
-        $filter = $this->filtersRequest($request);
-        $search = $filter['search'];
+        $date = $this->dateRequests($request);
+        $search = $request->search;
 
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
@@ -133,28 +128,28 @@ class DV extends Model{
             });
         }
 
-        if(!$filter['fund_source'] == null){
-            $dv->where('dv_fund_source', '=', $filter['fund_source']);
+        if(!$request->fund_source == null){
+            $dv->where('dv_fund_source', '=', $request->fund_source);
         }
 
-        if(!$filter['station'] == null){
-            $dv->where('dv_project_id', '=', $filter['station']);
+        if(!$request->station == null){
+            $dv->where('dv_project_id', '=', $request->station);
         }
 
-        if(!$filter['department'] == null){
-            $dv->where('dv_dept_code', '=', $filter['department']);
+        if(!$request->department == null){
+            $dv->where('dv_dept_code', '=', $request->department);
         }
 
-        if(!$filter['unit'] == null){
-            $dv->where('dv_unit_code', '=', $filter['unit']);
+        if(!$request->unit == null){
+            $dv->where('dv_unit_code', '=', $request->unit);
         }
 
-        if(!$filter['project_code'] == null){
-            $dv->where('dv_proj_code', '=', $filter['project_code']);
+        if(!$request->project_code == null){
+            $dv->where('dv_proj_code', '=', $request->project_code);
         }
         
         if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('dv_date', [$filter['fromDate'], $filter['toDate']]);
+            $dv->whereBetween('dv_date', [ $date['fromDate'], $date['toDate'] ]);
         }
 
 
@@ -170,22 +165,22 @@ class DV extends Model{
     public function userIndexFilter(Request $request, $paginate){
 
         $dv = $this->newQuery();
-        $filter = $this->filtersRequest($request);
+        $date = $this->dateRequests($request);
 
-        if(!$filter['search'] == null){
-            $dv->where('doc_no', 'LIKE', '%'. $filter['search'] .'%');   
+        if(!$request->search == null){
+            $dv->where('doc_no', 'LIKE', '%'. $request->search .'%');
         }
 
-        if(!$filter['project_code'] == null){
-            $dv->where('dv_proj_code', '=', $filter['project_code']);
+        if(!$request->project_code == null){
+            $dv->where('dv_proj_code', '=', $request->project_code);
         }
 
-        if(!$filter['fund_source'] == null){
-            $dv->where('dv_fund_source', '=', $filter['fund_source']);
+        if(!$request->fund_source == null){
+            $dv->where('dv_fund_source', '=', $request->fund_source);
         }
 
         if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('dv_date', [$filter['fromDate'], $filter['toDate']]);
+            $dv->whereBetween('dv_date', [$date['fromDate'], $date['toDate']]);
         }
 
         return $dv->where('user_id', Auth::user()->user_id)
@@ -199,9 +194,11 @@ class DV extends Model{
 
 
     public function incomingsFilter(Request $request, $pagination){
+
         $dv = $this->newQuery();
-        $filter = $this->filtersRequest($request);
-        $search = $filter['search'];
+        $date = $this->dateRequests($request);
+        $search = $request->search;
+
         if(!$search == null){
             $dv->where(function ($dv) use ($search) {
                 $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
@@ -213,8 +210,8 @@ class DV extends Model{
             });
         }
 
-        if(!$filter['department'] == null){
-            $dv->where('dv_dept_code', '=', $filter['department']);
+        if(!$request->department == null){
+            $dv->where('dv_dept_code', '=', $request->department);
         }
 
         return $dv->whereDate('dv_date', Carbon::now()->format('Y-m-d'))
@@ -229,7 +226,9 @@ class DV extends Model{
 
 
     public function hunt($slug){
+
         return $this->where('slug', $slug)->firstOrFail();
+
     }
 
 
@@ -237,26 +236,28 @@ class DV extends Model{
 
 
     public function sluggable(){
+
         return [
             'slug' => [
                 'source' => [ 'dv_proj_code', 'HashedSlug']
             ]
         ];
+
     }
-
-
 
 
 
     public function getHashedSlugAttribute(){
-        return md5(microtime());
-    }
 
+        return md5(microtime());
+
+    }
 
 
 
 
     public static function getCreatedDefaultsAttribute(){
+
         return [
             'doc_no' => 'DV' . rand(1000000, 9999999),
             'dv_date' => Carbon::now()->format('Y-m-d'),
@@ -268,6 +269,7 @@ class DV extends Model{
             'ip_updated' => request()->ip(), 
             'user_id' => Auth::user()->user_id,
         ];
+
     }
 
 
@@ -275,19 +277,15 @@ class DV extends Model{
 
 
     public static function getUpdatedDefaultsAttribute(){
+
         return array(
             'updated_at' => Carbon::now(),
             'machine_updated' => gethostname(),
             'ip_updated' => request()->ip(),
         );
+
     }
 
-
-
-
-    public static function mergeAmount(Request $request){
-        return $request->merge( [ 'dv_amount' => str_replace(',', '', $request['dv_amount']) ] );
-    }
 
 
 

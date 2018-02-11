@@ -4,6 +4,7 @@
         'autoclose': true
  });
 
+
 /** LOADER **/
 function showLoading() {
     $("#loader").show();
@@ -12,6 +13,6 @@ function showLoading() {
   $(document).ready(function() {
     clearTimeout(loadingTimeout); 
     $("#loader").fadeOut();
-  });
+ });
 
 

@@ -3,18 +3,25 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Libraries\Statics\DVUtil;
 
 class DvFormRequest extends FormRequest{
    
+
    
     public function authorize(){
+
         return true;
+    
     }
 
 
 
+
     public function rules(){
+
+        $this->sanitize();
+
         return [
             'dv_fund_source'=>'required|string|max:20',
             'dv_payee'=>'required|string|max:100',
@@ -29,12 +36,16 @@ class DvFormRequest extends FormRequest{
             'dv_approved_by'=>'required|string|max:100',
             'dv_approved_by_position'=>'required|string|max:100'
         ];
+
     }
 
 
 
+
     public function messages(){
+
 	    return [
+
             'dv_fund_source.required'  => 'Fund Source field is required.',
 	        'dv_fund_source.string'  => 'Invalid Input! You must enter a string value.',
             'dv_fund_source.max'  => 'The Fund Source field may not be greater than 20 characters.',
@@ -80,8 +91,33 @@ class DvFormRequest extends FormRequest{
 	        'dv_approved_by_position.required'  => 'Approved by position field is required.',
             'dv_approved_by_position.string'  => 'Invalid Input! You must enter a string value.',
             'dv_approved_by_position.max'  => 'The Position by field may not be greater than 100 characters.',
+
 	    ];
+
 	}
+
+
+
+    public function sanitize(){
+        $request = $this->all();
+        $request['dv_project_id'] = DVUtil::formSanitize($request['dv_project_id']);
+        $request['dv_fund_source'] = DVUtil::formSanitize($request['dv_fund_source']);
+        $request['dv_mop'] = DVUtil::formSanitize($request['dv_mop']);
+        $request['dv_payee'] = DVUtil::formSanitize($request['dv_payee']);
+        $request['dv_tin'] = DVUtil::formSanitize($request['dv_tin']);
+        $request['dv_bur_no'] = DVUtil::formSanitize($request['dv_bur_no']);
+        $request['dv_address'] = DVUtil::formSanitize($request['dv_address']);
+        $request['dv_dept_code'] = DVUtil::formSanitize($request['dv_dept_code']);
+        $request['dv_unit_code'] = DVUtil::formSanitize($request['dv_unit_code']);
+        $request['dv_proj_code'] = DVUtil::formSanitize($request['dv_proj_code']);
+        $request['dv_explanation'] = strip_tags($request['dv_explanation']);
+        $request['dv_amount'] = str_replace(',', '', DVUtil::formSanitize($request['dv_amount']));
+        $request['dv_certified_by'] = DVUtil::formSanitize($request['dv_certified_by']);
+        $request['dv_certified_by_position'] = DVUtil::formSanitize($request['dv_certified_by_position']);
+        $request['dv_approved_by'] = DVUtil::formSanitize($request['dv_approved_by']);
+        $request['dv_approved_by_position'] = DVUtil::formSanitize($request['dv_approved_by_position']);
+        $this->replace($request);
+    }
 
 
 

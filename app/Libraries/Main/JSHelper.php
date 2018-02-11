@@ -7,8 +7,12 @@ class JSHelper {
 
 
 
+
+
     public static function AjaxSelectToSelect($nameMain, $nameSub, $route, $key, $value){
+
       $string = "'";
+
       return '<script type="text/javascript">
 			    $(document).ready(function() {
 			        $("#'.$nameMain.'").on("change", function() {
@@ -31,13 +35,18 @@ class JSHelper {
 			        });
 			    });
 			</script>';
+
     }
 
 
 
 
 
+
+
+
     public static function AjaxSelectToInput($nameMain, $nameSub, $route, $value){
+
       return '<script type="text/javascript">
 	            $(document).ready(function() {
 	                $("#'.$nameMain.'").on("change", function() {
@@ -60,13 +69,20 @@ class JSHelper {
 	                });
 	            });
        		 </script>';
+
     }
 
 
 
 
+
+
+
+
     public static function Print($button, $div){
+
       $string = "'";
+
       return '<script>
 		    	$("#'.$button.'").on("click", function () {
 		            var divContents = $("#'.$div.'").html();
@@ -84,12 +100,17 @@ class JSHelper {
 		    		}, 1000);
 		    	});
 			</script>';
+
     }
 
 
 
 
+
+
+
     public static function RichText($id){
+
       return '<script>
 	            $(document).ready(function() {
 	                $("#'.$id.'").summernote({
@@ -107,23 +128,33 @@ class JSHelper {
 	                });
 	            });
 	        </script>';
+
     }
+
+
+
 
 
 
 
     public static function SelectSearch($id){
+
       return '<script>
     			$(document).ready(function() {
         			$("#'.$id.'").select2();
     			});
   			</script>';
+
     }
 
 
 
 
+
+
+
     public static function SelectNormal($id){
+
       return '<script>
     			$(document).ready(function() {
         			$("#'.$id.'").select2({
@@ -131,23 +162,33 @@ class JSHelper {
         			});
     			});
   			</script>';
+
     }
+
+
+
 
 
 
 
     public static function ModalShow($id){
+
       return '<script>
     			$(document).ready(function() {
         			$("#'.$id.'").modal("show");
     			});
   			</script>';
+
     }
 
 
 
 
+
+
+
     public static function PriceInput($id){
+
       return '<script>
       			$(document).ready(function() {
 	    			$("#'. $id .'").priceFormat({
@@ -158,15 +199,20 @@ class JSHelper {
             		});
             	});
   			</script>';
+
     }
 
 
 
 
 
+
+
     public static function ModalCallDelete($parent, $id){
+
     $string = "'";
-      return '<script>
+
+	  return '<script>
 			        $('. $string .' '. $parent .' '. $string .').on("click", ".formDelete", function(e){
 			            e.preventDefault();
 			            var $form=$(this);
@@ -176,13 +222,17 @@ class JSHelper {
 			                });
 			        });
 			   </script>';
+
     }
 
 
 
 
 
+
+
     public static function Snackbar($message){
+
       return '<script>
 			    new PNotify({
 	                text    : "'. $message .'",
@@ -212,7 +262,9 @@ class JSHelper {
 	                addclass: "md multiline"
 	            });
 			   </script>';
+
     }
+
 
 
 

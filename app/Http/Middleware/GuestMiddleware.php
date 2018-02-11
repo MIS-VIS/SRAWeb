@@ -10,10 +10,15 @@ class GuestMiddleware{
 
 
     public function handle($request, Closure $next){
+
         if (Auth::check()){
+
         	return redirect('admin/');
+
         }
+
         return $next($request);
+        
     }
 
 

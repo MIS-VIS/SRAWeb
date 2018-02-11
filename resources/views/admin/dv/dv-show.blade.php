@@ -116,7 +116,7 @@
 									<center><span style="font-size:16px; margin-left:-20px;"><strong>Payee:</strong></span></center>
 								</div>
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding-top:2px;">
-									<span style="font-size:16px;"><strong>{!! strtoupper($dv->dv_payee) !!}</strong></span>
+									<span style="font-size:16px;"><strong>{{{ strtoupper($dv->dv_payee) }}}</strong></span>
 								</div>
 								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none;">
 									<span style="font-size:13px;"><strong>TIN/Employee No.:</strong></span><br>

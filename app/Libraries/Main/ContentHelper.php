@@ -9,18 +9,21 @@ class ContentHelper{
 
 
     public static function loader($id){
+
       return'<div class="page-overlay" id="'.$id.'">
                 <div class="spinner">
                     <div class="circle1"></div>
                     <div class="circle2"></div>
                 </div>
             </div>';
+
     }
     
 
 
 
     public static function modalPrint($id, $title , $content, $link){
+
       return'<div id="'.$id.'" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -37,6 +40,7 @@ class ContentHelper{
                     </div>
                 </div>
             </div>';
+
     }
 
 
@@ -44,6 +48,7 @@ class ContentHelper{
 
 
     public static function modalDelete($id){
+
       return' <div id="'. $id .'" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -60,6 +65,7 @@ class ContentHelper{
                     </div>
                 </div>
             </div>';
+
     }
 
 
@@ -68,7 +74,9 @@ class ContentHelper{
 
 
     public static function menuStatus($routeName, $status){
+
       return Route::currentRouteNamed($routeName) ? $status : '';
+      
     }
 
 
