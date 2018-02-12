@@ -260,8 +260,8 @@
 										<span style="font-weight: bold; padding-left:5px; font-size:16px;">Received Payment:</span>
 									</div>
 									<div class="row">
-										<div class="col-md-1" style="border:solid; padding:2px; border-left-style: none; border-bottom-style: none;" >
-											<span style="font-size:11px; font-weight: bold;" >Check/ADA No.:</span>
+										<div class="col-md-1" style="border:solid; padding:6px; border-left-style: none; border-bottom-style: none;" >
+											<span style="font-size:12px; font-weight: bold;" >Check/ADA No.:</span>
 										</div>
 										<div class="col-md-4" style="border:solid; border-left-style: none; border-bottom-style: none;">
 										</div>
@@ -323,7 +323,7 @@
 							</div>
 						</div>
 						<center>
-							<button class="btn btn-success fuse-ripple-ready" id="frontBtn">
+							<button class="btn bg-success-600 text-auto fuse-ripple-ready" id="frontBtn">
 								<span style="color:white;"> <i style="font-size:18px;" class="icon icon-printer"></i> Print</span>
 							</button>
 						</center>
@@ -522,7 +522,7 @@
 						</div>
 						<br><br>
 						<center>
-							<button class="btn btn-success-600 text-auto fuse-ripple-ready" id="backBtn">
+							<button class="btn bg-success-600 text-auto fuse-ripple-ready" id="backBtn">
 								<span style="color:white;"> <i style="font-size:18px;" class="icon icon-printer"></i> Print</span>
 							</button>
 						</center>

@@ -168,8 +168,8 @@
 
                     @foreach($dvList as $data)
 
-                    <div class="thread ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord" 
-                    style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc" : '' !!}">
+                    <div class="thread row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord" 
+                    style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc;" : '' !!} overflow: visible;">
                         <div class="info col px-6">
                             <div class="name row no-gutters align-items-center">
                                 <div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
@@ -197,26 +197,23 @@
 
                         <div class="col-12 col-sm-auto d-flex flex-sm-column justify-content-center align-items-center">
                             <div class="time mb-2" style="font-size:17px; padding-bottom:15px;">{{ Carbon::parse($data->created_at)->format('M d, Y') }}</div>
+                            
                             <div class="actions row no-gutters">
-                                <a href="#" class="btn btn-fab btn-sm bg-light" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">
-                                    <i class="icon-attachment s-5"></i>
-                                </a>&nbsp;&nbsp;
+                                <div class="dropdown show">
+                                    <a class="btn btn-md btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action
+                                    </a>
 
-                                <a href="{{ route('admin.dv.edit', $data->slug) }}" class="btn btn-fab btn-sm bg-light">
-                                    <i class="icon-pencil s-5"></i>
-                                </a>&nbsp;&nbsp;
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button"">Set DV No.</a>
+                                        <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
+                                        <a class="dropdown-item" href="{{ route('admin.dv.edit', $data->slug) }}">Edit</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteBtn" data-slug="{{ $data->slug }}" data-url="{{ route('admin.dv.destroy', $data->slug) }}" id="delete_button">Delete</a>
+                                    </div>
 
-                                <a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-light">
-                                    <i class="icon-printer s-5"></i>
-                                </a>&nbsp;&nbsp;
-
-                                {!! Form::open(['method' => 'delete', 'route' => ['admin.dv.destroy', $data->slug], 'class' =>'formDelete']) !!}
-                                    <button href="" type="submit" class="btn btn-fab btn-sm bg-light">
-                                        <i class="icon-trash s-5"></i>
-                                    </button>
-                                {!! Form::close() !!}
-
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="divider"></div>
@@ -269,7 +266,10 @@
 @endsection
 
 
+
+
 @section('modals')
+
     {!! ContentHelper::modalDelete('deleteDv') !!}
 
     <div id="setDvNo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
@@ -298,13 +298,18 @@
 @endsection
 
 
+
+
+
 @section('scripts')
+
     {!! JSHelper::SelectSearch('project_code') !!}
     {!! JSHelper::SelectSearch('department') !!}
     {!! JSHelper::SelectNormal('fund_source') !!}
     {!! JSHelper::SelectNormal('station') !!}
     {!! JSHelper::SelectSearch('unit') !!}
-    {!! JSHelper::ModalCallDelete('div[data-form="dvRecord"]', 'deleteDv') !!}
+    {!! JSHelper::ModalCallDelete() !!}
+    {!! ContentHelper::modalDelete('deleteBtn') !!}
 
     @if(Session::has('deleted'))
        {!! JSHelper::Snackbar(Session::get('deleted')) !!}

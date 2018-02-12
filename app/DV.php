@@ -17,6 +17,9 @@ class DV extends Model{
     use Sluggable;
 
 
+
+
+
     protected $fillable = [
         'slug',
         'doc_no',
@@ -48,6 +51,7 @@ class DV extends Model{
         'ip_updated',
         'user_id'
     ];  
+
 
 
 
@@ -88,11 +92,13 @@ class DV extends Model{
 
 
 
+
     public function getRouteKeyName(){
 
         return 'slug';
 
     }
+
 
 
 
@@ -107,6 +113,7 @@ class DV extends Model{
         ];
 
     }
+
 
 
 
@@ -162,6 +169,7 @@ class DV extends Model{
 
 
 
+
     public function userIndexFilter(Request $request, $paginate){
 
         $dv = $this->newQuery();
@@ -193,10 +201,10 @@ class DV extends Model{
 
 
 
+
     public function incomingsFilter(Request $request, $pagination){
 
         $dv = $this->newQuery();
-        $date = $this->dateRequests($request);
         $search = $request->search;
 
         if(!$search == null){
@@ -225,11 +233,13 @@ class DV extends Model{
 
 
 
+
     public function hunt($slug){
 
         return $this->where('slug', $slug)->firstOrFail();
 
     }
+
 
 
 
@@ -247,11 +257,14 @@ class DV extends Model{
 
 
 
+
+
     public function getHashedSlugAttribute(){
 
         return md5(microtime());
 
     }
+
 
 
 
@@ -271,6 +284,7 @@ class DV extends Model{
         ];
 
     }
+
 
 
 

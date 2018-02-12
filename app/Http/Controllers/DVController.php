@@ -37,6 +37,7 @@ class DVController extends Controller{
 
 
 
+
     public function userIndex(DvFilterRequest $request){
 
         $dvUserList = $this->dv->userIndexFilter($request, 10);
@@ -48,6 +49,7 @@ class DVController extends Controller{
 
 
 
+
     public function incomings(DvFilterRequest $request){
 
         $dvIncomings = $this->dv->incomingsFilter($request ,10);
@@ -55,6 +57,7 @@ class DVController extends Controller{
         return view('admin.dv.dv-incomings', compact('dvIncomings'));
 
     }
+
 
 
 
@@ -79,6 +82,7 @@ class DVController extends Controller{
 
 
 
+
     public function create(){
 
         return view('admin.dv.dv-create');
@@ -86,6 +90,7 @@ class DVController extends Controller{
     }
 
    
+
 
 
     public function store(DVFormRequest $request){
@@ -109,7 +114,7 @@ class DVController extends Controller{
     public function show($slug){
 
         $dv = $this->dv->hunt($slug);
-
+        
         if(count($dv) == 1){
 
             return view('admin.dv.dv-show')->with('dv', $dv);
@@ -121,6 +126,7 @@ class DVController extends Controller{
     }
 
     
+
 
 
     public function edit($slug){
@@ -138,6 +144,7 @@ class DVController extends Controller{
     }
 
     
+
 
 
     public function update(DVFormRequest $request, $slug){

@@ -89,12 +89,12 @@
                             <div class="card-body">
                             <h4 class="card-title">Certified</h4>
 
-                                {!! DVUtil::employeeDropdown(
-                                    'col-md-12', 'dv_certified_by', 'Name:', 'dv_certified_by', $employees, 'emp_name', 'firstname', 'middlename', 'lastname', old('dv_certified_by'), $errors->first('dv_certified_by'), 'required'
+                                {!! FormHelper::readOnly(
+                                    'col-md-12', 'dv_certified_by', 'Name:', '', $accountingSignatory->emp_name
                                 ) !!} 
 
                                 {!! FormHelper::readOnly(
-                                    'col-md-12', 'dv_certified_by_position', 'Position:', '', old('dv_certified_by_position')
+                                    'col-md-12', 'dv_certified_by_position', 'Position:', '', $accountingSignatory->emp_position
                                 ) !!}
 
                             </div>
@@ -107,12 +107,12 @@
                             <div class="card-body">
                             <h4 class="card-title">Approved</h4>
 
-                                {!! DVUtil::employeeDropdown(
-                                    'col-md-12', 'dv_approved_by', 'Name:', 'dv_approved_by', $employees, 'emp_name', 'firstname', 'middlename', 'lastname', old('dv_approved_by'), $errors->first('dv_approved_by'), 'required'
+                                {!! FormHelper::readOnly(
+                                    'col-md-12', 'dv_approved_by', 'Name:', '', $adminSignatory->emp_name
                                 ) !!}
 
                                 {!! FormHelper::readOnly(
-                                    'col-md-12', 'dv_approved_by_position', 'Position:', '', old('dv_approved_by_position')
+                                    'col-md-12', 'dv_approved_by_position', 'Position:', '', $adminSignatory->emp_position
                                 ) !!}
 
                             </div>

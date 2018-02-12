@@ -208,20 +208,14 @@ class JSHelper {
 
 
 
-    public static function ModalCallDelete($parent, $id){
-
-    $string = "'";
+    public static function ModalCallDelete(){
 
 	  return '<script>
-			        $('. $string .' '. $parent .' '. $string .').on("click", ".formDelete", function(e){
-			            e.preventDefault();
-			            var $form=$(this);
-			            $("#'. $id .'").modal("show")
-			                .on("click", "#delete-btn", function(){
-			                    $form.submit();
-			                });
-			        });
-			   </script>';
+		        $(document).on("click", "#delete_button", function () {
+		            var url = $(this).data("url");
+		            $("#delete_body #form").attr("action", url);
+		        });
+		    </script>';
 
     }
 
@@ -264,6 +258,7 @@ class JSHelper {
 			   </script>';
 
     }
+
 
 
 

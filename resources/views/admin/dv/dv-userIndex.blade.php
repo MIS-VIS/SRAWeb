@@ -159,19 +159,28 @@
 					                	@foreach($dvUserList as $data)
 
 					                        <tr>
+
 					                        	<td>{!! $data->doc_no !!}</td>
                                                 <td>{!! $data->dv_no == '' ? '<span class="badge badge-danger">Not Set</span></td>' : $data->dv_no !!}
 					                            <td>{!! str_limit(strip_tags($data->dv_explanation),50) !!}</td>
 					                            <td>{!! $data->dv_proj_code !!}</td>
 					                            <td>{{ Carbon::parse($data->created_at)->format('M d, Y') }}</td>
 					                            <td>
-					                            	<a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-light">
-                                                        <i class="icon-printer s-5"></i>
-                                                    </a>&nbsp;
-					                                <a href="{{ route('admin.dv.edit', $data->slug) }}" class="btn btn-fab btn-sm bg-light">
-					                                    <i class="icon icon-pencil s-5"></i>
-					                                </a>
+                                                    <div class="actions row no-gutters">
+                                                        <div class="dropdown show">
+                                                            <a class="btn btn-md btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Action
+                                                            </a>
+
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="overflow: hidden;">
+                                                                <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
+                                                                <a class="dropdown-item" href="{{ route('admin.dv.edit', $data->slug) }}">Edit</a>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
 					                            </td>
+
 					                        </tr>
 
 					                    @endforeach

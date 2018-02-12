@@ -68,10 +68,11 @@
                     </div>
                 </div>
             </div>
-            <div class="todo-items">
+
+            <div class="todo-items" style="overflow: visible;">
                 @foreach($dvIncomings as $data)
-                        <div class="todo-item pr-2 py-4 ripple row no-gutters flex-wrap flex-sm-nowrap align-items-center" 
-                            style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc" : ''!!}">
+                        <div class="todo-item pr-2 py-4 row no-gutters flex-wrap flex-sm-nowrap align-items-center" 
+                            style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc;" : ''!!} overflow: visible;">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
                             <div class="info col px-4">
                                 <div class="title">
@@ -106,16 +107,26 @@
                                 &nbsp;
                                 &nbsp;
                                 &nbsp;
-                                &nbsp;
-                                <a href="#" class="btn btn-fab btn-sm bg-light" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">
-                                    <i class="icon-attachment s-5"></i>
-                                </a>
-                                &nbsp;&nbsp;
-                                <a href="{{ route('admin.dv.show', $data->slug) }}" class="btn btn-fab btn-sm bg-light">
-                                    <i class="icon-printer s-5"></i>
-                                </a> 
+                                &nbsp; 
+
+                                <div class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">Set DV No.</a>
+                                        <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
+                                    </div>
+                                </div>
+
                             </div>
+
+                            
+
                         </div>
+
                 @endforeach
 
                 @if($dvIncomings->isEmpty())
@@ -125,7 +136,7 @@
                 @endif
             </div>
 
-             <div class="todo-item pr-2 py-4 ripple row no-gutters flex-wrap flex-sm-nowrap align-items-center">
+             <div class="pr-2 py-4 row no-gutters flex-wrap flex-sm-nowrap align-items-center">
                 <div class="col-lg-6">
                     <span style="margin-left:20px;">
                         <strong>Displaying {{ $dvIncomings->firstItem() > 0 ? $dvIncomings->firstItem() : 0 }} - {{ $dvIncomings->lastItem() > 0 ? $dvIncomings->lastItem() : 0 }} out of {{ $dvIncomings->total()}} Records</strong>
@@ -145,6 +156,8 @@
         </div>
 
 @endsection
+
+
 
 @section('modals')
     <div id="setDvNo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
@@ -169,6 +182,8 @@
         </div>
     </div>
 @endsection
+
+
 
 @section('scripts')
     
