@@ -240,6 +240,8 @@
 
 
 @section('scripts')
+
     {!! JSHelper::SelectSearch('project_code') !!}
     {!! JSHelper::SelectNormal('fund_source') !!}
+    
 @endsection

@@ -110,6 +110,7 @@
                                 &nbsp; 
 
                                 <div class="dropdown show">
+
                                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action
@@ -119,6 +120,7 @@
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">Set DV No.</a>
                                         <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
                                     </div>
+                                    
                                 </div>
 
                             </div>

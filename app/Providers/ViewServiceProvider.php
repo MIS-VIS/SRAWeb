@@ -11,6 +11,7 @@ class ViewServiceProvider extends ServiceProvider{
 
     public function boot(){
         
+        View::composer('*', 'App\ViewComposers\MenuComposer');
         View::composer('*', 'App\ViewComposers\BURProjectsComposer');
         View::composer('*', 'App\ViewComposers\DepartmentsComposer');
         View::composer('*', 'App\ViewComposers\SignatoriesComposer');

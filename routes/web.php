@@ -1,5 +1,7 @@
 <?php
 
+
+/** GUEST **/
 Route::group(['middleware' => 'guest'], function () {
 
 	Route::get('/', 'LoginController@index')->name('login');
@@ -7,12 +9,22 @@ Route::group(['middleware' => 'guest'], function () {
 
 });
 
+
+
+
+/** LOGOUT **/
+Route::post('/logout', 'LoginController@logout')->name('logout');
+
+
+
+
+
+/** ADMIN **/
 Route::group(['prefix'=>'admin', 'as' => 'admin.' , 'middleware' => 'admin'], function () {
 
-	Route::post('/', 'LoginController@logout')->name('logout');
 	Route::get('/', 'HomeController@index')->name('home');
 
-	//User Routes
+	// User Routes
 	Route::resource('user', 'UserController');
 
 	// DV Routes
@@ -24,9 +36,23 @@ Route::group(['prefix'=>'admin', 'as' => 'admin.' , 'middleware' => 'admin'], fu
 	// DV Ajax Requests
 	Route::get('/dv-add/response-unit/{id}', 'AjaxController@dvAddUnitDropdown')->name('dv.add.responseUnit');
 	Route::get('/dv-add/response-accountCode/{id}', 'AjaxController@dvAddAccountCodeDropdown')->name('dv.add.responseAccountCode');
-	Route::get('/dv-add/response-certPos/{id}', 'AjaxController@dvAddEmpPosText')->name('dv.add.responseCertPos');
-	Route::get('/dv-add/response-apprPos/{id}', 'AjaxController@dvAddEmpPosText')->name('dv.add.responseApprPos');
     
 });
+	
 
+
+
+
+/** AJAX **/
+Route::group(['prefix'=>'ajax', 'as' => 'ajax.'], function () {
+
+	Route::get('/response-unit/{id}', 'AjaxController@dvAddUnitDropdown')->name('responseUnit');
+	Route::get('/response-accountCode/{id}', 'AjaxController@dvAddAccountCodeDropdown')->name('responseAccountCode');
+
+});
+
+
+
+
+/** TESTS **/
 Route::get('/test', 'SampleController@page')->name('sample');

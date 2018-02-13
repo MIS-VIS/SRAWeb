@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model{
 
+
+
     protected $table = 'menu';
+
 
 
     public function submenu() {
@@ -14,9 +17,20 @@ class Menu extends Model{
    	}
 
 
+
+
    	public function user() {
     	return $this->belongsTo('App\User');
    	}
    	
+
+
+
+   	public function usersubmenu() {
+      return $this->submenu->where('is_nav', true);
+    }
+   	  
+
+
 
 }

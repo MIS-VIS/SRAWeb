@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\User as user;
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Auth;
+
 
 class GuestMiddleware{
 

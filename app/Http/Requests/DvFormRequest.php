@@ -110,7 +110,7 @@ class DvFormRequest extends FormRequest{
         $request['dv_dept_code'] = DVUtil::formSanitize($request['dv_dept_code']);
         $request['dv_unit_code'] = DVUtil::formSanitize($request['dv_unit_code']);
         $request['dv_proj_code'] = DVUtil::formSanitize($request['dv_proj_code']);
-        $request['dv_explanation'] = strip_tags($request['dv_explanation']);
+        $request['dv_explanation'] = $request['dv_explanation'];
         $request['dv_amount'] = str_replace(',', '', DVUtil::formSanitize($request['dv_amount']));
         $request['dv_certified_by'] = DVUtil::formSanitize($request['dv_certified_by']);
         $request['dv_certified_by_position'] = DVUtil::formSanitize($request['dv_certified_by_position']);

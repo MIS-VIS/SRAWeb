@@ -45,20 +45,4 @@ class AjaxController extends Controller{
 
 
 
-	public function dvAddEmpPosText(Request $request, $id, Employees $employees){
-
-    	if($request->Ajax()){
-
-	    	$cert_pos = $employees->select('position')->where('emp_name', $id)->get();
-	    	return json_encode($cert_pos);
-
-	    }
-
-	    return abort(403);
-
-	}
-
-
-
-
 }

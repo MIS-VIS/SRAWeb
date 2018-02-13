@@ -19,7 +19,7 @@
 
           @if(Auth::check())
 
-            @foreach (Auth::user()->menu as $menu) 
+            @foreach ($menus as $menu)
 
               @if($menu->is_dropdown == false)
 
@@ -41,14 +41,14 @@
 
                     <ul id="{{ $menu->data_target }}" class="collapse {!! ContentHelper::menuStatus($menu->route, 'show') !!}" role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
 
-                        @foreach($menu->submenu as $submenu)
+                        @foreach($menu->usersubmenu() as $submenu)
 
-                          <li class="nav-item">
-                            <a class="nav-link ripple {!! ContentHelper::menuStatus($submenu->route, 'active') !!}" href="{{ route($submenu->route) }}">
-                                  <span>{{ $submenu->name }}</span>
-                              </a>
-                          </li>
-
+                            <li class="nav-item">
+                              <a class="nav-link ripple {!! ContentHelper::menuStatus($submenu->route, 'active') !!}" href="{{ route($submenu->route) }}">
+                                    <span>{{ $submenu->name }}</span>
+                                </a>
+                            </li>
+                            
                         @endforeach
 
                     </ul>

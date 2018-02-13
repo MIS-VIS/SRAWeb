@@ -143,14 +143,11 @@
 
 
 @section('scripts')
-    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/admin/dv-add/response-unit/', 'dept_unit', 'dept_unit') !!}
-    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/admin/dv-add/response-accountCode/', 'acct_code', 'acct_code') !!}
-    {!! JSHelper::AjaxSelectToInput('dv_certified_by', 'dv_certified_by_position', '/admin/dv-add/response-certPos/', 'position') !!}
-    {!! JSHelper::AjaxSelectToInput('dv_approved_by', 'dv_approved_by_position', '/admin/dv-add/response-apprPos/', 'position') !!}
+
+    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/ajax/response-unit/', 'dept_unit', 'dept_unit') !!}
+    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/ajax/response-accountCode/', 'acct_code', 'acct_code') !!}
     {!! JSHelper::ModalShow('dvConfirmAdd') !!}
     {!! JSHelper::RichText('dv_explanation') !!}
-    {!! JSHelper::SelectSearch('dv_certified_by') !!}
-    {!! JSHelper::SelectSearch('dv_approved_by') !!}
     {!! JSHelper::SelectSearch('dv_dept_code') !!}
     {!! JSHelper::SelectSearch('dv_unit_code') !!}
     {!! JSHelper::SelectSearch('dv_proj_code') !!}

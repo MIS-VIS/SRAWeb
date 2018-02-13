@@ -72,7 +72,7 @@
                     </div>
                     
 
-                    {!! FormHelper::submitButton('btn-secondary ', 'Save', 'dv-submit') !!}
+                    {!! FormHelper::submitButton('btn-secondary ', 'Save', 'user-submit') !!}
 
     			{!! Form::close() !!}
                 
@@ -87,29 +87,15 @@
 
 @section('modals')
 
-    @if(Session::has('created'))
-        {!! ContentHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('created'), route('admin.dv.show', Session::get('slug')) ) !!}
-    @endif
+
 
 @endsection
 
 
 
 @section('scripts')
-    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/admin/dv-add/response-unit/', 'dept_unit', 'dept_unit') !!}
-    {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/admin/dv-add/response-accountCode/', 'acct_code', 'acct_code') !!}
-    {!! JSHelper::AjaxSelectToInput('dv_certified_by', 'dv_certified_by_position', '/admin/dv-add/response-certPos/', 'position') !!}
-    {!! JSHelper::AjaxSelectToInput('dv_approved_by', 'dv_approved_by_position', '/admin/dv-add/response-apprPos/', 'position') !!}
-    {!! JSHelper::ModalShow('dvConfirmAdd') !!}
-    {!! JSHelper::RichText('dv_explanation') !!}
-    {!! JSHelper::SelectSearch('dv_certified_by') !!}
-    {!! JSHelper::SelectSearch('dv_approved_by') !!}
-    {!! JSHelper::SelectSearch('dv_dept_code') !!}
-    {!! JSHelper::SelectSearch('dv_unit_code') !!}
-    {!! JSHelper::SelectSearch('dv_proj_code') !!}
-    {!! JSHelper::SelectNormal('dv_project_id') !!}
-    {!! JSHelper::SelectNormal('dv_fund_source') !!}
-    {!! JSHelper::SelectNormal('dv_mop') !!}
-    {!! JSHelper::PriceInput('dv_amount') !!}
+    
+
+
 @endsection
 

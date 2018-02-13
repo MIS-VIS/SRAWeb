@@ -1,9 +1,21 @@
 <?php
 
 namespace App\Libraries\Statics;
+
 use Route;
 
+
 class DVUtil {
+
+
+
+    public static function usermenu( $string = null ) {
+
+          $string = strip_tags($string);
+          $string = htmlspecialchars($string);
+          return $string;
+
+    }
 
 
 

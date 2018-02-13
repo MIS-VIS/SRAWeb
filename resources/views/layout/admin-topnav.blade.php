@@ -23,7 +23,7 @@
                             </div>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                             <div class="row no-gutters align-items-center flex-nowrap">
                                 <i class="icon-logout"></i>
                                 <span class="px-3">Logout</span>
@@ -36,6 +36,6 @@
     </div>
 </nav>
 
-<form id="frm-logout" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+<form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
     {{ csrf_field() }}
 </form>
