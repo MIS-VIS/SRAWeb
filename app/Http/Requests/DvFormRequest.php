@@ -26,6 +26,7 @@ class DvFormRequest extends FormRequest{
             'dv_fund_source'=>'required|string|max:20',
             'dv_payee'=>'required|string|max:100',
             'dv_tin'=>'required|string|max:20',
+            'dv_bur_no'=>'max:20',
             'dv_address'=>'required|string|max:100',
             'dv_dept_code'=>'required|string|max:20',
             'dv_proj_code'=>'required|string|max:20',
@@ -57,6 +58,8 @@ class DvFormRequest extends FormRequest{
             'dv_tin.required'  => 'TIN field is required.',
             'dv_tin.string'  => 'Invalid Input! You must enter a string value.',
             'dv_tin.max'  => 'The TIN field may not be greater than 20 characters.',
+
+            'dv_bur_no.max'  => 'The BUR No. field may not be greater than 20 characters.',
 	        
             'dv_address.required'  => 'Address field is required.',
             'dv_address.string'  => 'Invalid Input! You must enter a string value.',

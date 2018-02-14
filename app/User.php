@@ -1,21 +1,28 @@
 <?php
-
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
-class User extends Authenticatable
-{
+
+
+class User extends Authenticatable{
+
+
+
     use Notifiable;
     protected $table = 'users';
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
     public $timestamps = false;
 
+
+
+
     protected $fillable = [
         'user_id',
-        'username', 
-        'password',
+        'username',
         'role',
         'lastname',
         'firstname',
@@ -37,10 +44,14 @@ class User extends Authenticatable
     ];
 
 
+
+
     protected $hidden = [
         'password', 
         'remember_token',
     ];
+
+
 
 
     protected $attributes = [
@@ -68,23 +79,14 @@ class User extends Authenticatable
     ];
 
 
+
+
+
     public function menu() {
         return $this->hasMany('App\Menu','user_id','user_id');
     }
 
 
-
-    public static function getCreatedDefaultsAttribute(){
-        return [
-            'user_id' => 'DV' . rand(1000000, 9999999),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-            'machine_created' => gethostname(),
-            'machine_updated' => gethostname(),
-            'ip_created' => request()->ip(), 
-            'ip_updated' => request()->ip(),
-        ];
-    }
 
 
 

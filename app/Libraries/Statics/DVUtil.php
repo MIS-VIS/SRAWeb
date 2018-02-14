@@ -9,17 +9,6 @@ class DVUtil {
 
 
 
-    public static function usermenu( $string = null ) {
-
-          $string = strip_tags($string);
-          $string = htmlspecialchars($string);
-          return $string;
-
-    }
-
-
-
-
     public static function formSanitize( $string = null ) {
 
           $string = strip_tags($string);
@@ -89,24 +78,6 @@ class DVUtil {
         return array('Doc No.', 'DV No.', 'Explanation', 'Project Code', 'Created', 'Actions');
 
     }
-
-
-
-    //Employee Custom Dropdown
-
-    public static function employeeDropdown($class, $name, $label, $id, $array, $var1, $var2, $var3, $var4, $oldValue ,$errors, $required){
-
-      return  '<div class="form-group '.$class.'">
-                  <label for="'.$name.'" style="padding-bottom: 8.5px; color:#696969;"><strong>'.$label.'</strong></label>
-                  <select class="form-control is-valid" id="'.$id.'" name="'.$name.'" '.$required.'>
-                      <option value="">Select</option>
-                      '. self::employeeOptions($array, $var1, $var2, $var3, $var4, $oldValue) .'
-                  </select>
-                  <small class="text-danger">'. $errors .'</small>
-              </div>';
-
-    }
-
 
 
 

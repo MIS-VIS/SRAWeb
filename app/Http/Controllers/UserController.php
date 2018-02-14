@@ -16,7 +16,9 @@ class UserController extends Controller{
 
 
     public function __construct(User $user){
+
         $this->user = $user;
+        
     }
 
 
@@ -41,9 +43,12 @@ class UserController extends Controller{
 
   
     public function store(Request $request){
-        
+
+
         if($request){
+
             $user = $this->user->create($request->all());
+            
         }
         
     }

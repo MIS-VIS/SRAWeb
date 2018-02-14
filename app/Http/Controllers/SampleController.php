@@ -33,11 +33,7 @@ class SampleController extends Controller
        return view('sample',compact('list'));
     }
 
-    public function page(Request $request){
-      if($request->Ajax()){
-        return view('admin.dv.dv-myList')->render();
-      }
-    }
+
 
 
 }

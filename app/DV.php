@@ -11,11 +11,12 @@ use Auth;
 
 class DV extends Model{
 
+
+
     protected $table = 'dv';
     protected $dates = ['created_at', 'updated_at'];
     public $timestamps = false;
     use Sluggable;
-
 
 
 
@@ -233,13 +234,11 @@ class DV extends Model{
 
 
 
-
     public function hunt($slug){
 
         return $this->where('slug', $slug)->firstOrFail();
 
     }
-
 
 
 
@@ -299,6 +298,8 @@ class DV extends Model{
         );
 
     }
+
+
 
 
 
