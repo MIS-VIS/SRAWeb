@@ -14,8 +14,11 @@ class AdminMiddleware{
 
 
 
+
     protected $menu;
     protected $submenu;
+
+
 
 
 
@@ -33,6 +36,8 @@ class AdminMiddleware{
         }
         
     }
+
+
 
 
 
@@ -65,6 +70,8 @@ class AdminMiddleware{
         return redirect('/');
         
     }
+
+
 
 
 

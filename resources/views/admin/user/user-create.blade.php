@@ -24,9 +24,10 @@
 
     			{!! ContentHelper::loader('loader') !!}
                 
+                {!! FormHelper::alert(Session::has('username_exist'), Session::get('username_exist'), 'danger') !!}
+
                 {!! Form::open(['route' => 'admin.user.store', 'method' => 'POST', 'class' => 'row', 'id' => 'userForm']) !!}
 
-    				{!! FormHelper::padding('col-md-12') !!}
 
     				<div class="col-md-6" id="">
                         <div class="card">
@@ -64,7 +65,7 @@
 			                    ) !!}
 
 			                    {!! FormHelper::textBox(
-			                        'up', 'col-md-12', 'c_password', 'Confirm Password:', 'password', 'c_password', old('c_password'), 'required', $errors->first('c_password')
+			                        'up', 'col-md-12', 'password_confirmation', 'Confirm Password:', 'password', 'password_confirmation','' , 'required', $errors->first('password')
 			                    ) !!}
 
                             </div>
@@ -87,7 +88,11 @@
 
 @section('modals')
 
+    @if(Session::has('user_created'))
 
+        {!! ContentHelper::modalView('userConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('user_created'), route('admin.user.show', Session::get('user_slug')) ) !!}
+        
+    @endif
 
 @endsection
 
@@ -95,7 +100,7 @@
 
 @section('scripts')
     
-
+    {!! JSHelper::ModalShow('userConfirmAdd') !!}
 
 @endsection
 

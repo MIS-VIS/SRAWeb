@@ -24,8 +24,6 @@
     	   {!!ContentHelper::loader('loader')!!} 
                 
                 {!! Form::open(['route' => 'admin.dv.store', 'method' => 'POST', 'class' => 'row', 'id' => 'dvForm']) !!}
-
-    				{!! FormHelper::padding('col-md-12') !!}
                 
                     {!! FormHelper::dropdownStatic(
                         'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', DVUtil::selectProjectId(), old('dv_project_id'), $errors->first('dv_project_id'), 'required'

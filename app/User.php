@@ -3,8 +3,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Auth;
 
 
 
@@ -13,6 +16,7 @@ class User extends Authenticatable{
 
 
     use Notifiable;
+    use Sluggable;
     protected $table = 'users';
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
     public $timestamps = false;
@@ -23,6 +27,7 @@ class User extends Authenticatable{
     protected $fillable = [
         'user_id',
         'username',
+        'password',
         'role',
         'lastname',
         'firstname',
@@ -38,6 +43,8 @@ class User extends Authenticatable{
         'machine_updated',
         'ip_created',
         'ip_updated',
+        'user_created',
+        'user_updated',
         'last_login_time',
         'last_login_machine',
         'last_login_ip',
@@ -73,6 +80,8 @@ class User extends Authenticatable{
         'machine_updated' => null,
         'ip_created' => null,
         'ip_updated' => null,
+        'user_created' => null,
+        'user_updated' => null,
         'last_login_time' => null,
         'last_login_machine' => null,
         'last_login_ip' => null,
@@ -81,10 +90,115 @@ class User extends Authenticatable{
 
 
 
-
     public function menu() {
+
         return $this->hasMany('App\Menu','user_id','user_id');
+
     }
+
+
+
+
+    public function sluggable(){
+
+        return [
+            'slug' => [
+                'source' => ['firstname', 'middlename', 'lastname', 'HashedSlug']
+            ]
+        ];
+
+    }
+
+
+
+
+
+    public function getHashedSlugAttribute(){
+
+        return md5(microtime());
+
+    }
+
+
+
+
+
+    public function hunt($slug){
+
+        return $this->where('slug', $slug)->firstOrFail();
+
+    }
+
+
+
+
+
+    /** Setters **/
+
+    public function setPasswordAttribute($value){
+
+        $this->attributes['password'] = Hash::make($value);
+
+    }
+
+
+
+
+    /** Getters **/
+
+    public function getLastUserAttribute(){
+
+        $user = $this->select('user_id')->orderBy('user_id', 'desc')->first();
+        return $user->user_id;
+
+    }
+
+
+
+
+
+    public function getUserIdIncrementAttribute(){
+
+        $id = '1001';
+
+        if($id != null){
+
+            $id = $this->lastUser + 1;
+        
+        }
+
+        return $id;
+
+    }
+
+
+
+
+
+    public function getCreatedDefaultsAttribute(){
+
+        return [
+
+            'user_id' => $this->userIdIncrement,
+            'is_logged' => false,
+            'is_active' => true, 
+
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            'machine_created' => gethostname(),
+            'machine_updated' => gethostname(),
+            'ip_created' => request()->ip(), 
+            'ip_updated' => request()->ip(),
+            'last_login_time' => null,
+            'last_login_machine' => null,
+            'last_login_ip' => null,
+            'user_created' => Auth::user()->user_id,
+            'user_updated' => Auth::user()->user_id,
+
+        ];
+
+    }
+
 
 
 

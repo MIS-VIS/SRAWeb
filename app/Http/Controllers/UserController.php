@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\UserFormRequest;
+use Illuminate\Support\Facades\Input;
+use Session;
 
 
 
@@ -27,6 +29,7 @@ class UserController extends Controller{
     public function index(){
         
 
+
     }
 
 
@@ -42,24 +45,39 @@ class UserController extends Controller{
 
 
   
-    public function store(Request $request){
+    public function store(UserFormRequest $request){
 
+        $usernameExist = $this->user->where('username', $request->username)->count();
 
-        if($request){
+        if(!$usernameExist == 1 && $request){
 
-            $user = $this->user->create($request->all());
+            $user = $this->user->create($request->all() + $this->user->createdDefaults);
+            Session::flash('user_slug', $user->slug);
+            Session::flash('user_created', 'User Successfully Created!');
+            return redirect()->back();
             
         }
+
+        Input::flash();
+        Session::flash('username_exist', 'NOTICE: The Username you provided is already used by an existing account. Please provide a unique Username.');
+        return redirect()->back();
         
     }
 
 
 
 
-    public function show($id){
+    public function show($slug){
 
+        $user = $this->user->hunt($slug);
+        
+        if(count($user) == 1){
 
+            return view('admin.user.user-show')->with('user', $user);
 
+        } 
+
+        return abort(404);
         
     }
 
@@ -67,7 +85,7 @@ class UserController extends Controller{
 
 
   
-    public function edit($id){
+    public function edit($slug){
 
 
 
@@ -78,7 +96,7 @@ class UserController extends Controller{
 
 
    
-    public function update(Request $request, $id){
+    public function update(Request $request, $slug){
 
 
 
@@ -89,7 +107,7 @@ class UserController extends Controller{
 
 
     
-    public function destroy($id){
+    public function destroy($slug){
 
 
 
