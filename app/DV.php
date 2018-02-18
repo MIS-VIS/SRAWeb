@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use App\Libraries\Statics\DVUtil;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
@@ -104,13 +103,12 @@ class DV extends Model{
 
 
 
-    public function dateRequests(Request $request){
+    public function sluggable(){
 
         return [
-
-            'fromDate' => Carbon::parse($request->fromDate)->format('Y-m-d'),
-            'toDate' => Carbon::parse($request->toDate)->format('Y-m-d')
-
+            'slug' => [
+                'source' => [ 'dv_proj_code', 'HashedSlug']
+            ]
         ];
 
     }
@@ -119,10 +117,13 @@ class DV extends Model{
 
 
 
+
+    /** QUERIES **/
+
     public function indexFilter(Request $request, $paginate){
 
         $dv = $this->newQuery();
-        $date = $this->dateRequests($request);
+        $date = $this->getDateRequests($request);
         $search = $request->search;
 
         if(!$search == null){
@@ -174,7 +175,7 @@ class DV extends Model{
     public function userIndexFilter(Request $request, $paginate){
 
         $dv = $this->newQuery();
-        $date = $this->dateRequests($request);
+        $date = $this->getDateRequests($request);
 
         if(!$request->search == null){
             $dv->where('doc_no', 'LIKE', '%'. $request->search .'%');
@@ -244,12 +245,47 @@ class DV extends Model{
 
 
 
-    public function sluggable(){
+    /** SETTERS **/
+    
+    public function setDvPayeeAttribute($value){
+
+        $this->attributes['dv_payee'] = strtoupper($value); 
+
+    }
+
+
+
+
+    public function setDvAmountAttribute($value){
+
+        $this->attributes['dv_amount'] = str_replace(',', '', $value);
+
+    }
+
+
+
+
+
+    public function setDvUnitCodeAttribute($value){
+
+        $this->attributes['dv_unit_code'] = $value == null ? '' : $value; 
+
+    }
+
+
+
+
+
+
+    /** GETTERS **/
+
+    public function getDateRequests(Request $request){
 
         return [
-            'slug' => [
-                'source' => [ 'dv_proj_code', 'HashedSlug']
-            ]
+
+            'fromDate' => Carbon::parse($request->fromDate)->format('Y-m-d'),
+            'toDate' => Carbon::parse($request->toDate)->format('Y-m-d')
+
         ];
 
     }
@@ -271,6 +307,8 @@ class DV extends Model{
     public static function getCreatedDefaultsAttribute(){
 
         return [
+
+            'user_id' => Auth::user()->user_id,
             'doc_no' => 'DV' . rand(1000000, 9999999),
             'dv_date' => Carbon::now()->format('Y-m-d'),
             'created_at' => Carbon::now(),
@@ -279,7 +317,7 @@ class DV extends Model{
             'machine_updated' => gethostname(),
             'ip_created' => request()->ip(), 
             'ip_updated' => request()->ip(), 
-            'user_id' => Auth::user()->user_id,
+
         ];
 
     }
@@ -291,11 +329,13 @@ class DV extends Model{
 
     public static function getUpdatedDefaultsAttribute(){
 
-        return array(
+        return [
+
             'updated_at' => Carbon::now(),
             'machine_updated' => gethostname(),
             'ip_updated' => request()->ip(),
-        );
+
+        ];
 
     }
 

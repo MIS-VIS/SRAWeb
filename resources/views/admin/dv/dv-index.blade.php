@@ -169,7 +169,7 @@
                     @foreach($dvList as $data)
 
                     <div class="thread row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord" 
-                    style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc;" : '' !!} overflow: visible;">
+                    style="{!! Session::has('SESSION_SET_DV_NO_SLUG') && Session::get('SESSION_SET_DV_NO_SLUG') == $data->slug ? "background-color: #b3e5fc;" : '' !!} overflow: visible;">
                         <div class="info col px-6">
                             <div class="name row no-gutters align-items-center">
                                 <div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
@@ -311,12 +311,12 @@
     {!! JSHelper::ModalCallDelete() !!}
     {!! ContentHelper::modalDelete('deleteBtn') !!}
 
-    @if(Session::has('deleted'))
+    @if(Session::has('SESSION_DV_DELETE'))
        {!! JSHelper::Snackbar(Session::get('deleted')) !!}
     @endif
 
-    @if(Session::has('set'))
-       {!! JSHelper::Snackbar(Session::get('set')) !!}
+    @if(Session::has('SESSION_SET_DV_NO'))
+       {!! JSHelper::Snackbar(Session::get('SESSION_SET_DV_NO')) !!}
     @endif
 
     <script>

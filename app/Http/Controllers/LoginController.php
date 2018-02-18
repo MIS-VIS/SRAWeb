@@ -48,7 +48,7 @@ class LoginController extends Controller{
           if(Auth::user()->is_logged == true){
 
             Auth::logout();
-            Session::flash('multilog', 'Your account is log-in to another device!!');
+            Session::flash('SESSION_AUTH_MULTI_LOG', 'Your account is log-in to another device!!');
             return redirect('/')->withInput();
 
           }
@@ -59,12 +59,12 @@ class LoginController extends Controller{
 
     	  }
 
-        Session::flash('unactivated', 'Your account is not activated!!');
+        Session::flash('SESSION_AUTH_UNACTIVATED', 'Your account is not activated!!');
         return redirect('/')->withInput();
 
       }
 
-      Session::flash('unmatch', 'Invalid username or password!!');
+      Session::flash('SESSION_AUTH_UNMATCH', 'Invalid username or password!!');
       return redirect('/')->withInput();
 
     }
@@ -75,16 +75,17 @@ class LoginController extends Controller{
 
     public function logout(Request $request) {
 
-      if(Auth::check()){
+        if(Auth::check()){
 
-        $user = $this->user->find(Auth::user()->id);
-        $user->is_logged = false;
-        $user->save();
-        Auth::logout();
-        return redirect('/');
+          $user = $this->user->find(Auth::user()->id);
+          $user->is_logged = false;
+          $user->save();
+          Auth::logout();
+          Session::flush();
+          return redirect('/');
 
-      }
-
+        }
+        
     }
 
 

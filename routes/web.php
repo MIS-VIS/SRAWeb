@@ -19,6 +19,8 @@ Route::post('/logout', 'LoginController@logout')->name('logout');
 
 
 
+
+
 /** ADMIN **/
 Route::group(['prefix'=>'admin', 'as' => 'admin.' , 'middleware' => 'admin'], function () {
 
@@ -55,4 +57,4 @@ Route::group(['prefix'=>'ajax', 'as' => 'ajax.'], function () {
 
 
 /** TESTS **/
-Route::get('/test', 'SampleController@page')->name('sample');
+Route::get('/test', 'SampleController@test')->name('sample');

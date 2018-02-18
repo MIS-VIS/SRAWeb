@@ -242,6 +242,7 @@ return [
         'FormHelper' => App\Libraries\Main\FormHelper::class,
         'ContentHelper' => App\Libraries\Main\ContentHelper::class,
         'JSHelper' => App\Libraries\Main\JSHelper::class,
+        'SanitizeHelper' => App\Libraries\Main\SanitizeHelper::class,
 
         //STATICS
         'DVUtil' => App\Libraries\Statics\DVUtil::class,

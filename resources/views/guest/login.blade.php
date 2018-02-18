@@ -18,12 +18,12 @@
                     '', 'mb-4', 'password', 'Password', 'password', 'password', old('password'), 'required', $errors->first('password'), ''
                 ) !!}
 
-                {!! FormHelper::alert(Session::has('unmatch'), Session::get('unmatch'), 'danger') !!}
-                {!! FormHelper::alert(Session::has('unactivated'), Session::get('unactivated'), 'danger') !!}
-                {!! FormHelper::alert(Session::has('multilog'), Session::get('multilog'), 'danger') !!}
+                {!! FormHelper::alert(Session::has('SESSION_AUTH_UNMATCH'), Session::get('SESSION_AUTH_UNMATCH'), 'danger') !!}
+                {!! FormHelper::alert(Session::has('SESSION_AUTH_UNACTIVATED'), Session::get('SESSION_AUTH_UNACTIVATED'), 'danger') !!}
+                {!! FormHelper::alert(Session::has('SESSION_AUTH_MULTI_LOG'), Session::get('SESSION_AUTH_MULTI_LOG'), 'danger') !!}
 
-                {!! FormHelper::alert(Session::has('logout'), Session::get('logout'), 'danger') !!}
-                {!! FormHelper::alert(Session::has('check'), Session::get('check'), 'danger') !!}
+                {!! FormHelper::alert(Session::has('SESSION_AUTH_LOGOUT'), Session::get('SESSION_AUTH_LOGOUT'), 'danger') !!}
+                {!! FormHelper::alert(Session::has('SESSION_AUTH_RESTRICT'), Session::get('SESSION_AUTH_RESTRICT'), 'danger') !!}
 
                 <div class="remember-forgot-password row no-gutters align-items-center justify-content-between pt-4">
                     <div class="form-check remember-me mb-4">

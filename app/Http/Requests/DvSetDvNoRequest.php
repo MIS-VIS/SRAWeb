@@ -15,15 +15,21 @@ class DvSetDvNoRequest extends FormRequest{
 
 
     public function rules(){
+
         return [
+
             'dv_no' => 'string|nullable|max:20',
             'slug' => 'required|string',
+
         ];
+
     }
 
 
     public function messages(){
+
         return [
+
             'dv_no.string'  => 'Invalid Input! You must enter a valid value',
             'dv_no.max'  => 'The DV No. field may not be greater than 20 characters.',
 
@@ -31,7 +37,10 @@ class DvSetDvNoRequest extends FormRequest{
             'slug.string'  => 'Invalid Input! You must enter a valid value',
 
         ];
+
     }
 
 
+    
+    
 }

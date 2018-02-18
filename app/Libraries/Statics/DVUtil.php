@@ -1,48 +1,8 @@
 <?php
-
 namespace App\Libraries\Statics;
-
-use Route;
 
 
 class DVUtil {
-
-
-
-    public static function formSanitize( $string = null ) {
-
-          $string = strip_tags($string);
-          $string = htmlspecialchars($string);
-          return $string;
-
-    }
-
-
-
-
-  	public static function filterSanitize( $string = null ) {
-
-          $char = array("'", " ");
-          $string = str_replace($char, "", $string);
-          $string = strip_tags($string);
-          $string = htmlspecialchars($string);
-          return $string;
-
-    }
-
-
-
-
-    public static function searchSanitize( $string = null ) {
-
-        $string = preg_replace('/[^ \w]+/', '', $string);
-        $string = str_replace(" ", "%", $string);
-        $string = strip_tags($string);
-        $string = htmlspecialchars($string);
-        return $string;
-
-    }
-
 
 
 
@@ -76,33 +36,6 @@ class DVUtil {
     public static function userIndexTableHeader(){
 
         return array('Doc No.', 'DV No.', 'Explanation', 'Project Code', 'Created', 'Actions');
-
-    }
-
-
-
-    public static function employeeOptions($array, $var1, $var2, $var3, $var4, $oldValue){
-
-      $string = '';
-
-      foreach($array as $value){
-
-        $string .= '<option value="'. $value->$var1 .'" '. self::condition($value->var1, $oldValue) .'>'. $value->$var2 .' '. substr($value->$var3, 0, 1) .'. '.$value->$var4.'</option>';
-
-      }
-
-      return $string;
-
-    }
-
-
-
-
-    public static function condition($var1, $oldValue){
-
-        $selected = "selected";
-        $empty = "";
-        return $var1 == $oldValue ? $empty : $selected;
 
     }
 

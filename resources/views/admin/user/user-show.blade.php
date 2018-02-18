@@ -131,6 +131,22 @@
                                     <span style="font-size:17px;">Last Login IP: <strong>{{ $user->last_login_ip }}</strong></span>
                                 </div>
 
+                                <div class="col-md-12">
+                                    <span style="font-size:17px;">&nbsp;</span>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <span style="font-size:17px;">&nbsp;</span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <span style="font-size:17px;">&nbsp;</span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <span style="font-size:17px;">&nbsp;</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>

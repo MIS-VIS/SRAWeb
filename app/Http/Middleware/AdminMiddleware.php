@@ -13,12 +13,8 @@ use App\Submenu;
 class AdminMiddleware{
 
 
-
-
     protected $menu;
     protected $submenu;
-
-
 
 
 
@@ -57,7 +53,7 @@ class AdminMiddleware{
                 }
 
                 Auth::logout();
-                Session::flash('logout', 'Your account has been Logout or Deactivated!');
+                Session::flash('SESSION_AUTH_LOGOUT', 'Your account has been Logout or Deactivated!');
                 return redirect('/');
 
             }
@@ -66,7 +62,7 @@ class AdminMiddleware{
 
         }
 
-        Session::flash('check', 'Please log-in to start your session!');
+        Session::flash('SESSION_AUTH_RESTRICT', 'Please log-in to start your session!');
         return redirect('/');
         
     }
