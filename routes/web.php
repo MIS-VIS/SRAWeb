@@ -13,6 +13,7 @@ Route::group(['middleware' => 'guest'], function () {
 
 
 /** LOGOUT **/
+Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::post('/logout', 'LoginController@logout')->name('logout');
 
 

@@ -75,6 +75,8 @@ class LoginController extends Controller{
 
     public function logout(Request $request) {
 
+      if($request->isMethod('POST')){
+
         if(Auth::check()){
 
           $user = $this->user->find(Auth::user()->id);
@@ -85,7 +87,11 @@ class LoginController extends Controller{
           return redirect('/');
 
         }
+
+      }
         
+      return abort(403);
+
     }
 
 
