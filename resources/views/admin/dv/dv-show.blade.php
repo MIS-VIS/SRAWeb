@@ -157,12 +157,12 @@
 								</div>
 
 
-								<div class="col-sm-9" style="border-style:solid; border-top-style: none; height:35em;">
+								<div class="col-sm-9" style="border-style:solid; border-top-style: none; height:30em;">
 									<div class="row" style="padding-left:10px; padding-top:10px;">
 										<pre style="font-family:Arial; font-size:16px; white-space: pre-wrap; white-space: -moz-pre-wrap;  white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;">{!! $dv->dv_explanation !!}</pre>
 									</div>
 								</div>
-								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none; height:35em;">
+								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none; height:30em;">
 									<div class="row" style="padding-left:10px; padding-top:10px;">
 										<span style="font-size:20px;  position: static; padding-left:60px;"><strong>{!! number_format($dv->dv_amount, 2) !!}</strong></span>
 									</div>
