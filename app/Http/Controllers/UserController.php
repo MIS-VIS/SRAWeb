@@ -46,9 +46,9 @@ class UserController extends Controller{
 
   
     public function store(UserFormRequest $request){
-
+        
         $usernameExist = $this->user->where('username', $request->username)->count();
-
+        
         if(!$usernameExist == 1 && $request){
 
             $user = $this->user->create($request->all() + $this->user->createdDefaults);

@@ -69,8 +69,8 @@ class DVController extends Controller{
         if(count($dv) == 1){
 
             $dv->update(['dv_no' => $request->dv_no] + $this->dv->updatedDefaults);
-            Session::flash('slug', $dv->slug);
-            Session::flash('set', 'DV No. Successfully Set !');
+            Session::flash('SESSION_SET_DV_NO_SLUG', $dv->slug);
+            Session::flash('SESSION_SET_DV_NO', 'DV No. Successfully Set !');
             return redirect()->back();
 
         }
@@ -98,8 +98,8 @@ class DVController extends Controller{
         if($request){
 
             $dv = $this->dv->create($request->all() + $this->dv->createdDefaults);
-            Session::flash('slug', $dv->slug);
-            Session::flash('created', 'Your data has been successfully saved!');
+            Session::flash('SESSION_DV_STORE_SLUG', $dv->slug);
+            Session::flash('SESSION_DV_STORE', 'Your data has been successfully saved!');
             return redirect()->back();
 
         }
@@ -155,8 +155,8 @@ class DVController extends Controller{
         if(count($dv) == 1){
 
             $dv->update($request->all() + $this->dv->updatedDefaults);
-            Session::flash('slug', $dv->slug);
-            Session::flash('updated', 'Your data has been successfully updated!');
+            Session::flash('SESSION_DV_UPDATE_SLUG', $dv->slug);
+            Session::flash('SESSION_DV_UPDATE', 'Your data has been successfully updated!');
             return view('admin.dv.dv-edit')->with('dv', $dv);
 
         }
@@ -176,7 +176,7 @@ class DVController extends Controller{
         if(count($dv) == 1){
 
             $dv->delete();
-            Session::flash('deleted', 'Your data has been successfully Deleted!');
+            Session::flash('SESSION_DV_DELETE', 'Your data has been successfully Deleted!');
             return redirect()->back();
 
         }

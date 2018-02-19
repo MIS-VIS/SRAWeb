@@ -7,6 +7,10 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta Http-Equiv="Cache-Control" Content="no-cache">
+  <meta Http-Equiv="Pragma" Content="no-cache">
+  <meta Http-Equiv="Expires" Content="0"> 
+  
   <title>Sugar Regulatory Administration</title>
 
   <link rel="shortcut icon" href="{{ asset('template/images/logos/favicon.ico') }}"/>

@@ -21,7 +21,7 @@
             <div class="page-content-card" id="dv-card">
                 <div class="p-5 col-12">
 
-    	   {!!ContentHelper::loader('loader')!!} 
+    	        {!!ContentHelper::loader('loader')!!} 
                 
                 {!! Form::open(['route' => 'admin.dv.store', 'method' => 'POST', 'class' => 'row', 'id' => 'dvForm']) !!}
                 
@@ -132,8 +132,8 @@
 
 @section('modals')
 
-    @if(Session::has('created'))
-        {!! ContentHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('created'), route('admin.dv.show', Session::get('slug')) ) !!}
+    @if(Session::has('SESSION_DV_STORE'))
+        {!! ContentHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('SESSION_DV_STORE'), route('admin.dv.show', Session::get('SESSION_DV_STORE_SLUG')) ) !!}
     @endif
 
 @endsection
@@ -153,4 +153,5 @@
     {!! JSHelper::SelectNormal('dv_fund_source') !!}
     {!! JSHelper::SelectNormal('dv_mop') !!}
     {!! JSHelper::PriceInput('dv_amount') !!}
+    
 @endsection

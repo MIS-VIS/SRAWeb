@@ -72,7 +72,7 @@
             <div class="todo-items" style="overflow: visible;">
                 @foreach($dvIncomings as $data)
                         <div class="todo-item pr-2 py-4 row no-gutters flex-wrap flex-sm-nowrap align-items-center" 
-                            style="{!! Session::has('slug') && Session::get('slug') == $data->slug ? "background-color: #b3e5fc;" : ''!!} overflow: visible;">
+                            style="{!! Session::has('SESSION_SET_DV_NO_SLUG') && Session::get('SESSION_SET_DV_NO_SLUG') == $data->slug ? "background-color: #b3e5fc;" : ''!!} overflow: visible;">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
                             <div class="info col px-4">
                                 <div class="title">
@@ -117,7 +117,7 @@
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button">Set DV No.</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ SanitizeHelper::stringOutputSanitize($data->slug) }}" data-value="{{ SanitizeHelper::stringOutputSanitize($data->dv_no) }}" id="dv_no_button">Set DV No.</a>
                                         <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
                                     </div>
                                     
@@ -162,9 +162,11 @@
 
 
 @section('modals')
+        
+
+
     <div id="setDvNo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
-            
                 <div class="modal-content">
                     <div class="modal-body" id="set_dv_no_body">
                         {!! Form::open(['route' => 'admin.dv.setDvNo', 'method' => 'POST']) !!}
@@ -183,15 +185,19 @@
                 </div>
         </div>
     </div>
+
 @endsection
 
 
 
 @section('scripts')
     
-    @if(Session::has('set'))
-       {!! JSHelper::Snackbar(Session::get('set')) !!}
+    @if(Session::has('SESSION_SET_DV_NO'))
+       {!! JSHelper::Snackbar(Session::get('SESSION_SET_DV_NO')) !!}
     @endif
+
+
+    /** SET DV NO. **/
 
     <script>
         $(document).on("click", "#dv_no_button", function () {

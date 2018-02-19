@@ -17,6 +17,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-auto">
+                    <a href="" class="btn btn-secondary fuse-ripple-ready">
+                        <i style="font-size:15px;" class="icon icon-border-color"></i> Back
+                    </a>
+                </div>
             </div>
             <div class="page-content-card" id="dv-card">
                 <div class="p-5 col-12">
@@ -68,7 +73,7 @@
                     ) !!}
 
                     {!! FormHelper::textArea(
-                        'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', $dv->dv_explanation, $errors->first('dv_explanation'), 'required', '30'
+                        'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', $dv->dv_explanation , $errors->first('dv_explanation'), 'required', '30'
                     ) !!}
 
                     {!! FormHelper::textBox(
@@ -129,8 +134,8 @@
 
 @section('modals')
 
-    @if(Session::has('updated'))
-        {!! ContentHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('updated'), route('admin.dv.show', Session::get('slug')) ) !!}
+    @if(Session::has('SESSION_DV_UPDATE'))
+        {!! ContentHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('SESSION_DV_UPDATE'), route('admin.dv.show', Session::get('SESSION_DV_UPDATE_SLUG')) ) !!}
     @endif
 
 @endsection
@@ -138,6 +143,7 @@
 
 
 @section('scripts')
+
     {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/ajax/response-unit/', 'dept_unit', 'dept_unit') !!}
     {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/ajax/response-accountCode/', 'acct_code', 'acct_code') !!}
     {!! JSHelper::ModalShow('dvConfirmUpdate') !!}
@@ -149,4 +155,5 @@
     {!! JSHelper::SelectNormal('dv_fund_source') !!}
     {!! JSHelper::SelectNormal('dv_mop') !!}
     {!! JSHelper::PriceInput('dv_amount') !!}
+    
 @endsection
