@@ -125,11 +125,11 @@ class FormHelper {
 
     /** TEXTAREA **/
 
-    public static function textArea($class, $label, $title, $name, $value, $errors, $required, $height){
+    public static function textArea($class, $label, $title, $name, $value, $errors, $required){
 
       return '<div class="form-group '.$class.' summernote">
                 <label for="'.$label.'" style="color:#696969;"><strong>'.$title.'</strong></label>
-                <textarea class="form-control" id="'.$name.'" name="'.$name.'" rows="3" style="height:'.$height.'em;" '.$required.'>'. htmlspecialchars($value) .'</textarea>
+                <textarea class="form-control" id="'.$name.'" name="'.$name.'" rows="3" '.$required.'>'. htmlspecialchars($value) .'</textarea>
                 <small class="text-danger">'. $errors .'</small>
               </div>';
 

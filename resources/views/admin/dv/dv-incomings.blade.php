@@ -73,10 +73,10 @@
                 @foreach($dvIncomings as $data)
                         <div class="todo-item pr-2 py-4 row no-gutters flex-wrap flex-sm-nowrap align-items-center" 
                             style="{!! Session::has('SESSION_SET_DV_NO_SLUG') && Session::get('SESSION_SET_DV_NO_SLUG') == $data->slug ? "background-color: #b3e5fc;" : ''!!} overflow: visible;">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="avatar mr-2 bg-primary">{{ substr($data->user->firstname, 0, 1) }}</div>
                             <div class="info col px-4">
                                 <div class="title">
-                                    {{ $data->dv_payee }}
+                                    {{ $data->user->fullname }}
                                 </div>
                                 <div class="notes mt-1">
                                     <span style="margin-top:-10px;">DV No: <strong>{!! $data->dv_no == null ? '<span class="text-danger">Not Set</span>' : $data->dv_no !!}</strong></span>
@@ -111,10 +111,8 @@
 
                                 <div class="dropdown show">
 
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action
-                                    </a>
+                                    <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ SanitizeHelper::stringOutputSanitize($data->slug) }}" data-value="{{ SanitizeHelper::stringOutputSanitize($data->dv_no) }}" id="dv_no_button">Set DV No.</a>

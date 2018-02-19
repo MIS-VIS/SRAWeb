@@ -74,7 +74,7 @@
         
 
                     {!! FormHelper::textArea(
-                        'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', old('dv_explanation'), $errors->first('dv_explanation'), 'required', '30'
+                        'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', old('dv_explanation'), $errors->first('dv_explanation'), 'required'
                     ) !!}
 
                     {!! FormHelper::textBox(
@@ -145,7 +145,7 @@
     {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/ajax/response-unit/', 'dept_unit', 'dept_unit') !!}
     {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/ajax/response-accountCode/', 'acct_code', 'acct_code') !!}
     {!! JSHelper::ModalShow('dvConfirmAdd') !!}
-    {!! JSHelper::RichText('dv_explanation') !!}
+    {!! JSHelper::RichText('dv_explanation', '450') !!}
     {!! JSHelper::SelectSearch('dv_dept_code') !!}
     {!! JSHelper::SelectSearch('dv_unit_code') !!}
     {!! JSHelper::SelectSearch('dv_proj_code') !!}

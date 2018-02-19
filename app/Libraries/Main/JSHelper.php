@@ -20,15 +20,20 @@ class JSHelper {
 			                    url: "'.$route.'"+id,
 			                    type: "GET",
 			                    dataType: "json",
-			                    success:function(data) {         
+			                    success:function(data) {       
+			                      
 			                        $("#'. $nameSub .'").empty();
+
 		                        	$.each(data, function(key, value) {
-		                        			$("#'. $nameSub .'").append("<option value='.$string.'"+ value.'.$key.' +"'.$string.'>"+ value.'.$value.' +"</option>");
-		                        	});
+	                        			$("#'. $nameSub .'").append("<option value='.$string.'"+ value.'.$key.' +"'.$string.'>"+ value.'.$value.' +"</option>");
+	                        		});
+
+		                        	$("#'. $nameSub .'").append("<option value>Select</option>");  
+			            
 			                    }
 			                });
 			            }else{
-			                $("#'.$nameSub.'").empty();
+			            	$("#'. $nameSub .'").empty();
 			            }
 			        });
 			    });
@@ -107,12 +112,12 @@ class JSHelper {
 
 
 
-    public static function RichText($id){
+    public static function RichText($id, $height){
 
       return '<script>
 	            $(document).ready(function() {
 	                $("#'.$id.'").summernote({
-	                     height: 500,
+	                     height: '. $height .',
 	                     toolbar: [
 	                        ["style", ["style"]],
 	                        ["text", ["bold", "italic", "underline", "color", "clear"]],

@@ -99,6 +99,14 @@ class User extends Authenticatable{
 
 
 
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'user_id');
+    }
+
+
+
+
     public function sluggable(){
 
         return [
@@ -145,6 +153,24 @@ class User extends Authenticatable{
 
 
     /** Getters **/
+
+    public function getFullnameAttribute(){
+
+        return strtoupper($this->firstname . " " . substr($this->middlename , 0, 1) . ". " . $this->lastname);
+
+    }
+
+
+
+
+    public function getFullnameShortAttribute(){
+
+        return strtoupper(substr($this->firstname , 0, 1) . ". " . $this->lastname);
+
+    }
+
+
+
 
     public function getLastUserAttribute(){
 

@@ -157,18 +157,16 @@
 					                <tbody>
 
 					                	@foreach($dvUserList as $data)
-
+                                            
 					                        <tr>
-
 					                        	<td>{!! $data->doc_no !!}</td>
-                                                <td>{!! $data->dv_no == '' ? '<span class="badge badge-danger">Not Set</span></td>' : $data->dv_no !!}
-					                            <td>{!! str_limit(strip_tags($data->dv_explanation),50) !!}</td>
+                                                <td>{!! $data->dv_no == '' ? '<span class="badge bg-deep-orange-500 text-auto">Filed</span>' : '<span class="badge bg-teal-500 text-auto">Processing..</span>' !!}</td>
 					                            <td>{!! $data->dv_proj_code !!}</td>
 					                            <td>{{ Carbon::parse($data->created_at)->format('M d, Y') }}</td>
 					                            <td>
                                                     <div class="actions row no-gutters">
                                                         <div class="dropdown show">
-                                                            <a class="btn btn-md btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 Action
                                                             </a>
 

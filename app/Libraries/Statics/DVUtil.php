@@ -35,7 +35,7 @@ class DVUtil {
 
     public static function userIndexTableHeader(){
 
-        return array('Doc No.', 'DV No.', 'Explanation', 'Project Code', 'Created', 'Actions');
+        return array('Doc No.', 'Status', 'Project Code', 'Created', 'Actions');
 
     }
 

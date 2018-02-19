@@ -18,8 +18,8 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="" class="btn btn-secondary fuse-ripple-ready">
-                        <i style="font-size:15px;" class="icon icon-border-color"></i> Back
+                    <a href="" class="btn btn-secondary fuse-ripple-ready" onclick="window.history.back()">
+                        <i style="font-size:15px;" class="icon-arrow-left"></i> Back
                     </a>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     ) !!}
 
                     {!! FormHelper::textArea(
-                        'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', $dv->dv_explanation , $errors->first('dv_explanation'), 'required', '30'
+                        'col-md-9', 'dv_explanation', 'Explanation:', 'dv_explanation', $dv->dv_explanation , $errors->first('dv_explanation'), 'required'
                     ) !!}
 
                     {!! FormHelper::textBox(
@@ -147,7 +147,7 @@
     {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_unit_code', '/ajax/response-unit/', 'dept_unit', 'dept_unit') !!}
     {!! JSHelper::AjaxSelectToSelect('dv_dept_code', 'dv_proj_code', '/ajax/response-accountCode/', 'acct_code', 'acct_code') !!}
     {!! JSHelper::ModalShow('dvConfirmUpdate') !!}
-    {!! JSHelper::RichText('dv_explanation') !!}
+    {!! JSHelper::RichText('dv_explanation', '450') !!}
     {!! JSHelper::SelectSearch('dv_dept_code') !!}
     {!! JSHelper::SelectSearch('dv_unit_code') !!}
     {!! JSHelper::SelectSearch('dv_proj_code') !!}

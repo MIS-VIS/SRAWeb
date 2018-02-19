@@ -168,55 +168,61 @@
 
                     @foreach($dvList as $data)
 
-                    <div class="thread row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 unread" data-form="dvRecord" 
-                    style="{!! Session::has('SESSION_SET_DV_NO_SLUG') && Session::get('SESSION_SET_DV_NO_SLUG') == $data->slug ? "background-color: #b3e5fc;" : '' !!} overflow: visible;">
-                        <div class="info col px-6">
-                            <div class="name row no-gutters align-items-center">
-                                <div class="avatar mr-2 bg-blue">{!! substr($data->dv_payee, 0, 1) !!}</div>
-                                <span>&nbsp;<strong>{{ $data->dv_payee }}</strong></span>
-                            </div>
+                        <div class="contacts-list card">
 
-                            <div class="message">
-                                <p style="margin-top:5px;">Explanation: <strong>{!! str_limit(strip_tags($data->dv_explanation),75) !!}</strong></p>
-                                <p style="margin-top:-10px;">DV No: <strong>{!! $data->dv_no == null ? '<span class="text-danger">Not Set</span>' : $data->dv_no !!}</strong></p>
-                                <p style="margin-top:-10px;">Document No: <strong>{{ $data->doc_no }}</strong></p>
-                                <p style="margin-top:-10px;">Fund Source: <strong>{{ $data->dv_fund_source }}</strong></p>
-                                <div class="labels">
-                                    <div class="label badge bg-primary-50 text-auto" style="background-color:#ececee;">
-                                        <span style="font-size:14px;">Department: <strong>{{ $data->dv_dept_code }}</strong></span>
-                                    </div>
-                                    <div class="label badge bg-primary-50 text-auto" style="background-color:#ececee;">
-                                        <span style="font-size:14px;">Unit: <strong>{{ $data->dv_unit_code }}</strong></span>
-                                    </div>
-                                    <div class="label badge bg-primary-50 text-auto" style="background-color:#ececee;">
-                                        <span style="font-size:14px;">Project Code: <strong>{{ $data->dv_proj_code }}</strong></span>
+                            <!-- CONTACT ITEM -->
+                            <div class="contact-item row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready"
+                            style="{!! Session::has('SESSION_SET_DV_NO_SLUG') && Session::get('SESSION_SET_DV_NO_SLUG') == $data->slug ? "background-color: #b3e5fc;" : '' !!} overflow: visible;"
+                            >
+
+                                <div class="avatar mr-2 bg-primary">{{ substr($data->user->firstname, 0, 1) }} </div>
+
+                                <div class="col-2 text-truncate font-weight-bold px-1">{{ $data->user->fullnameShort }}</div>
+
+                                <div class="col email text-truncate px-1 d-none d-xl-flex">
+                                    {{ $data->dv_proj_code }}
+                                </div>
+
+                                <div class="col-3 job-title px-1 d-none d-sm-flex">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span><strong>Doc No :</strong> {{ $data->doc_no }}</span><br>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span><strong>DV No :</strong> {!! $data->dv_no == null ? '&nbsp<span class="text-danger">Not Set</span>' : $data->dv_no !!}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="col-12 col-sm-auto d-flex flex-sm-column justify-content-center align-items-center">
-                            <div class="time mb-2" style="font-size:17px; padding-bottom:15px;">{{ Carbon::parse($data->created_at)->format('M d, Y') }}</div>
+                                <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                    {{ Carbon::parse($data->created_at)->format('M d, Y') }}
+                                </div>
+
+                                <div class="col-auto actions">
+
+                                    <div class="row no-gutters">
                             
-                            <div class="actions row no-gutters">
-                                <div class="dropdown show">
-                                    <a class="btn btn-md btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action
-                                    </a>
+                                        <div class="actions row no-gutters">
+                                            <div class="dropdown show">
+                                                <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</a>
 
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button"">Set DV No.</a>
-                                        <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
-                                        <a class="dropdown-item" href="{{ route('admin.dv.edit', $data->slug) }}">Edit</a>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteBtn" data-slug="{{ $data->slug }}" data-url="{{ route('admin.dv.destroy', $data->slug) }}" id="delete_button">Delete</a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setDvNo" data-slug="{{ $data->slug }}" data-value="{{ $data->dv_no }}" id="dv_no_button"">Set DV No.</a>
+                                                    <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
+                                                    <a class="dropdown-item" href="{{ route('admin.dv.edit', $data->slug) }}">Edit</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteBtn" data-slug="{{ $data->slug }}" data-url="{{ route('admin.dv.destroy', $data->slug) }}" id="delete_button">Delete</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
                                     </div>
-
                                 </div>
                             </div>
+                            <!-- CONTACT ITEM -->
 
                         </div>
-                    </div>
-                    <div class="divider"></div>
 
                     @endforeach
 
@@ -226,7 +232,6 @@
                         </div>
                     @endif
 
-                    <div class="divider"></div>
                     <div class="toolbar row no-gutters align-items-center p-sm-3">
                         <div class="col">
                             <div class="row no-gutters align-items-center">
@@ -312,7 +317,7 @@
     {!! ContentHelper::modalDelete('deleteBtn') !!}
 
     @if(Session::has('SESSION_DV_DELETE'))
-       {!! JSHelper::Snackbar(Session::get('deleted')) !!}
+       {!! JSHelper::Snackbar(Session::get('SESSION_DV_DELETE')) !!}
     @endif
 
     @if(Session::has('SESSION_SET_DV_NO'))

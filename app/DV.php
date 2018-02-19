@@ -92,6 +92,12 @@ class DV extends Model{
 
 
 
+    public function user(){
+        return $this->hasOne('App\User', 'user_id', 'user_id');
+    }
+
+
+
 
     public function getRouteKeyName(){
 
@@ -261,17 +267,6 @@ class DV extends Model{
         $this->attributes['dv_amount'] = str_replace(',', '', $value);
 
     }
-
-
-
-
-
-    public function setDvUnitCodeAttribute($value){
-
-        $this->attributes['dv_unit_code'] = $value == null ? '' : $value; 
-
-    }
-
 
 
 

@@ -21,6 +21,9 @@
         		<a href="{{ route('admin.dv.edit', $dv->slug) }}" class="btn btn-secondary fuse-ripple-ready">
                     <i style="font-size:15px;" class="icon icon-border-color"></i> Edit
                 </a>
+                <a href="" class="btn btn-secondary fuse-ripple-ready" onclick="window.history.back()">
+                    <i style="font-size:15px;" class="icon-arrow-left"></i> Back
+                </a>
             </div>
         </div>
         <div class="page-content-card">
