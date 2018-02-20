@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 
@@ -101,7 +102,7 @@ class User extends Authenticatable{
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'user_id');
+        return $this->belongsTo('App\DV', 'user_id', 'user_id');
     }
 
 
@@ -136,6 +137,43 @@ class User extends Authenticatable{
         return $this->where('slug', $slug)->firstOrFail();
 
     }
+
+
+
+
+    /** QUERIES **/
+
+    public function indexFilter(Request $request, $paginate){
+
+        $user = $this->newQuery();
+        $search = $request->search;
+
+        if(!$search == null){
+            $user->where(function ($user) use ($search) {
+                $user->where('firstname', 'LIKE', '%'. $search .'%')
+                   ->orwhere('middlename', 'LIKE', '%'. $search .'%')
+                   ->orwhere('lastname', 'LIKE', '%'. $search .'%')
+                   ->orwhere('username', 'LIKE', '%'. $search .'%');
+            });
+        }
+
+        if(!$request->status == null){
+            $user->where('is_logged', '=', $request->status);
+        }
+
+        // if(!$request->fund_source == null){
+        //     $dv->where('dv_fund_source', '=', $request->fund_source);
+        // }
+
+        // if(!$request->fromDate == null || !$request->toDate == null){
+        //     $dv->whereBetween('dv_date', [$date['fromDate'], $date['toDate']]);
+        // }
+
+        return $user->orderBy('created_at', 'DESC')
+                    ->paginate($paginate);
+
+    }
+
 
 
 

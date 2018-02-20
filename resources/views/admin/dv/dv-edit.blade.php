@@ -32,12 +32,12 @@
 
                     {!! FormHelper::padding('col-md-12') !!}
 
-                    {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', DVUtil::selectProjectId(), $dv->dv_project_id, $errors->first('dv_project_id'), 'required'
+                    {!! FormHelper::dropdownDynamic(
+                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', $projects, 'project_id', 'project_address', $dv->dv_project_id , $errors->first('dv_project_id'), 'required'
                     ) !!}
 
-                    {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', DVUtil::selectFundSource(), $dv->dv_fund_source, $errors->first('dv_fund_source'), 'required'
+                    {!! FormHelper::dropdownDynamic(
+                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', $fundSource, 'fund_source_name', 'fund_source_name', $dv->dv_fund_source , $errors->first('dv_fund_source'), 'required'
                     ) !!}
 
                     {!! FormHelper::dropdownStatic(
@@ -136,7 +136,7 @@
 
     @if(Session::has('SESSION_DV_UPDATE'))
 
-        {!! ContentHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('SESSION_DV_UPDATE'), route('admin.dv.show', Session::get('SESSION_DV_UPDATE_SLUG')) ) !!}
+        {!! ModalHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('SESSION_DV_UPDATE'), route('admin.dv.show', Session::get('SESSION_DV_UPDATE_SLUG')) ) !!}
         
     @endif
 

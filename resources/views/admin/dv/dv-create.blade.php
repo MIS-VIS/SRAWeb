@@ -24,13 +24,13 @@
     	        {!!ContentHelper::loader('loader')!!} 
                 
                 {!! Form::open(['route' => 'admin.dv.store', 'method' => 'POST', 'class' => 'row', 'id' => 'dvForm']) !!}
-                
-                    {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', DVUtil::selectProjectId(), old('dv_project_id'), $errors->first('dv_project_id'), 'required'
+
+                    {!! FormHelper::dropdownDynamic(
+                        'col-md-4', 'dv_project_id', 'Station:', 'dv_project_id', $projects, 'project_id', 'project_address', old('dv_project_id') , $errors->first('dv_project_id'), 'required'
                     ) !!}
 
-                    {!! FormHelper::dropdownStatic(
-                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', DVUtil::selectFundSource(), old('dv_fund_source'), $errors->first('dv_fund_source'), 'required'
+                    {!! FormHelper::dropdownDynamic(
+                        'col-md-4', 'dv_fund_source', 'Fund Source:', 'dv_fund_source', $fundSource, 'fund_source_name', 'fund_source_name', old('dv_fund_source') , $errors->first('dv_fund_source'), 'required'
                     ) !!}
 
                     {!! FormHelper::dropdownStatic(
@@ -133,7 +133,7 @@
 @section('modals')
 
     @if(Session::has('SESSION_DV_STORE'))
-        {!! ContentHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('SESSION_DV_STORE'), route('admin.dv.show', Session::get('SESSION_DV_STORE_SLUG')) ) !!}
+        {!! ModalHelper::modalPrint('dvConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('SESSION_DV_STORE'), route('admin.dv.show', Session::get('SESSION_DV_STORE_SLUG')) ) !!}
     @endif
 
 @endsection

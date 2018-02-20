@@ -13,7 +13,7 @@
                     </div>
                     <div class="logo-text">
                         <div class="h4">Print Voucher</div>
-                        <div class="">Doc No: {{ SanitizeHelper::stringOutputSanitize($dv->doc_no) }}</div>
+                        <div class="">Doc No: {{ $dv->doc_no }}</div>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
 								</div>
 								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none;">
 									<span style="font-size:15px;"><strong>No.</strong></span><br>
-									<span style="font-size:20px; font-weight:bold;"> {{ SanitizeHelper::stringOutputSanitize($dv->dv_no) }} </span>
+									<span style="font-size:20px; font-weight:bold;"> {{ $dv->dv_no }} </span>
 								</div>
 
 
@@ -119,15 +119,15 @@
 									<center><span style="font-size:16px; margin-left:-20px;"><strong>Payee:</strong></span></center>
 								</div>
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding-top:2px;">
-									<span style="font-size:16px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_payee) }}</strong></span>
+									<span style="font-size:16px;"><strong>{{ $dv->dv_payee }}</strong></span>
 								</div>
 								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none;">
 									<span style="font-size:13px;"><strong>TIN/Employee No.:</strong></span><br>
-									<span style="font-size:19px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_tin) }}</strong></span>
+									<span style="font-size:19px;"><strong>{{ $dv->dv_tin }}</strong></span>
 								</div>
 								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none;">
 									<span style="font-size:13px;"><strong>BUR No.:</strong></span><br>
-									<span style="font-size:19px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_bur_no) }}</strong></span>
+									<span style="font-size:19px;"><strong>{{ $dv->dv_bur_no }}</strong></span>
 								</div>
 
 
@@ -135,18 +135,18 @@
 									<center><span style="font-size:16px; margin-left:-12px"><strong>Address:</strong></span></center>
 								</div>
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding-top:12px;">
-									<span style="font-size:16px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_address) }}</strong></span>
+									<span style="font-size:16px;"><strong>{{ $dv->dv_address }}</strong></span>
 								</div>
 								<div class="col-sm-6" style="border-style:solid; border-top-style: none; border-left-style: none;">
 									<center><span style="font-size:13px;"><strong>Responsibility Center</strong></span></center>
 									<div class="row">
 										<div class="col-sm-6" style="border-style:solid; border-left-style: none; border-bottom-style: none; padding:5px;">
 											<span style="font-size:13px;"><strong>Office/Unit/Project:</strong></span><br>
-											<span style="font-size:15px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_unit_code) }}</strong></span>
+											<span style="font-size:15px;"><strong>{{ $dv->dv_unit_code }}</strong></span>
 										</div>
 										<div class="col-sm-6" style="border-style:solid; border-left-style: none; border-bottom-style: none; border-right-style: none; padding:5px;">
 											<span style="font-size:13px;"><strong>Code:</strong></span><br>
-											<span style="font-size:15px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_proj_code) }}</strong></span>
+											<span style="font-size:15px;"><strong>{{ $dv->dv_proj_code }}</strong></span>
 										</div>
 									</div>
 								</div>
@@ -167,7 +167,7 @@
 								</div>
 								<div class="col-sm-3" style="border-style:solid; border-top-style: none; border-left-style: none; height:30em;">
 									<div class="row" style="padding-left:10px; padding-top:10px;">
-										<span style="font-size:20px;  position: static; padding-left:60px;"><strong>{{ SanitizeHelper::stringOutputSanitize(number_format($dv->dv_amount, 2)) }}</strong></span>
+										<span style="font-size:20px;  position: static; padding-left:60px;"><strong>{{ number_format($dv->dv_amount, 2) }}</strong></span>
 									</div>
 								</div>
 
@@ -184,7 +184,7 @@
 										<span style="border:solid; border-top-style: none; border-left-style: none;"><strong>&nbsp;B&nbsp;</strong></span>
 										<span style="padding-left:10px; padding-top:5px; font-size:16px;"><strong>Approved for Payment</strong></span>
 									</div>
-									<span style="padding-left:250px; font-size:25px;"><strong>{{ SanitizeHelper::stringOutputSanitize(number_format($dv->dv_amount, 2)) }}</strong></span>
+									<span style="padding-left:250px; font-size:25px;"><strong>{{ number_format($dv->dv_amount, 2) }}</strong></span>
 								</div>
 
 
@@ -204,13 +204,13 @@
 									<span style="font-size:11px; font-weight:bold;">Printed Name:</span>
 								</div>
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; padding:0px; margin-top:0px;">
-									<center><span style="font-size:17px; font-weight:bold;">{{ SanitizeHelper::stringOutputSanitize($dv->dv_certified_by) }}</span></center>
+									<center><span style="font-size:17px; font-weight:bold;">{{ $dv->dv_certified_by }}</span></center>
 								</div>
 								<div class="col-sm-1" style="border-style:solid; border-top-style: none; padding:0px; padding-top:5px; padding-bottom:5px;">
 									<span style="font-size:11px; font-weight:bold;">Printed Name:</span>
 								</div>
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding:0px; margin-top:0px;">
-									<center><span style="font-size:17px; font-weight:bold;">{{ SanitizeHelper::stringOutputSanitize($dv->dv_approved_by) }}</span></center>
+									<center><span style="font-size:17px; font-weight:bold;">{{ $dv->dv_approved_by }}</span></center>
 								</div>
 
 
@@ -220,7 +220,7 @@
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-right-style: none; border-left-style: none;">
 									<div class="row">
 										<div class="col-sm-12" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none;">
-											<center><span style="font-size:17px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_certified_by_position) }}</strong></span></center>
+											<center><span style="font-size:17px;"><strong>{{ $dv->dv_certified_by_position }}</strong></span></center>
 										</div>
 										<div class="col-sm-12" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; border-bottom-style: none;">
 											<center><span style="font-size:12px; font-weight: bold;">Head, Accounting Unit/Authorized Representative</span></center>
@@ -233,7 +233,7 @@
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none;">
 									<div class="row">
 										<div class="col-sm-12" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; ">
-											<center><span style="font-size:17px;"><strong>{{ SanitizeHelper::stringOutputSanitize($dv->dv_approved_by_position) }}</strong></span></center>
+											<center><span style="font-size:17px;"><strong>{{ $dv->dv_approved_by_position }}</strong></span></center>
 										</div>
 										<div class="col-sm-12" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; border-bottom-style: none;">
 											<center><span style="font-size:12px; font-weight: bold;">Agency Head / Authorized Representative</span></center>
@@ -247,13 +247,13 @@
 									<span style="font-size:13px; font-weight: bold;">Date:</span>
 								</div>
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; border-right-style: none; margin-top: 4px;">
-									<span style="font-size:15px; font-weight: bold;">{{ SanitizeHelper::stringOutputSanitize($dv->dv_certified_by_sig_date) }}</span>
+									<span style="font-size:15px; font-weight: bold;">{{ $dv->dv_certified_by_sig_date }}</span>
 								</div>
 								<div class="col-sm-1" style="border-style:solid; border-top-style: none; padding:2px;">
 									<span style="font-size:13px; font-weight: bold;">Date:</span>
 								</div>
 								<div class="col-sm-5" style="border-style:solid; border-top-style: none; border-left-style: none; padding-top:4px;">
-									<span style="font-size:15px; font-weight: bold;">{{ SanitizeHelper::stringOutputSanitize($dv->dv_approved_by_sig_date) }}</span>
+									<span style="font-size:15px; font-weight: bold;">{{ $dv->dv_approved_by_sig_date }}</span>
 								</div>
 
 
@@ -308,13 +308,13 @@
 								<div class="col-sm-12">
 									<div class="row">
 										<div class="col-md-9">
-											<span style="font-size:11px; font-style:italic; margin-left:15px;">Username: {{ SanitizeHelper::stringOutputSanitize(Auth::user()->username) }} &nbsp;|&nbsp; IP Address: {{ SanitizeHelper::stringOutputSanitize($dv->ip_created) }} &nbsp;|&nbsp; Computer Name: {{ SanitizeHelper::stringOutputSanitize($dv->machine_created) }}</span>
+											<span style="font-size:11px; font-style:italic; margin-left:15px;">Username: {{ Auth::user()->username }} &nbsp;|&nbsp; IP Address: {{ $dv->ip_created }} &nbsp;|&nbsp; Computer Name: {{ $dv->machine_created }}</span>
 										</div> 
 										<div class="col-md-3">
 											<span style="font-size:13px;">FM-AFD-ACC-001, Rev. 00</span>
 										</div>
 										<div class="col-md-9">
-											<span style="font-size:12px; font-weight:bold; font-style:italic; margin-left:15px;">DOC NO: {{ SanitizeHelper::stringOutputSanitize($dv->doc_no) }}</span>
+											<span style="font-size:12px; font-weight:bold; font-style:italic; margin-left:15px;">DOC NO: {{ $dv->doc_no }}</span>
 										</div>
 										<div class="col-md-3">
 											<span style="font-size:13px;">Effectivity Date: March 12, 2015</span>

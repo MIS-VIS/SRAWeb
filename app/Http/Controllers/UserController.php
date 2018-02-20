@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Http\Requests\UserFormRequest;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Session;
 
 
@@ -26,9 +27,11 @@ class UserController extends Controller{
 
 
 
-    public function index(){
+    public function index(Request $request){
         
-
+        $userList = $this->user->indexFilter($request, 10);
+        Input::flash();
+        return view('admin.user.user-index', compact('userList'));
 
     }
 
