@@ -22,90 +22,71 @@
         <div class="page-content-wrapper">
 
             {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
-            <aside class="page-sidebar p-6">
 
-                <div class="page-sidebar-card">
-                    <div class="header p-4">
-                        <div class="row no-gutters align-items-center">
-                            <i class="icon-filter"></i>
-                            <span class="font-weight-bold"> &nbsp;&nbsp;&nbsp;Filters</span>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-                        <div class="content">
-                            <div class="p-2">
-                                    
-                                <div class="col-md-12 row" style="margin-bottom:15px;">
-                                    <small>Fund Source</small><br>
-                                    <select name="fund_source" id="fund_source" class="form-control" onchange="this.form.submit()">
-                                        <option value="">None</option>
-                                        <option value="SIDA" {{ old('fund_source') == "SIDA" ? 'selected' : ''}}>SIDA</option>
-                                        <option value="Corporate" {{ old('fund_source') == "Corporate" ? 'selected' : ''}}>CORPORATE</option>
-                                    </select>
-                                    <small class="text-danger">{{ $errors->first('fund_source') }}</small>
-                                </div>
+                <aside class="page-sidebar p-6">
 
-                                <div class="col-md-12 row" style="margin-bottom:15px;">
-                                    <small>Station</small><br>
-                                    <select name="station" id="station" class="form-control" onchange="this.form.submit()">
-                                        <option value="">None</option>
-                                        <option value="1" {{ old('station') == 1 ? 'selected' : ''}}>Bacolod City</option>
-                                        <option value="2" {{ old('station') == 2 ? 'selected' : ''}}>Quezon City</option>
-                                    </select>
-                                    <small class="text-danger">{{ $errors->first('station') }}</small>
-                                </div>
+                    <div class="page-sidebar-card">
 
-
-                                <div class="col-md-12 row" style="margin-bottom:15px;">
-                                    <small>Department</small><br>
-                                    <select name="department" id="department" class="form-control" onchange="this.form.submit()">
-                                        <option value="">None</option>
-                                        @foreach($burProjectsDeptId as $data)
-                                            <option value="{{ $data->dept_id }}" {{ old('department') == $data->dept_id ? 'selected' : ''}}>{{ $data->dept_id }}</option>
-                                        @endforeach
-                                    </select>
-                                    <small class="text-danger">{{ $errors->first('department') }}</small>
-                                </div>
-
-
-                                <div class="col-md-12 row" style="margin-bottom:15px;">
-                                    <small>Unit</small><br>
-                                    <select name="unit" id="unit" class="form-control" onchange="this.form.submit()">
-                                        <option value="">None</option>
-                                        @foreach($departmentsDeptUnit as $data)
-                                            <option value="{{ $data->dept_unit }}" {{ old('unit') == $data->dept_unit ? 'selected' : ''}}>{{ $data->dept_unit }}</option>
-                                        @endforeach
-                                    </select>
-                                    <small class="text-danger">{{ $errors->first('unit') }}</small>
-                                </div>
-
-
-                                <div class="col-md-12 row" style="margin-bottom:15px;">
-                                    <small>Project Code </small>
-                                    <select name="project_code" id="project_code" class="form-control" onchange="this.form.submit()">
-                                        <option value="">None</option>
-                                        @foreach($burProjectsAcctCode as $data)
-                                            <option value="{{ $data->acct_code }}" {{ old('project_code') == $data->acct_code ? 'selected' : ''}}>{{ $data->acct_code }}</option>
-                                        @endforeach
-                                    </select>
-                                    <small class="text-danger">{{ $errors->first('project_code') }}</small>
-                                </div>
-
+                        <div class="header p-4">
+                            <div class="row no-gutters align-items-center">
+                                <i class="icon-filter"></i>
+                                <span class="font-weight-bold"> &nbsp;&nbsp;&nbsp;Filters</span>
                             </div>
                         </div>
-                </div>
+
+                        <div class="divider"></div>
+
+                        <div class="content">
+                            <div class="p-2">
+                                  
+                                {!! 
+                                    DVUtil::filterDropdown('fund_source', 'Fund Source', $fundSource, 'fund_source_name', 'fund_source_name' , old('fund_source'), $errors->first('fund_source')) 
+                                !!}
 
 
-                <br>
+                                {!! 
+                                    DVUtil::filterDropdown('station', 'Station', $projects, 'project_id', 'project_address' , old('station'), $errors->first('station')) 
+                                !!}
 
-                <div class="page-sidebar-card">
-                    <div class="header p-4">
-                        <div class="row no-gutters align-items-center">
-                            <i class="icon-calendar"></i>
-                            <span class="font-weight-bold"> &nbsp;&nbsp;&nbsp; Date Filter</span>
+
+                                {!! 
+                                    DVUtil::filterDropdown('department', 'Department', $burProjectsDeptId, 'dept_id', 'dept_id' , old('department'), $errors->first('department')) 
+                                !!}
+
+
+                                {!! 
+                                    DVUtil::filterDropdown('department', 'Department', $burProjectsDeptId, 'dept_id', 'dept_id' , old('department'), $errors->first('department')) 
+                                !!}
+
+
+                                {!! 
+                                    DVUtil::filterDropdown('unit', 'Unit', $departmentsDeptUnit, 'dept_unit', 'dept_unit' , old('unit'), $errors->first('unit')) 
+                                !!} 
+
+
+                                {!! 
+                                    DVUtil::filterDropdown('project_code', 'Project Code', $burProjectsAcctCode, 'acct_code', 'acct_code' , old('project_code'), $errors->first('project_code')) 
+                                !!} 
+                                
+                            </div>
                         </div>
+                        
                     </div>
-                    <div class="divider"></div>
+
+
+                    <br>
+
+                    <div class="page-sidebar-card">
+
+                        <div class="header p-4">
+                            <div class="row no-gutters align-items-center">
+                                <i class="icon-calendar"></i>
+                                <span class="font-weight-bold"> &nbsp;&nbsp;&nbsp; Date Filter</span>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+
                         <div class="content">
                             <div class="p-2">
 
@@ -129,10 +110,11 @@
 
                             </div>
                         </div>
-                </div>
+
+                    </div>
 
 
-            </aside>
+                </aside>
 
              {!! Form::close() !!}
 

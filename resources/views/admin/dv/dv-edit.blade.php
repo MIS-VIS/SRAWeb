@@ -26,7 +26,7 @@
             <div class="page-content-card" id="dv-card">
                 <div class="p-5 col-12">
 
-                {!!ContentHelper::loader('loader')!!} 
+                {!! ContentHelper::loader('loader') !!} 
                 
                 {!! Form::open(['route' => ['admin.dv.update', $dv->slug], 'method' => 'PUT', 'class' => 'row', 'id' => 'dvForm']) !!}
 
@@ -135,7 +135,9 @@
 @section('modals')
 
     @if(Session::has('SESSION_DV_UPDATE'))
+
         {!! ContentHelper::modalPrint('dvConfirmUpdate', '<i class="icon-file-check"></i> UPDATED!', Session::get('SESSION_DV_UPDATE'), route('admin.dv.show', Session::get('SESSION_DV_UPDATE_SLUG')) ) !!}
+        
     @endif
 
 @endsection

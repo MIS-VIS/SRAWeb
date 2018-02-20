@@ -15,6 +15,8 @@ class ViewServiceProvider extends ServiceProvider{
         View::composer('*', 'App\ViewComposers\BURProjectsComposer');
         View::composer('*', 'App\ViewComposers\DepartmentsComposer');
         View::composer('*', 'App\ViewComposers\SignatoriesComposer');
+        View::composer('*', 'App\ViewComposers\ProjectsComposer');
+        View::composer('*', 'App\ViewComposers\FundSourceComposer');
 
     }
 

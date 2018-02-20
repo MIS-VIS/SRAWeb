@@ -4,7 +4,6 @@ namespace App\Libraries\Main;
 
 use Route;
 
-
 class ContentHelper{
 
 
@@ -115,6 +114,12 @@ class ContentHelper{
     }
 
 
+
+    public static function dropdownStatus($oldValue, $value){
+
+      return $oldValue == $value ? 'selected' : '';
+      
+    }
 
 
 

@@ -11,11 +11,11 @@ class Projects extends Model{
 
 
     protected $attributes = [
-        'project_id' => '',
-        'project_desc' => '',
-        'color' => '',
-        'is_active' => '',
-        'project_address' => '',
+        'project_id' => null,
+        'project_desc' => null,
+        'color' => null,
+        'is_active' => null,
+        'project_address' => null,
     ];
     
 }
