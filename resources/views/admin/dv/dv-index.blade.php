@@ -144,7 +144,7 @@
                             <div class="col-md-8">
                                 {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
                                         <div class="row align-items-center">
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-7">
                                                 <input type="search" class="form-control" placeholder="Search any" name="search" value="{{ old('search') }}">
                                                 <small class="text-danger">{{ $errors->first('search') }}</small>
                                             </div>
