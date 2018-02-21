@@ -33,7 +33,9 @@
             "app/Libraries/Main/ContentHelper.php",
             "app/Libraries/Main/JSHelper.php",
             "app/Libraries/Main/SanitizeHelper.php",
-            "app/Libraries/Statics/DVUtil.php"
+            "app/Libraries/Main/ModalHelper.php",
+            "app/Libraries/Statics/DVUtil.php",
+            "app/Libraries/Statics/userUtil.php"
         ]
     },
     "autoload-dev": {

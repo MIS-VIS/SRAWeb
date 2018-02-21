@@ -55,11 +55,6 @@
 
 
                                 {!! 
-                                    DVUtil::filterDropdown('department', 'Department', $burProjectsDeptId, 'dept_id', 'dept_id' , old('department'), $errors->first('department')) 
-                                !!}
-
-
-                                {!! 
                                     DVUtil::filterDropdown('unit', 'Unit', $departmentsDeptUnit, 'dept_unit', 'dept_unit' , old('unit'), $errors->first('unit')) 
                                 !!} 
 
@@ -90,23 +85,9 @@
                         <div class="content">
                             <div class="p-2">
 
-                                <div class="col-md-12 row" id="datepicker" style="margin-bottom:15px;"">
-                                    <label for="fromDate" style="color:#696969;"><strong>From</strong></label>
-                                    <input type="text" class="form-control is-valid date" id="fromDate" name="fromDate" value="{{ old('fromDate') }}" placeholder="dd-mm-yyyy" required>
-                                    <small class="text-danger">{{ $errors->first('fromDate') }}</small>
-                                </div>
-
-                                <div class="col-md-12 row" id="datepicker" style="margin-bottom:15px;"">
-                                    <label for="toDate" style="color:#696969;"><strong>To</strong></label>
-                                    <input type="text" class="form-control is-valid date" id="toDate" name="toDate" value="{{ old('toDate') }}" placeholder="dd-mm-yyyy" required>
-                                    <small class="text-danger">{{ $errors->first('toDate') }}</small>
-                                </div>
-
-                                <div class="col-md-12 row" style="margin-bottom:15px;">
-                                    <button type="submit" class="btn btn-secondary btn-sm">
-                                        Filter
-                                    </button>
-                                </div>
+                                {!! 
+                                    DVUtil::filterDatepicker(old('fromDate'), $errors->first('fromDate'), old('toDate'), $errors->first('toDate')); 
+                                !!}
 
                             </div>
                         </div>
@@ -125,18 +106,12 @@
                         <div class="row no-gutters align-items-center justify-content-between">
                             <div class="col-md-8">
                                 {!! Form::open(['route' => 'admin.dv.index', 'method' => 'GET']) !!}
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-7">
-                                                <input type="search" class="form-control" placeholder="Search any" name="search" value="{{ old('search') }}">
-                                                <small class="text-danger">{{ $errors->first('search') }}</small>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="submit" class="btn btn-fab btn-primary btn-sm">
-                                                    <i class="icon icon-magnify s-4"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    {!! Form::close() !!}
+                                        
+                                    {!! 
+                                        DVUtil::filterSearch(old('search'), $errors->first('search')); 
+                                    !!}
+
+                                {!! Form::close() !!}
                             </div>
                             <div class="col-auto">
                                 <div class="row no-gutters align-items-center">
@@ -257,7 +232,7 @@
 
 @section('modals')
 
-    {!! ContentHelper::modalDelete('deleteDv') !!}
+    {!! ModalHelper::modalDelete('deleteBtn') !!}
 
     <div id="setDvNo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
@@ -296,7 +271,6 @@
     {!! JSHelper::SelectNormal('station') !!}
     {!! JSHelper::SelectSearch('unit') !!}
     {!! JSHelper::ModalCallDelete() !!}
-    {!! ContentHelper::modalDelete('deleteBtn') !!}
 
     @if(Session::has('SESSION_DV_DELETE'))
        {!! JSHelper::Snackbar(Session::get('SESSION_DV_DELETE')) !!}

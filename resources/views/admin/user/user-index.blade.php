@@ -10,12 +10,12 @@
                 <i class="icon-file-multiple"></i>
             </div>
             <div class="logo-text">
-                <div class="h4">My Vouchers</div>
-                <div class="">Records : {{ $dvUserList->total() }}</div>
+                <div class="h4">Users</div>
+                <div class="">Records : {{ $userList->total() }}</div>
             </div>
         </div>
         <div class="col-auto">
-            <a href="{{ route('admin.dv.create') }}" class="btn btn-secondary fuse-ripple-ready">
+            <a href="{{ route('admin.user.create') }}" class="btn btn-secondary fuse-ripple-ready">
                 <i style="font-size:20px;" class="icon icon-playlist-plus"></i> New
             </a>
         </div>
@@ -26,7 +26,7 @@
 	
 	<div class="page-content-wrapper">
 
-            {!! Form::open(['route' => 'admin.dv.userIndex', 'method' => 'GET']) !!}
+            {!! Form::open(['route' => 'admin.user.index', 'method' => 'GET']) !!}
             <aside class="page-sidebar p-6">
 
                 <div class="page-sidebar-card">
@@ -40,40 +40,24 @@
                         <div class="content">
                             <div class="p-2">
                                     
-                                {!! 
-                                    DVUtil::filterDropdown('fund_source', 'Fund Source', $fundSource, 'fund_source_name', 'fund_source_name' , old('fund_source'), $errors->first('fund_source')) 
-                                !!}
+                                <div class="col-md-12 row" style="margin-bottom:15px;">
+                                    <small>Status</small><br>
+                                    <select name="status" id="status" class="form-control" onchange="this.form.submit()">
+                                        <option value="">None</option>
 
+                                         @foreach(userUtil::selectStatus() as $value => $key)
 
-                                {!! 
-                                    DVUtil::filterDropdown('project_code', 'Project Code', $burProjectsAcctCode, 'acct_code', 'acct_code' , old('project_code'), $errors->first('project_code')) 
-                                !!}
+                                            <option value="{{ $key }}" {!! $key == old('status') ? 'selected' : '' !!}>{{ $value }}</option>
 
-                            </div>
-                        </div>
-                </div>
+                                         @endforeach
 
-                <br>
-
-                <div class="page-sidebar-card">
-                    <div class="header p-4">
-                        <div class="row no-gutters align-items-center">
-                            <i class="icon-calendar"></i>
-                            <span class="font-weight-bold"> &nbsp;&nbsp;&nbsp; Date Filter</span>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-                        <div class="content">
-                            <div class="p-2">
-
-                                {!! 
-                                    DVUtil::filterDatepicker(old('fromDate'), $errors->first('fromDate'), old('toDate'), $errors->first('toDate')); 
-                                !!}
+                                    </select>
+                                    <small class="text-danger">{{ $errors->first('status') }}</small>
+                                </div>
 
                             </div>
                         </div>
                 </div>
-
 
             </aside>
             {!! Form::close() !!}
@@ -83,17 +67,17 @@
                     <div class="contacts-list-header p-6">
                         <div class="row no-gutters align-items-center justify-content-between">
                             <div class="col-md-8">
-                                {!! Form::open(['route' => 'admin.dv.userIndex', 'method' => 'GET']) !!}
+                                {!! Form::open(['route' => 'admin.user.index', 'method' => 'GET']) !!}
                                     
                                     {!! 
-                                        DVUtil::filterSearch(old('search'), $errors->first('search')); 
+                                        userUtil::filterSearch(old('search'), $errors->first('search')); 
                                     !!}
 
                                 {!! Form::close() !!}
                             </div>
                             <div class="col-auto">
                                 <div class="row no-gutters align-items-center">
-                                    <a href="{{ route('admin.dv.userIndex') }}" class="btn btn-fab btn-sm btn-primary">
+                                    <a href="{{ route('admin.user.index') }}" class="btn btn-fab btn-sm btn-primary">
                                         <i class="icon icon-refresh s-4"></i>
                                     </a>
                                 </div>
@@ -109,27 +93,48 @@
 					                <thead>
 					                    <tr>
 
-                                            @foreach(DVUtil::userIndexTableHeader() as $data)
+					                    	<th>
+					                            <div class="table-header">
+					                                <span class="column-title">Name</span>
+					                            </div>
+					                        </th>
 
-    					                    	<th>
-    					                            <div class="table-header">
-    					                                <span class="column-title">{!! $data !!}</span>
-    					                            </div>
-    					                        </th>
+                                            <th>
+                                                <div class="table-header">
+                                                    <span class="column-title">Username</span>
+                                                </div>
+                                            </th>
 
-                                            @endforeach
+                                            <th>
+                                                <div class="table-header">
+                                                    <span class="column-title">Active</span>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="table-header">
+                                                    <span class="column-title">Modified</span>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="table-header">
+                                                    <span class="column-title">Actions</span>
+                                                </div>
+                                            </th>
 
 					                    </tr>
 					                </thead>
 					                <tbody>
 
-					                	@foreach($dvUserList as $data)
+					                	@foreach($userList as $data)
                                             
 					                        <tr>
-					                        	<td>{!! $data->doc_no !!}</td>
-                                                <td>{!! $data->dv_no == '' ? '<span class="badge bg-deep-orange-500 text-auto">Filed</span>' : '<span class="badge bg-teal-500 text-auto">Processing..</span>' !!}</td>
-					                            <td>{!! $data->dv_proj_code !!}</td>
-					                            <td>{{ Carbon::parse($data->created_at)->format('M d, Y') }}</td>
+					                        	<td>{!! $data->fullname !!}</td>
+                                                <td>{!! $data->username !!}</td>
+                                                <td>{!! $data->is_logged == true ? '<i class="icon-checkbox-marked-circle text-success"></i>' : '<i class="icon-cancel text-danger"></i>' !!}</td>
+					                            
+					                            <td>{{ Carbon::parse($data->updated_at)->format('M d, Y') }}</td>
 					                            <td>
                                                     <div class="actions row no-gutters">
                                                         <div class="dropdown show">
@@ -138,8 +143,8 @@
                                                             </a>
 
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="overflow: hidden;">
-                                                                <a class="dropdown-item" href="{{ route('admin.dv.show', $data->slug) }}">Print</a>
-                                                                <a class="dropdown-item" href="{{ route('admin.dv.edit', $data->slug) }}">Edit</a>
+                                                                <a class="dropdown-item" href="{{ route('admin.user.show', $data->slug) }}">View</a>
+                                                                <a class="dropdown-item" href="{{ route('admin.user.edit', $data->slug) }}">Edit</a>
                                                             </div>
 
                                                         </div>
@@ -158,7 +163,7 @@
 			   	</div>
 
 
-			   		@if($dvUserList->isEmpty())
+			   		@if($userList->isEmpty())
 	                    <div class="alert alert-danger fade show" role="alert">
 		                    No Records Found!
 		                </div>
@@ -172,20 +177,20 @@
 				            	<div class="col-lg-6">
 				                	<span>
 
-				                		<strong>Displaying {{ $dvUserList->firstItem() > 0 ? $dvUserList->firstItem() : 0 }} - {{ $dvUserList->lastItem() > 0 ? $dvUserList->lastItem() : 0 }} out of {{ $dvUserList->total()}} Records</strong>
+				                		<strong>Displaying {{ $userList->firstItem() > 0 ? $userList->firstItem() : 0 }} - {{ $userList->lastItem() > 0 ? $userList->lastItem() : 0 }} out of {{ $userList->total()}} Records</strong>
                                         
 				                	</span>
 	    						</div>
 				                <div class="col-lg-6">
 				                	<nav aria-label="..." style="float:right;">
 
-				                		{!! $dvUserList->appends([
+				                		{!! $userList->appends([
                                                         'search'=>Input::get('search'),
                                                         'fund_source' => Input::get('fund_source'),
                                                         'project_code' => Input::get('project_code'),
                                                         'fromDate' => Input::get('fromDate'),
-                                                        'toDate' => Input::get('toDate')])
-                                                       ->render('vendor.pagination.bootstrap-4') 
+                                                        'toDate' => Input::get('toDate'),
+                                                    ])->render('vendor.pagination.bootstrap-4') 
                                         !!}
                                         
 				                	</nav>
@@ -206,7 +211,6 @@
 
 @section('scripts')
 
-    {!! JSHelper::SelectSearch('project_code') !!}
-    {!! JSHelper::SelectNormal('fund_source') !!}
+    {!! JSHelper::SelectNormal('status') !!}
     
 @endsection

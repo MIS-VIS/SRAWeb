@@ -2,43 +2,13 @@
 namespace App\Libraries\Statics;
 
 
-class DVUtil {
+class userUtil {
 
 
 
-    public static function selectMOP(){
+    public static function selectStatus(){
 
-        return array('Check' => '01', 'Cash' => '02', 'Others' => '03');
-
-    }
-
-
-
-
-
-    public static function selectFundSource(){
-
-        return array('SIDA' => 'SIDA', 'Corporate' => 'Corporate');
-
-    }
-
-
-
-
-
-    public static function selectProjectId(){
-
-        return array('BACOLOD CITY' => '1', 'QUEZON CITY' => '2');
-
-    }
-
-
-
-
-
-    public static function userIndexTableHeader(){
-
-        return array('Doc No.', 'Status', 'Project Code', 'Created', 'Actions');
+        return array('Active' => 'true', 'Inactive' => 'false');
 
     }
 

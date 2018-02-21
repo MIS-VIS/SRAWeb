@@ -168,8 +168,6 @@
 
 
 @section('modals')
-        
-
 
     <div id="setDvNo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">

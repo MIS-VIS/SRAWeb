@@ -136,6 +136,7 @@ class DV extends Model{
             $dv->where(function ($dv) use ($search) {
                 $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
+                   ->orwhere('doc_no', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
@@ -219,6 +220,7 @@ class DV extends Model{
             $dv->where(function ($dv) use ($search) {
                 $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
+                   ->orwhere('doc_no', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
                    ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')

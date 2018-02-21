@@ -90,7 +90,7 @@
 
     @if(Session::has('user_created'))
 
-        {!! ContentHelper::modalView('userConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('user_created'), route('admin.user.show', Session::get('user_slug')) ) !!}
+        {!! ModalHelper::modalView('userConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('user_created'), route('admin.user.show', Session::get('user_slug')) ) !!}
         
     @endif
 
