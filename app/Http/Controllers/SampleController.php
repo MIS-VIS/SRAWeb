@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\User as user;
-use App\Departments as department;
+use Session;
 
 class SampleController extends Controller{ 
     
@@ -13,7 +13,7 @@ class SampleController extends Controller{
 
   public function test(){
 
-    $test = htmlspecialchars("http://localhost:8000/test");
+    $test = session()->all();
     dd($test);
 
   }
