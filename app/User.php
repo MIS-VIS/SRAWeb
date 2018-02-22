@@ -93,7 +93,7 @@ class User extends Authenticatable{
 
     public function menu() {
 
-        return $this->hasMany('App\Menu','user_id','user_id');
+        return $this->hasMany('App\UserMenu','user_id','user_id');
 
     }
 

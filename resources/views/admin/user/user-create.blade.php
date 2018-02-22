@@ -76,23 +76,48 @@
                     <div class="col-md-12" id="" style="padding-top:20px;">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">User Menu</h4>
-                                <a href="#">add</a>
-                                <table class="table table-bordered">
+
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <h4 class="card-title">User Menu</h4>
+                                    </div>
+                                    
+                                    <div class="col-sm-1" style="margin-top: 25px;">
+                                        <a href="#" id="add_row" type="button" class="btn btn-sm btn-fab bg-success-600 text-auto"><i class="icon-plus"></i></a>
+                                    </div>
+                                </div>
+
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th>Menu</th>
                                             <th>SubMenus</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" class="form-control"></td>
-                                            <td><input type="text" class="form-control"></td>
-                                            <td><a href="#" type="button" class="btn btn-danger">wewe</a></td>
+                                    <tbody class="table_body" id="table_body" >
+                                        
+                                        <tr class="table_row" id="table_row">
+
+                                            <td>
+                                                <select id="menu" name="menu[]" class="form-control">        
+                                                    <option>Select</option>
+                                                </select>
+                                            </td>
+
+                                            <td>
+                                                <select id="submenu" name="submenu[]" class="form-control" multiple="multiple">      
+                                                    <option>Select</option>
+                                                </select>
+                                            </td>
+
+                                            <td>
+                                                <button role="button" class="btn btn-sm btn-fab btn-danger" id="delete_row"><i class="icon-close"></i></button>
+                                            </td>
+                                     
                                         </tr>
+
                                     </tbody>
+
                                 </table>
 
                             </div>
@@ -103,7 +128,7 @@
                     {!! FormHelper::submitButton('btn-secondary ', 'Save', 'user-submit') !!}
 
     			{!! Form::close() !!}
-                
+                <div style="padding-top:100px;"></div>
             </div>
 	    </div>
     </div>
@@ -127,7 +152,58 @@
 
 @section('scripts')
 
+
     {!! JSHelper::ModalShow('userConfirmAdd') !!}
+
+
+    <script>
+
+        // SELECT
+        $(document).ready(function() {
+            $("select").select2({width:400});
+        });
+
+
+
+
+        //APPEND ROW
+        $(document).ready(function() {
+
+            $("#add_row").on("click", function() {
+                $('select').select2('destroy');
+                var content ='<tr>' + 
+                                '<td>' +
+                                    '<select name="menu" class="form-control">' +    
+                                        '<option>Select</option>' +
+                                    '</select>' +
+                                '</td>' +
+                                '<td>' +
+                                    '<select name="submenu" class="form-control" multiple="multiple">' +     
+                                        '<option>Select</option>' +
+                                    '</select>' +
+                                '</td>' +
+                                '<td>' +
+                                    '<button role="button" class="btn btn-sm btn-fab btn-danger" id="delete_row"><i class="icon-close"></i></button>' +
+                                '</td>' +
+                            '</tr>';
+
+            $("#table_body").append($(content));
+            $('select').select2({width:400});
+            });
+
+
+
+
+            //DELETE ROW
+            $(document).on("click","#delete_row" ,function(e) {
+                $(this).closest('tr').remove();
+
+            });
+
+         });
+
+    </script>
+
 
 @endsection
 

@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model{
+class UserMenu extends Model{
 
 
 
-    protected $table = 'menu';
+    protected $table = 'user_menu';
 
 
 
     public function submenu() {
-    	return $this->hasMany('App\Submenu','menu_id','menu_id');
+    	return $this->hasMany('App\UserSubmenu','menu_id','menu_id');
    	}
 
 

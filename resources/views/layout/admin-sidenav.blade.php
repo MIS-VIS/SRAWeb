@@ -19,33 +19,33 @@
 
           @if(Auth::check())
 
-            @foreach ($menus as $menu)
+            @foreach ($usermenus as $usermenu)
 
-              @if($menu->is_dropdown == false)
+              @if($usermenu->is_dropdown == false)
 
                 <li class="nav-item">
-                    <a class="nav-link ripple {!! ContentHelper::menuStatus($menu->route ,'active') !!}" href="{{ route($menu->route) }}"
+                    <a class="nav-link ripple {!! ContentHelper::menuStatus($usermenu->route ,'active') !!}" href="{{ route($usermenu->route) }}"
                        data-page-url="/user-interface-page-layouts-blank.html">
-                        <i class="{{ $menu->icon }}"></i>
-                        <span>{{ $menu->name }}</span>
+                        <i class="{{ $usermenu->icon }}"></i>
+                        <span>{{ $usermenu->name }}</span>
                     </a>
                 </li>
 
               @else
 
                 <li class="nav-item" role="tab">
-                    <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#{{ $menu->data_target }}" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
-                      <i class="{{ $menu->icon }}"></i>
-                      <span>{{ $menu->name }}</span>
+                    <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#{{ $usermenu->data_target }}" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
+                      <i class="{{ $usermenu->icon }}"></i>
+                      <span>{{ $usermenu->name }}</span>
                     </a>
 
-                    <ul id="{{ $menu->data_target }}" class="collapse {!! ContentHelper::menuStatus($menu->route, 'show') !!}" role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
+                    <ul id="{{ $usermenu->data_target }}" class="collapse {!! ContentHelper::menuStatus($usermenu->route, 'show') !!}" role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
 
-                        @foreach($menu->usersubmenu() as $submenu)
+                        @foreach($usermenu->usersubmenu() as $usersubmenu)
 
                             <li class="nav-item">
-                              <a class="nav-link ripple {!! ContentHelper::menuStatus($submenu->route, 'active') !!}" href="{{ route($submenu->route) }}">
-                                    <span>{{ $submenu->name }}</span>
+                              <a class="nav-link ripple {!! ContentHelper::menuStatus($usersubmenu->route, 'active') !!}" href="{{ route($usersubmenu->route) }}">
+                                    <span>{{ $usersubmenu->name }}</span>
                                 </a>
                             </li>
                             

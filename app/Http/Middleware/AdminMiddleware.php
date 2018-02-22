@@ -6,27 +6,27 @@ use Closure;
 use Auth;
 use Session;
 use Route;
-use App\Menu;
-use App\Submenu;
+use App\UserMenu;
+use App\UserSubmenu;
 
 
 class AdminMiddleware{
 
 
-    protected $menu;
-    protected $submenu;
+    protected $usermenu;
+    protected $usersubmenu;
 
 
 
-    public function __construct(Menu $menu, Submenu $submenu){
+    public function __construct(UserMenu $usermenu, UserSubmenu $usersubmenu){
 
         if(Auth::check()){
 
-            $this->menu = count($menu->where('route', Route::currentRouteName())
+            $this->usermenu = count($usermenu->where('route', Route::currentRouteName())
                                      ->where('user_id', Auth::user()->user_id)
                                      ->first());
 
-            $this->submenu = count($submenu->where('route', Route::currentRouteName())
+            $this->usersubmenu = count($usersubmenu->where('route', Route::currentRouteName())
                                      ->where('user_id', Auth::user()->user_id)
                                      ->first());
         }
@@ -44,7 +44,7 @@ class AdminMiddleware{
 
         if(Auth::check()){
 
-            if($this->menu == 1 || $this->submenu == 1){
+            if($this->usermenu == 1 || $this->usersubmenu == 1){
 
                 if(Auth::user()->is_logged == true){
 
