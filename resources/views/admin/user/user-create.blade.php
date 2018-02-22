@@ -73,6 +73,33 @@
                     </div>
                     
 
+                    <div class="col-md-12" id="" style="padding-top:20px;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">User Menu</h4>
+                                <a href="#">add</a>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Menu</th>
+                                            <th>SubMenus</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" class="form-control"></td>
+                                            <td><input type="text" class="form-control"></td>
+                                            <td><a href="#" type="button" class="btn btn-danger">wewe</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
                     {!! FormHelper::submitButton('btn-secondary ', 'Save', 'user-submit') !!}
 
     			{!! Form::close() !!}

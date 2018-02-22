@@ -54,8 +54,7 @@ class LoginController extends Controller{
           }
 
           $user = $this->user->find(Auth::user()->id);
-          $user->is_logged = true;
-          $user->save();
+          $user->update(['is_logged' => true]);
 
     	  }
 
@@ -80,8 +79,7 @@ class LoginController extends Controller{
         if(Auth::check()){
 
           $user = $this->user->find(Auth::user()->id);
-          $user->is_logged = false;
-          $user->save();
+          $user->update($this->user->getLogoutDefaultsAttribute());
           Auth::logout();
           Session::flush();
           return redirect('/');

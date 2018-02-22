@@ -100,7 +100,7 @@ class User extends Authenticatable{
 
 
 
-    public function user()
+    public function dv()
     {
         return $this->belongsTo('App\DV', 'user_id', 'user_id');
     }
@@ -127,53 +127,6 @@ class User extends Authenticatable{
         return md5(microtime());
 
     }
-
-
-
-
-
-    public function hunt($slug){
-
-        return $this->where('slug', $slug)->firstOrFail();
-
-    }
-
-
-
-
-    /** QUERIES **/
-
-    public function indexFilter(Request $request, $paginate){
-
-        $user = $this->newQuery();
-        $search = $request->search;
-
-        if(!$search == null){
-            $user->where(function ($user) use ($search) {
-                $user->where('firstname', 'LIKE', '%'. $search .'%')
-                   ->orwhere('middlename', 'LIKE', '%'. $search .'%')
-                   ->orwhere('lastname', 'LIKE', '%'. $search .'%')
-                   ->orwhere('username', 'LIKE', '%'. $search .'%');
-            });
-        }
-
-        if(!$request->status == null){
-            $user->where('is_logged', '=', $request->status);
-        }
-
-        // if(!$request->fund_source == null){
-        //     $dv->where('dv_fund_source', '=', $request->fund_source);
-        // }
-
-        // if(!$request->fromDate == null || !$request->toDate == null){
-        //     $dv->whereBetween('dv_date', [$date['fromDate'], $date['toDate']]);
-        // }
-
-        return $user->orderBy('created_at', 'DESC')
-                    ->paginate($paginate);
-
-    }
-
 
 
 
@@ -264,6 +217,100 @@ class User extends Authenticatable{
     }
 
 
+
+
+
+
+    public function getLoginDefaultsAttribute(){
+
+        return [
+
+            'is_logged' => true,
+
+        ];
+
+    }
+
+
+
+
+
+
+    public function getLogoutDefaultsAttribute(){
+
+        return [
+
+            'is_logged' => false,
+            'last_login_time' => Carbon::now(),
+            'last_login_machine' => gethostname(),
+            'last_login_ip' => request()->ip(),
+
+        ];
+
+    }
+
+
+
+
+
+
+    public function getBoolean($value){
+
+        if($value == 'true'){
+
+            return true;
+
+        }elseif($value == 'false'){
+
+            return false;
+
+        }else{
+
+            return null;
+
+        }
+
+    }
+
+
+
+
+
+    /** QUERIES **/
+
+    public function indexFilter(Request $request, $paginate){
+
+        $user = $this->newQuery();
+        $search = $request->search;
+
+        if(!$search == null){
+            $user->where(function ($user) use ($search) {
+                $user->where('firstname', 'LIKE', '%'. $search .'%')
+                   ->orwhere('middlename', 'LIKE', '%'. $search .'%')
+                   ->orwhere('lastname', 'LIKE', '%'. $search .'%')
+                   ->orwhere('username', 'LIKE', '%'. $search .'%');
+            });
+        }
+
+        if(!$request->is_logged == null){
+            $user->where('is_logged', $this->getBoolean($request->is_logged));
+        }
+
+        return $user->orderBy('created_at', 'DESC')
+                    ->paginate($paginate);
+
+    }
+
+
+
+
+
+
+    public function hunt($slug){
+
+        return $this->where('slug', $slug)->firstOrFail();
+
+    }
 
 
 

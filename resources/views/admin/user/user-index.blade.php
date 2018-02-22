@@ -42,17 +42,19 @@
                                     
                                 <div class="col-md-12 row" style="margin-bottom:15px;">
                                     <small>Status</small><br>
-                                    <select name="status" id="status" class="form-control" onchange="this.form.submit()">
+
+                                    <select name="is_logged" id="is_logged" class="form-control" onchange="this.form.submit()">
                                         <option value="">None</option>
 
                                          @foreach(userUtil::selectStatus() as $value => $key)
 
-                                            <option value="{{ $key }}" {!! $key == old('status') ? 'selected' : '' !!}>{{ $value }}</option>
+                                            <option value="{{ $key }}" {!! $key == old('is_logged') ? 'selected' : '' !!}>{{ $value }}</option>
 
                                          @endforeach
 
                                     </select>
-                                    <small class="text-danger">{{ $errors->first('status') }}</small>
+
+                                    <small class="text-danger">{{ $errors->first('is_logged') }}</small>
                                 </div>
 
                             </div>
@@ -113,7 +115,13 @@
 
                                             <th>
                                                 <div class="table-header">
-                                                    <span class="column-title">Modified</span>
+                                                    <span class="column-title">Last Modified</span>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="table-header">
+                                                    <span class="column-title">Last Logged-in</span>
                                                 </div>
                                             </th>
 
@@ -135,6 +143,7 @@
                                                 <td>{!! $data->is_logged == true ? '<i class="icon-checkbox-marked-circle text-success"></i>' : '<i class="icon-cancel text-danger"></i>' !!}</td>
 					                            
 					                            <td>{{ Carbon::parse($data->updated_at)->format('M d, Y') }}</td>
+                                                <td>{{ Carbon::parse($data->last_login_time)->format('M d, Y h:i A') }}</td>
 					                            <td>
                                                     <div class="actions row no-gutters">
                                                         <div class="dropdown show">
@@ -186,10 +195,7 @@
 
 				                		{!! $userList->appends([
                                                         'search'=>Input::get('search'),
-                                                        'fund_source' => Input::get('fund_source'),
-                                                        'project_code' => Input::get('project_code'),
-                                                        'fromDate' => Input::get('fromDate'),
-                                                        'toDate' => Input::get('toDate'),
+                                                        'is_logged' => Input::get('is_logged'),
                                                     ])->render('vendor.pagination.bootstrap-4') 
                                         !!}
                                         
@@ -211,6 +217,6 @@
 
 @section('scripts')
 
-    {!! JSHelper::SelectNormal('status') !!}
+    {!! JSHelper::SelectNormal('is_logged') !!}
     
 @endsection

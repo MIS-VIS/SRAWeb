@@ -18,6 +18,11 @@
                     </div>
                 </div>
             </div>
+            <div class="col-auto">
+                <a href="" class="btn btn-secondary fuse-ripple-ready" onclick="window.history.back()">
+                    <i style="font-size:15px;" class="icon-arrow-left"></i> Back
+                </a>
+            </div>
         </div>
         <div class="page-content-card" id="dv-card">
             <div class="p-5 col-12">
