@@ -13,8 +13,7 @@ class SampleController extends Controller{
 
   public function test(){
 
-    $test = htmlspecialchars("http://localhost:8000/test");
-    dd($test);
+    return view('sample');
 
   }
 

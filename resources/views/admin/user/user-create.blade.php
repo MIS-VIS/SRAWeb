@@ -66,7 +66,7 @@
 
 			                    {!! FormHelper::textBox(
 			                        'up', 'col-md-12', 'password_confirmation', 'Confirm Password:', 'password', 'password_confirmation','' , 'required', $errors->first('password')
-			                    ) !!}
+			                    ) !!}   
 
                             </div>
                         </div>
@@ -99,7 +99,7 @@
 
 
 @section('scripts')
-    
+
     {!! JSHelper::ModalShow('userConfirmAdd') !!}
 
 @endsection
