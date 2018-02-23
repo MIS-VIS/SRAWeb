@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Departments;
 use App\BurProjects;
 use App\Employees;
+use App\SubMenu;
 
 class AjaxController extends Controller{
 
@@ -40,6 +41,24 @@ class AjaxController extends Controller{
 	    return abort(403);
 
 	}
+
+
+
+
+
+	public function userAddSubmenuDropdown(Request $request, $id, Submenu $submenu){
+
+    	if($request->Ajax()){
+
+	    	$submenus = $submenu->select('submenu_id', 'name')->where('menu_id', $id)->get();
+	    	return json_encode($submenus);
+
+	    }
+
+	    return abort(403);
+
+	}
+
 
 
 

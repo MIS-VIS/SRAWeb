@@ -99,14 +99,20 @@
                                         <tr class="table_row" id="table_row">
 
                                             <td>
-                                                <select id="menu" name="menu[]" class="form-control">        
-                                                    <option>Select</option>
+                                                <select id="menu" name="menu[]" class="form-control">   
+                                                    <option>Select</option>   
+                                                    @foreach($menus as $data)  
+                                                        <option value="{{ $data->menu_id }}">{{ $data->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
 
                                             <td>
                                                 <select id="submenu" name="submenu[]" class="form-control" multiple="multiple">      
                                                     <option>Select</option>
+                                                    @foreach($submenus as $data)
+                                                        <option value="{{ $data->menu_id }}">{{$data->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
 
@@ -164,22 +170,25 @@
         });
 
 
-
-
         //APPEND ROW
         $(document).ready(function() {
-
             $("#add_row").on("click", function() {
                 $('select').select2('destroy');
                 var content ='<tr>' + 
                                 '<td>' +
-                                    '<select name="menu" class="form-control">' +    
-                                        '<option>Select</option>' +
+                                    '<select id="menu" name="menu[]" class="form-control">' + 
+                                        '<option>Select</option>' +   
+                                        '@foreach($menus as $data)' +
+                                            '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
+                                        '@endforeach' +
                                     '</select>' +
                                 '</td>' +
                                 '<td>' +
-                                    '<select name="submenu" class="form-control" multiple="multiple">' +     
-                                        '<option>Select</option>' +
+                                    '<select id="submenu" name="submenu[]" class="form-control" multiple="multiple">' +  
+                                        '<option>Select</option>' +   
+                                        '@foreach($submenus as $data)' +
+                                            '<option value="{{ $data->menu_id }}">{{$data->name}}</option>' +
+                                        '@endforeach' +
                                     '</select>' +
                                 '</td>' +
                                 '<td>' +
@@ -191,16 +200,46 @@
             $('select').select2({width:400});
             });
 
-
-
-
-            //DELETE ROW
-            $(document).on("click","#delete_row" ,function(e) {
-                $(this).closest('tr').remove();
-
-            });
-
          });
+
+
+
+        //DELETE ROW
+        $(document).on("click","#delete_row" ,function(e) {
+            $(this).closest('tr').remove();
+
+        });
+
+
+
+        //AJAX
+        $(document).ready(function() {
+            $(document).on("change", "#menu", function() {
+                var id = $(this).val();
+                var parent = $(this).closest('tr');
+                console.log(parent);
+                if(id) {
+                    $.ajax({
+                        url: "/ajax/response-submenu/" + id,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {   
+
+                            $(parent).find("#submenu").empty();
+
+                            $.each(data, function(key, value) {
+                                $(parent).find("#submenu").append("<option value='" + value.submenu_id + "'>"+ value.name +"</option>");
+                            });
+
+                            $(parent).find("#submenu").append("<option value>Select</option>");  
+                
+                        }
+                    });
+                }else{
+                    $(parent).find("#submenu").empty();
+                }
+            });
+        });
 
     </script>
 

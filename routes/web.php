@@ -51,6 +51,7 @@ Route::group(['prefix'=>'ajax', 'as' => 'ajax.'], function () {
 
 	Route::get('/response-unit/{id}', 'AjaxController@dvAddUnitDropdown')->name('responseUnit');
 	Route::get('/response-accountCode/{id}', 'AjaxController@dvAddAccountCodeDropdown')->name('responseAccountCode');
+	Route::get('/response-submenu/{id}', 'AjaxController@userAddSubmenuDropdown')->name('responseSubmenu');
 
 });
 

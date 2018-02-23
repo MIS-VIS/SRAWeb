@@ -17,6 +17,8 @@ class ViewServiceProvider extends ServiceProvider{
         View::composer('*', 'App\ViewComposers\SignatoriesComposer');
         View::composer('*', 'App\ViewComposers\ProjectsComposer');
         View::composer('*', 'App\ViewComposers\FundSourceComposer');
+        View::composer('admin.user.user-create', 'App\ViewComposers\MenuComposer');
+        View::composer('admin.user.user-create', 'App\ViewComposers\SubMenuComposer');
 
     }
 
