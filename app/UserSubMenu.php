@@ -9,7 +9,7 @@ class UserSubMenu extends Model{
 
 
     protected $table = 'user_submenu';
-
+    public $timestamps = false;
 
 
 

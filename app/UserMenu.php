@@ -9,7 +9,7 @@ class UserMenu extends Model{
 
 
     protected $table = 'user_menu';
-
+    public $timestamps = false;
 
 
     public function submenu() {
@@ -30,6 +30,33 @@ class UserMenu extends Model{
       return $this->submenu->where('is_nav', true);
     }
    	  
+
+
+    //GETTERS
+    public function getLastUserMenuAttribute(){
+
+        $usermenu = $this->select('menu_id')->orderBy('menu_id', 'desc')->first();
+        return $usermenu->menu_id;
+
+    }
+
+
+
+
+    public function getMenuIdIncrementAttribute(){
+
+        $id = '1001';
+
+        if($id != null){
+
+            $id = $this->lastUserMenu + 1;
+        
+        }
+
+        return $id;
+
+    }
+
 
 
 
