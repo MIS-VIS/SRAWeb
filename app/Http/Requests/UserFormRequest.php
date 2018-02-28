@@ -37,6 +37,12 @@ class UserFormRequest extends FormRequest{
 
         }
 
+        foreach($this->request->get('submenu') as $key => $value){
+
+            $rules['submenu.'.$key] = '';
+
+        }
+
         return $rules;
 
     }
@@ -72,8 +78,8 @@ class UserFormRequest extends FormRequest{
             'password.max'  => 'The Password field may not be greater than 50 characters.',
 
         ];
-
-        foreach($this->request->get('menu') as $key => $val) {
+        
+        foreach($this->request->get('menu') as $key => $value) {
 
             $messages['menu.'.$key.'.required'] = ' Menu Field is Required.';
             $messages['menu.'.$key.'.string'] = ' Invalid Input! You must enter a string value.';

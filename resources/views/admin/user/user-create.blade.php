@@ -98,7 +98,7 @@
                                             
                                         @if(old('menu'))
 
-                                            @foreach(old('menu') as $key => $value)
+                                            @foreach(old('menu') as $key1 => $value1)
 
                                                 <tr>
 
@@ -106,17 +106,27 @@
                                                         <select id="menu" name="menu[]" class="form-control">   
                                                             <option value="">Select</option>   
                                                             @foreach($menus as $data)  
-                                                                <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
+                                                                <option value="{{ $data->menu_id }}" {!! old('menu.'.$key1) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
                                                             @endforeach
                                                         </select>
-                                                        <small class="text-danger">{{ $errors->first('menu.'.$key) }}</small>
+                                                        <small class="text-danger">{{ $errors->first('menu.'.$key1) }}</small>
                                                     </td>
 
                                                     <td>
                                                         <select id="submenu" name="submenu[]" class="form-control" multiple="multiple">      
                                                             <option value="">Select</option>
                                                             @foreach($submenus as $data)
-                                                                <option value="{{ $data->menu_id }}">{{$data->name}}</option>
+
+                                                                @if(old('submenu') && $data->menu_id == old('menu.'.$key1))
+                                                                      
+                                                                    <option value="{{ $data->submenu_id }}" {!! in_array($data->submenu_id, old('submenu')) ? 'selected' : '' !!}>{{$data->name}}</option>
+
+                                                                @else
+
+                                                                    <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
+
+                                                                @endif
+
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -145,9 +155,13 @@
                                                 <td>
                                                     <select id="submenu" name="submenu[]" class="form-control" multiple="multiple">      
                                                         <option value="">Select</option>
+
                                                         @foreach($submenus as $data)
-                                                            <option value="{{ $data->menu_id }}">{{$data->name}}</option>
+
+                                                            <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
+
                                                         @endforeach
+
                                                     </select>
                                                 </td>
 
@@ -222,7 +236,7 @@
                                     '<select id="submenu" name="submenu[]" class="form-control" multiple="multiple">' +  
                                         '<option value="">Select</option>' +   
                                         '@foreach($submenus as $data)' +
-                                            '<option value="{{ $data->menu_id }}">{{$data->name}}</option>' +
+                                            '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
                                         '@endforeach' +
                                     '</select>' +
                                 '</td>' +

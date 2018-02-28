@@ -12,7 +12,7 @@ class SubMenuComposer{
 
     public function compose($view){
 
-        $submenus = SubMenu::select('menu_id', 'name', 'is_nav')->get();
+        $submenus = SubMenu::select('menu_id','submenu_id', 'name', 'is_nav')->get();
     	
     	$view->with('submenus', $submenus);
     	
