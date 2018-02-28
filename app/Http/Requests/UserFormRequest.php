@@ -21,7 +21,7 @@ class UserFormRequest extends FormRequest{
 
     public function rules(){
 
-        return [
+        $rules =  [
 
             'firstname'=>'required|string|max:100',
             'middlename'=>'required|string|max:100',
@@ -31,6 +31,14 @@ class UserFormRequest extends FormRequest{
             
         ];
 
+        foreach($this->request->get('menu') as $key => $value){
+
+            $rules['menu.'.$key] = 'required|string';
+
+        }
+
+        return $rules;
+
     }
 
 
@@ -39,7 +47,7 @@ class UserFormRequest extends FormRequest{
 
     public function messages(){
 
-        return [
+        $messages = [
 
             'firstname.required'  => 'Firstname field is required.',
             'firstname.string'  => 'Invalid Input! You must enter a string value.',
@@ -64,6 +72,15 @@ class UserFormRequest extends FormRequest{
             'password.max'  => 'The Password field may not be greater than 50 characters.',
 
         ];
+
+        foreach($this->request->get('menu') as $key => $val) {
+
+            $messages['menu.'.$key.'.required'] = ' Menu Field is Required.';
+            $messages['menu.'.$key.'.string'] = ' Invalid Input! You must enter a string value.';
+
+        }
+
+        return $messages;
 
     }
 

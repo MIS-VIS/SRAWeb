@@ -33,7 +33,7 @@ class UserController extends Controller{
         $this->user_menu = $user_menu;
         $this->submenu = $submenu;
         $this->user_submenu = $user_submenu;
-        
+
     }
 
 
@@ -63,10 +63,9 @@ class UserController extends Controller{
     public function store(UserFormRequest $request){
         
         $usernameExist = $this->user->where('username', $request->username)->count();
-        
-        if(!$usernameExist == 1 && $request){
+        $count_user_menu = count($request->menu);
 
-            // $user = $this->user->create($request->all() + $this->user->createdDefaults);
+        if(!$usernameExist == 1 && $request){
 
             $user = $this->user;
             $user->firstname = $request->firstname;
@@ -76,8 +75,6 @@ class UserController extends Controller{
             $user->password = $request->password;
             $user->user_id = $this->user->userIdIncrement;
             $user->save();
-
-            $count_user_menu = count($request->menu);
 
             for($i = 0; $i < $count_user_menu; $i++){
 
@@ -93,14 +90,15 @@ class UserController extends Controller{
                 $user_menu->is_dropdown = $menu->is_dropdown;            
                 $user_menu->save();
 
-                foreach($request->submenu as $data_submenu){
+                if($request->submenu > 0){
+
+                    foreach($request->submenu as $data_submenu){
 
                     $submenu = $this->submenu->where('submenu_id', $data_submenu)->first();
 
                     if($menu->menu_id === $submenu->menu_id){
 
                             $user_submenu = new UserSubMenu;
-
                             $user_submenu->menu_id = $user_menu->menu_id;
                             $user_submenu->user_id = $user_menu->user_id;
                             $user_submenu->is_nav = $submenu->is_nav;
@@ -110,16 +108,11 @@ class UserController extends Controller{
 
                     }
 
+                    }
 
                 }
 
-
             }
-
-
-            
-
-
 
             Session::flash('user_slug', $user->slug);
             Session::flash('user_created', 'User Successfully Created!');

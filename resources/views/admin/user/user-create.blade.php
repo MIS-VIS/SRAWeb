@@ -95,37 +95,72 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table_body" id="table_body" >
-                                        
-                                        <tr class="table_row" id="table_row">
+                                            
+                                        @if(old('menu'))
 
-                                            <td>
-                                                <select id="menu" name="menu[]" class="form-control">   
-                                                    <option>Select</option>   
-                                                    @foreach($menus as $data)  
-                                                        <option value="{{ $data->menu_id }}">{{ $data->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
+                                            @foreach(old('menu') as $key => $value)
 
-                                            <td>
-                                                <select id="submenu" name="submenu[]" class="form-control" multiple="multiple">      
-                                                    <option>Select</option>
-                                                    @foreach($submenus as $data)
-                                                        <option value="{{ $data->menu_id }}">{{$data->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
+                                                <tr>
 
-                                            <td>
-                                                <button role="button" class="btn btn-sm btn-fab btn-danger" id="delete_row"><i class="icon-close"></i></button>
-                                            </td>
-                                     
-                                        </tr>
+                                                    <td>
+                                                        <select id="menu" name="menu[]" class="form-control">   
+                                                            <option value="">Select</option>   
+                                                            @foreach($menus as $data)  
+                                                                <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <small class="text-danger">{{ $errors->first('menu.'.$key) }}</small>
+                                                    </td>
+
+                                                    <td>
+                                                        <select id="submenu" name="submenu[]" class="form-control" multiple="multiple">      
+                                                            <option value="">Select</option>
+                                                            @foreach($submenus as $data)
+                                                                <option value="{{ $data->menu_id }}">{{$data->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <button role="button" class="btn btn-sm btn-fab btn-danger" id="delete_row"><i class="icon-close"></i></button>
+                                                    </td>
+                
+                                                </tr>
+
+                                            @endforeach
+
+                                        @else        
+
+                                            <tr>
+
+                                                <td>
+                                                    <select id="menu" name="menu[]" class="form-control">   
+                                                        <option value="">Select</option>   
+                                                        @foreach($menus as $data)  
+                                                            <option value="{{ $data->menu_id }}">{{ $data->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <select id="submenu" name="submenu[]" class="form-control" multiple="multiple">      
+                                                        <option value="">Select</option>
+                                                        @foreach($submenus as $data)
+                                                            <option value="{{ $data->menu_id }}">{{$data->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <button role="button" class="btn btn-sm btn-fab btn-danger" id="delete_row"><i class="icon-close"></i></button>
+                                                </td>
+                                         
+                                            </tr>
+
+                                        @endif
 
                                     </tbody>
-
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -177,7 +212,7 @@
                 var content ='<tr>' + 
                                 '<td>' +
                                     '<select id="menu" name="menu[]" class="form-control">' + 
-                                        '<option>Select</option>' +   
+                                        '<option value="">Select</option>' +   
                                         '@foreach($menus as $data)' +
                                             '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
                                         '@endforeach' +
@@ -185,7 +220,7 @@
                                 '</td>' +
                                 '<td>' +
                                     '<select id="submenu" name="submenu[]" class="form-control" multiple="multiple">' +  
-                                        '<option>Select</option>' +   
+                                        '<option value="">Select</option>' +   
                                         '@foreach($submenus as $data)' +
                                             '<option value="{{ $data->menu_id }}">{{$data->name}}</option>' +
                                         '@endforeach' +
