@@ -12,22 +12,21 @@ class UserMenu extends Model{
     public $timestamps = false;
 
 
-    public function submenu() {
-    	return $this->hasMany('App\UserSubmenu','menu_id','menu_id');
-   	}
 
-
-
-
-   	public function user() {
-    	return $this->belongsTo('App\User');
+    public function userSubMenu() {
+    	return $this->hasMany('App\UserSubMenu','user_menu_id','user_menu_id');
    	}
    	
+    
+
+    public function user() {
+      return $this->belongsTo('App\User','user_id','user_id');
+    }
 
 
 
-   	public function usersubmenu() {
-      return $this->submenu->where('is_nav', true);
+   	public function usernav() {
+      return $this->userSubmenu->where('is_nav', true);
     }
    	  
 
@@ -35,8 +34,8 @@ class UserMenu extends Model{
     //GETTERS
     public function getLastUserMenuAttribute(){
 
-        $usermenu = $this->select('menu_id')->orderBy('menu_id', 'desc')->first();
-        return $usermenu->menu_id;
+        $usermenu = $this->select('user_menu_id')->orderBy('user_menu_id', 'desc')->first();
+        return $usermenu->user_menu_id;
 
     }
 

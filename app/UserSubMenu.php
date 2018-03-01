@@ -13,9 +13,9 @@ class UserSubMenu extends Model{
 
 
 
-    public function menu() {
+    public function userMenu() {
 
-    	return $this->belongsTo('App\UserMenu');
+    	return $this->belongsTo('App\UserMenu','user_menu_id','user_menu_id');
 
    	}
 

@@ -17,7 +17,6 @@ use Session;
 class UserController extends Controller{
    
 
-
     protected $user;
     protected $menu;
     protected $user_menu;
@@ -82,7 +81,8 @@ class UserController extends Controller{
 
                 $user_menu = new UserMenu;
                 $user_menu->user_id = $user->user_id;
-                $user_menu->menu_id = $this->user_menu->menuIdIncrement;
+                $user_menu->menu_id = $menu->menu_id;
+                $user_menu->user_menu_id = $this->user_menu->menuIdIncrement;
                 $user_menu->name = $menu->name;
                 $user_menu->route = $menu->route;
                 $user_menu->icon = $menu->icon;
@@ -99,7 +99,8 @@ class UserController extends Controller{
                     if($menu->menu_id === $submenu->menu_id){
 
                             $user_submenu = new UserSubMenu;
-                            $user_submenu->menu_id = $user_menu->menu_id;
+                            $user_submenu->submenu_id = $submenu->submenu_id;
+                            $user_submenu->user_menu_id = $user_menu->user_menu_id;
                             $user_submenu->user_id = $user_menu->user_id;
                             $user_submenu->is_nav = $submenu->is_nav;
                             $user_submenu->name = $submenu->name;
@@ -149,7 +150,14 @@ class UserController extends Controller{
   
     public function edit($slug){
 
+        $user = $this->user->hunt($slug);
+        if(count($user) == 1){
 
+            return view('admin.user.user-edit')->with('user', $user);
+
+        } 
+
+        return abort(404);
 
         
     }

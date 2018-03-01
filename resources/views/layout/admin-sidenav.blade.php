@@ -41,11 +41,11 @@
 
                     <ul id="{{ $usermenu->data_target }}" class="collapse {!! ContentHelper::menuStatus($usermenu->route, 'show') !!}" role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
 
-                        @foreach($usermenu->usersubmenu() as $usersubmenu)
+                        @foreach($usermenu->usernav() as $usernav)
 
                             <li class="nav-item">
-                              <a class="nav-link ripple {!! ContentHelper::menuStatus($usersubmenu->route, 'active') !!}" href="{{ route($usersubmenu->route) }}">
-                                    <span>{{ $usersubmenu->name }}</span>
+                              <a class="nav-link ripple {!! ContentHelper::menuStatus($usernav->route, 'active') !!}" href="{{ route($usernav->route) }}">
+                                    <span>{{ $usernav->name }}</span>
                                 </a>
                             </li>
                             

@@ -132,7 +132,7 @@
                             style="{!! Session::has('SESSION_SET_DV_NO_SLUG') && Session::get('SESSION_SET_DV_NO_SLUG') == $data->slug ? "background-color: #b3e5fc;" : '' !!} overflow: visible;"
                             >
 
-                                <div class="avatar mr-2 bg-primary">{{ substr($data->user->firstname, 0, 1) }} </div>
+                                <div class="avatar mr-2 bg-primary">{!! substr($data->user->firstname, 0, 1) !!} </div>
 
                                 <div class="col-2 text-truncate font-weight-bold px-1">{{ $data->user->fullnameShort }}</div>
 

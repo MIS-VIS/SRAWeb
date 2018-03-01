@@ -91,12 +91,12 @@ class User extends Authenticatable{
 
 
 
-    public function menu() {
+    public function userMenu() {
 
         return $this->hasMany('App\UserMenu','user_id','user_id');
 
     }
-
+    
 
 
 
