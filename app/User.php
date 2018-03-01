@@ -99,6 +99,13 @@ class User extends Authenticatable{
     
 
 
+    public function userSubMenu() {
+
+        return $this->hasMany('App\UserSubMenu','user_id','user_id');
+
+    }
+
+
 
     public function dv()
     {

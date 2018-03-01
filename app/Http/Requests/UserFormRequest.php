@@ -27,21 +27,39 @@ class UserFormRequest extends FormRequest{
             'middlename'=>'required|string|max:100',
             'lastname'=>'required|string|max:100',
             'username'=>'required|string|max:50',
-            'password'=>'required|confirmed|string|min:6|max:50',
             
         ];
 
-        foreach($this->request->get('menu') as $key => $value){
+
+        if($this->request->get('password')){
+
+            $rules['password'] = 'required|confirmed|string|min:6|max:50';
+
+        }
+
+
+
+        if(count($this->request->get('menu')) > 0){
+
+          foreach($this->request->get('menu') as $key => $value){
 
             $rules['menu.'.$key] = 'required|string';
 
-        }
-
-        foreach($this->request->get('submenu') as $key => $value){
-
-            $rules['submenu.'.$key] = '';
+            } 
 
         }
+
+        
+
+        if(count($this->request->get('submenu')) > 0){
+
+            foreach($this->request->get('submenu') as $key => $value){
+
+                $rules['submenu.'.$key] = '';
+
+            }
+        }
+
 
         return $rules;
 

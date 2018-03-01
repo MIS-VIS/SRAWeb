@@ -13,7 +13,7 @@
                             <i class="icon-account-plus"></i>
                         </div>
                         <div class="logo-text">
-                            <div class="h4">Add User</div>
+                            <div class="h4">Edit User</div>
                             <div class="">Please fill up the necessary fields.</div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                 
                 {!! FormHelper::alert(Session::has('username_exist'), Session::get('username_exist'), 'danger') !!}
 
-                {!! Form::open(['route' => 'admin.user.store', 'method' => 'POST', 'class' => 'row', 'id' => 'userForm']) !!}
+                {!! Form::open(['route' => ['admin.user.update', $user->slug], 'method' => 'PUT', 'class' => 'row', 'id' => 'userForm']) !!}
 
 
     				<div class="col-md-6" id="">
@@ -59,6 +59,10 @@
                             	{!! FormHelper::textBox(
 			                        'up', 'col-md-12', 'username', 'Username:', 'text', 'username', $user->username, 'required', $errors->first('username')
 			                    ) !!}
+
+                                <div class="col-md-12">
+                                    <span style="font-size:17px;">&nbsp;</span>
+                                </div>
 
                             </div>
                         </div>

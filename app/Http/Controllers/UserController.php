@@ -166,11 +166,66 @@ class UserController extends Controller{
 
 
    
-    public function update(Request $request, $slug){
+    public function update(UserFormRequest $request, $slug){
 
+        $user = $this->user->hunt($slug);
+        $count_user_menu = count($request->menu);
 
+        if(count($user) == 1){
 
-        
+            $user->firstname = $request->firstname;
+            $user->middlename = $request->middlename;
+            $user->lastname = $request->lastname;
+            $user->username = $request->username;
+            $user->save();
+            $user->userMenu()->delete();
+            $user->userSubMenu()->delete();
+
+            for($i = 0; $i < $count_user_menu; $i++){
+
+                $menu = $this->menu->where('menu_id', $request->menu[$i])->first();
+
+                $user_menu = new UserMenu;
+                $user_menu->user_id = $user->user_id;
+                $user_menu->menu_id = $menu->menu_id;
+                $user_menu->user_menu_id = $this->user_menu->menuIdIncrement;
+                $user_menu->name = $menu->name;
+                $user_menu->route = $menu->route;
+                $user_menu->icon = $menu->icon;
+                $user_menu->data_target = $menu->data_target;
+                $user_menu->is_dropdown = $menu->is_dropdown;            
+                $user_menu->save();
+
+                if($request->submenu > 0){
+
+                    foreach($request->submenu as $data_submenu){
+
+                    $submenu = $this->submenu->where('submenu_id', $data_submenu)->first();
+
+                    if($menu->menu_id == $submenu->menu_id){
+
+                            $user_submenu = new UserSubMenu;
+                            $user_submenu->submenu_id = $submenu->submenu_id;
+                            $user_submenu->user_menu_id = $user_menu->user_menu_id;
+                            $user_submenu->user_id = $user_menu->user_id;
+                            $user_submenu->is_nav = $submenu->is_nav;
+                            $user_submenu->name = $submenu->name;
+                            $user_submenu->route = $submenu->route;
+                            $user_submenu->save();
+
+                    }
+
+                    }
+
+                }
+
+            }
+
+            return 'success';
+        } 
+
+        abort(404);
+
     }
 
 
