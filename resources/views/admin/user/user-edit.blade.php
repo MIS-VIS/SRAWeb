@@ -199,9 +199,9 @@
 
 @section('modals')
 
-    @if(Session::has('user_created'))
+    @if(Session::has('SESSION_USER_UPDATE'))
 
-        {!! ModalHelper::modalView('userConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('user_created'), route('admin.user.show', Session::get('user_slug')) ) !!}
+        {!! ModalHelper::modalView('userConfirmUpdate', '<i class="icon-file-check"></i> Updated!', Session::get('SESSION_USER_UPDATE'), route('admin.user.show', Session::get('SESSION_USER_UPDATE_SLUG')) ) !!}
         
     @endif
 
@@ -212,7 +212,7 @@
 @section('scripts')
 
 
-    {!! JSHelper::ModalShow('userConfirmAdd') !!}
+    {!! JSHelper::ModalShow('userConfirmUpdate') !!}
 
 
     <script>

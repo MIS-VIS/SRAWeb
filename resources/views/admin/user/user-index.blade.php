@@ -154,6 +154,7 @@
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="overflow: hidden;">
                                                                 <a class="dropdown-item" href="{{ route('admin.user.show', $data->slug) }}">View</a>
                                                                 <a class="dropdown-item" href="{{ route('admin.user.edit', $data->slug) }}">Edit</a>
+                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteBtn" data-slug="{{ $data->slug }}" data-url="{{ route('admin.user.destroy', $data->slug) }}" id="delete_button">Delete</a>
                                                             </div>
 
                                                         </div>
@@ -213,10 +214,22 @@
 
 
 @endsection
+    
+
+@section('modals')
+
+    {!! ModalHelper::modalDelete('deleteBtn') !!}
+
+@endsection
 
 
 @section('scripts')
 
+    {!! JSHelper::ModalCallDelete() !!}
     {!! JSHelper::SelectNormal('is_logged') !!}
+
+    @if(Session::has('SESSION_USER_DELETE'))
+       {!! JSHelper::Snackbar(Session::get('SESSION_USER_DELETE')) !!}
+    @endif
     
 @endsection

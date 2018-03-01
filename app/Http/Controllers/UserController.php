@@ -115,14 +115,14 @@ class UserController extends Controller{
 
             }
 
-            Session::flash('user_slug', $user->slug);
-            Session::flash('user_created', 'User Successfully Created!');
+            Session::flash('SESSION_USER_SLUG', $user->slug);
+            Session::flash('SESSION_USER_CREATED', 'User Successfully Created!');
             return redirect()->back();
             
         }
 
         Input::flash();
-        Session::flash('username_exist', 'NOTICE: The Username you provided is already used by an existing account. Please provide a unique Username.');
+        Session::flash('SESSION_USER_USERNAME_EXIST', 'NOTICE: The Username you provided is already used by an existing account. Please provide a unique Username.');
         return redirect()->back();
         
     }
@@ -220,8 +220,9 @@ class UserController extends Controller{
                 }
 
             }
-
-            return 'success';
+            Session::flash('SESSION_USER_UPDATE_SLUG', $user->slug);
+            Session::flash('SESSION_USER_UPDATE', 'Your data has been successfully updated!');
+            return view('admin.user.user-edit')->with('user', $user);
         } 
 
         abort(404);
@@ -234,9 +235,20 @@ class UserController extends Controller{
     
     public function destroy($slug){
 
+        $user = $this->user->hunt($slug);
 
+        if(count($user) == 1){
 
-        
+            $user->delete();
+            $user->userMenu()->delete();
+            $user->userSubmenu()->delete();
+            Session::flash('SESSION_USER_DELETE', 'Your data has been successfully Deleted!');
+            return redirect()->back();
+
+        }
+
+        return abort(404);
+ 
     }
 
 

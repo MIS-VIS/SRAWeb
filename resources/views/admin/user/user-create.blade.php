@@ -24,7 +24,7 @@
 
     			{!! ContentHelper::loader('loader') !!}
                 
-                {!! FormHelper::alert(Session::has('username_exist'), Session::get('username_exist'), 'danger') !!}
+                {!! FormHelper::alert(Session::has('SESSION_USER_USERNAME_EXIST'), Session::get('SESSION_USER_USERNAME_EXIST'), 'danger') !!}
 
                 {!! Form::open(['route' => 'admin.user.store', 'method' => 'POST', 'class' => 'row', 'id' => 'userForm']) !!}
 
@@ -195,9 +195,9 @@
 
 @section('modals')
 
-    @if(Session::has('user_created'))
+    @if(Session::has('SESSION_USER_CREATED'))
 
-        {!! ModalHelper::modalView('userConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('user_created'), route('admin.user.show', Session::get('user_slug')) ) !!}
+        {!! ModalHelper::modalView('userConfirmAdd', '<i class="icon-file-check"></i> SAVED!', Session::get('SESSION_USER_CREATED'), route('admin.user.show', Session::get('SESSION_USER_SLUG')) ) !!}
         
     @endif
 
