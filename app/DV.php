@@ -124,7 +124,63 @@ class DV extends Model{
 
 
 
-    /** QUERIES **/
+    /** SCOPES **/
+
+    public function scopeLikeDVFundSource($query, $search){
+
+        $query->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
+
+    }
+
+
+
+    public function scopeLikeDVPayee($query, $search){
+
+        $query->orwhere('dv_payee', 'LIKE', '%'. $search .'%');
+
+    }
+
+
+
+    public function scopeLikeDVNo($query, $search){
+
+        $query->orwhere('dv_no', 'LIKE', '%'. $search .'%');
+
+    }
+
+
+
+    public function scopeLikeDocNo($query, $search){
+
+        $query->orwhere('doc_no', 'LIKE', '%'. $search .'%');
+
+    }
+
+
+
+    public function scopeLikeDVDeptCode($query, $search){
+
+        $query->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%');
+
+    }
+
+
+
+    public function scopeLikeDVUnitCode($query, $search){
+
+        $query->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%');
+
+    }
+
+
+
+    public function scopeLikeDVProjCode($query, $search){
+
+        $query->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%');
+
+    }
+
+
 
     public function indexFilter(Request $request, $paginate){
 
