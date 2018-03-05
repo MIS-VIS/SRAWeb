@@ -181,7 +181,6 @@ return [
         
         //Custom Providers
         App\Providers\ViewServiceProvider::class,
-        App\Providers\RepositoryServiceProvider::class,
 
 
 
