@@ -126,182 +126,48 @@ class DV extends Model{
 
     /** SCOPES **/
 
-    public function scopeLikeDVFundSource($query, $search){
+    public function scopeSearch($query, $key){
 
-        $query->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
+        return $query->where('dv_payee', 'LIKE', '%'. $key .'%')
+                     ->orwhere('dv_no', 'LIKE', '%'. $key .'%')
+                     ->orwhere('doc_no', 'LIKE', '%'. $key .'%')
+                     ->orwhere('dv_dept_code', 'LIKE', '%'. $key .'%')
+                     ->orwhere('dv_unit_code', 'LIKE', '%'. $key .'%')
+                     ->orwhere('dv_proj_code', 'LIKE', '%'. $key .'%')
+                     ->orwhere('dv_fund_source', 'LIKE', '%'. $key .'%');
+
+    }
+
+    
+
+    public function scopeBetweenDvDate($query, $from, $to){
+
+        return $query->whereBetween('dv_date', [$from, $to]);
 
     }
 
 
 
-    public function scopeLikeDVPayee($query, $search){
+    public function scopePopulate($query){
 
-        $query->orwhere('dv_payee', 'LIKE', '%'. $search .'%');
-
-    }
-
-
-
-    public function scopeLikeDVNo($query, $search){
-
-        $query->orwhere('dv_no', 'LIKE', '%'. $search .'%');
-
-    }
-
-
-
-    public function scopeLikeDocNo($query, $search){
-
-        $query->orwhere('doc_no', 'LIKE', '%'. $search .'%');
-
-    }
-
-
-
-    public function scopeLikeDVDeptCode($query, $search){
-
-        $query->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%');
-
-    }
-
-
-
-    public function scopeLikeDVUnitCode($query, $search){
-
-        $query->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%');
-
-    }
-
-
-
-    public function scopeLikeDVProjCode($query, $search){
-
-        $query->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%');
-
-    }
-
-
-
-    public function indexFilter(Request $request, $paginate){
-
-        $dv = $this->newQuery();
-        $date = $this->getDateRequests($request);
-        $search = $request->search;
-
-        if(!$search == null){
-            $dv->where(function ($dv) use ($search) {
-                $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
-                   ->orwhere('doc_no', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
-            });
-        }
-
-        if(!$request->fund_source == null){
-            $dv->where('dv_fund_source', '=', $request->fund_source);
-        }
-
-        if(!$request->station == null){
-            $dv->where('dv_project_id', '=', $request->station);
-        }
-
-        if(!$request->department == null){
-            $dv->where('dv_dept_code', '=', $request->department);
-        }
-
-        if(!$request->unit == null){
-            $dv->where('dv_unit_code', '=', $request->unit);
-        }
-
-        if(!$request->project_code == null){
-            $dv->where('dv_proj_code', '=', $request->project_code);
-        }
-        
-        if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('dv_date', [ $date['fromDate'], $date['toDate'] ]);
-        }
-
-
-        return $dv->orderBy('created_at', 'DESC')
-                  ->paginate($paginate); 
+        return $query->orderBy('created_at', 'DESC')->paginate(10);
 
     }
 
 
 
 
+    public function scopeIncomings($query){
 
-
-    public function userIndexFilter(Request $request, $paginate){
-
-        $dv = $this->newQuery();
-        $date = $this->getDateRequests($request);
-
-        if(!$request->search == null){
-            $dv->where('doc_no', 'LIKE', '%'. $request->search .'%');
-        }
-
-        if(!$request->project_code == null){
-            $dv->where('dv_proj_code', '=', $request->project_code);
-        }
-
-        if(!$request->fund_source == null){
-            $dv->where('dv_fund_source', '=', $request->fund_source);
-        }
-
-        if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->whereBetween('dv_date', [$date['fromDate'], $date['toDate']]);
-        }
-
-        return $dv->where('user_id', Auth::user()->user_id)
-                  ->orderBy('created_at', 'DESC')
-                  ->paginate($paginate);
+        return $query->whereDate('dv_date', Carbon::now()->format('Y-m-d'));
 
     }
 
 
 
+    public function scopeFindSlug($query ,$slug){
 
-
-
-    public function incomingsFilter(Request $request, $pagination){
-
-        $dv = $this->newQuery();
-        $search = $request->search;
-
-        if(!$search == null){
-            $dv->where(function ($dv) use ($search) {
-                $dv->where('dv_payee', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_no', 'LIKE', '%'. $search .'%')
-                   ->orwhere('doc_no', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_dept_code', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_unit_code', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_proj_code', 'LIKE', '%'. $search .'%')
-                   ->orwhere('dv_fund_source', 'LIKE', '%'. $search .'%');
-            });
-        }
-
-        if(!$request->department == null){
-            $dv->where('dv_dept_code', '=', $request->department);
-        }
-
-        return $dv->whereDate('dv_date', Carbon::now()->format('Y-m-d'))
-                  ->orderBy('created_at', 'DESC')
-                  ->paginate($pagination)
-                  ->appends(['department' => $request->department]);        
-        
-    }
-
-
-
-
-
-    public function hunt($slug){
-
-        return $this->where('slug', $slug)->firstOrFail();
+        return $query->where('slug', $slug)->firstOrFail();
 
     }
 
@@ -316,7 +182,6 @@ class DV extends Model{
         $this->attributes['dv_payee'] = strtoupper($value); 
 
     }
-
 
 
 

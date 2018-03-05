@@ -2,26 +2,32 @@
 
 namespace App\Http\Controllers;
 
+
+use Auth;
 use App\DV;
+use Illuminate\Events\Dispatcher;
 use App\Http\Requests\DvFormRequest;
+use Illuminate\Support\Facades\Input;
 use App\Http\Requests\DvFilterRequest;
 use App\Http\Requests\DvSetDvNoRequest;
-use Illuminate\Support\Facades\Input;
-use Auth;
+
+
 
 use App\Repositories\DV\DVRepository;
+use App\Services\DVService;
+
+
 
 class DVController extends Controller{
     
 
-    protected $dv;
+    protected $dv_service;
     protected $dv_repo;
 
 
-    public function __construct(DV $dv, DVRepository $dv_repo){
-
-        $this->dv = $dv;
-         $this->dv_repo = $dv_repo;
+    public function __construct(DVRepository $dv_repo, DVService $dv_service){
+        $this->dv_service = $dv_service;
+        $this->dv_repo = $dv_repo;
 
     }
 
@@ -29,10 +35,9 @@ class DVController extends Controller{
 
 
     public function index(DvFilterRequest $request){
-
-        $dvList = $this->dv_repo->getAll_SNF($request);
-        Input::flash();
-        return view('admin.dv.dv-index', compact('dvList'));
+        dd($this->dv_service->getAll_SNF($request));
+        $dvList = $this->dv_service->getAll_SNF($request);
+        return view('admin.dv.dv-index')->with('dvList', $dvList);
 
     }
 
@@ -42,9 +47,9 @@ class DVController extends Controller{
 
     public function userIndex(DvFilterRequest $request){
 
-        $dvUserList = $this->dv->userIndexFilter($request, 10);
-        Input::flash();
-        return view('admin.dv.dv-userIndex', compact('dvUserList'));
+        $dvUserList = $this->dv_repo->getByUser_SNF($request);
+        dd($dvUserList);
+        return view('admin.dv.dv-userIndex')->with('dvUserList', $dvUserList);
 
     }
 
@@ -54,9 +59,8 @@ class DVController extends Controller{
 
     public function incomings(DvFilterRequest $request){
 
-        $dvIncomings = $this->dv->incomingsFilter($request ,10);
-        Input::flash();
-        return view('admin.dv.dv-incomings', compact('dvIncomings'));
+        $dvIncomings = $this->dv_repo->getByIncomings_SNF($request);
+        return view('admin.dv.dv-incomings')->with('dvIncomings', $dvIncomings);
 
     }
 
@@ -66,16 +70,7 @@ class DVController extends Controller{
 
     public function setDvNo(DvSetDvNoRequest $request){
 
-        $dv = $this->dv->hunt($request->slug);
-
-        if(count($dv) == 1){
-
-            $dv->update(['dv_no' => $request->dv_no] + $this->dv->updatedDefaults);
-            return redirect()->back();
-
-        }
-
-        return abort(404);
+        return $this->dv_repo->updateDvNo($request);
 
     }
 
@@ -95,14 +90,7 @@ class DVController extends Controller{
 
     public function store(DVFormRequest $request){
 
-        if($request){
-
-            $dv = $this->dv->create($request->all() + $this->dv->createdDefaults);
-            return redirect()->back();
-
-        }
-
-        return redirect()->back();
+        return $this->dv_repo->create($request);
 
     }
 
@@ -112,15 +100,7 @@ class DVController extends Controller{
 
     public function show($slug){
 
-        $dv = $this->dv->hunt($slug);
-        
-        if(count($dv) == 1){
-
-            return view('admin.dv.dv-show')->with('dv', $dv);
-
-        } 
-
-        return abort(404);
+       return $this->dv_repo->show($slug);
 
     }
 
@@ -130,15 +110,7 @@ class DVController extends Controller{
 
     public function edit($slug){
 
-        $dv = $this->dv->hunt($slug);
-
-        if(count($dv) == 1){
-
-            return view('admin.dv.dv-edit')->with('dv', $dv);
-
-        } 
-
-        return abort(404);
+        return $this->dv_repo->edit($slug);
 
     }
 
@@ -148,16 +120,7 @@ class DVController extends Controller{
 
     public function update(DVFormRequest $request, $slug){
 
-        $dv = $this->dv->hunt($slug);
-
-        if(count($dv) == 1){
-
-            $dv->update($request->all() + $this->dv->updatedDefaults);
-            return view('admin.dv.dv-edit')->with('dv', $dv);
-
-        }
-
-        return abort(404);
+        return $this->dv_repo->update($request, $slug);
 
     }
 
@@ -167,16 +130,7 @@ class DVController extends Controller{
 
     public function destroy($slug){
 
-        $dv = $this->dv->hunt($slug);
-
-        if(count($dv) == 1){
-
-            $dv->delete();
-            return redirect()->back();
-
-        }
-
-        return abort(404);
+        return $this->dv_repo->delete($slug);
         
     }
 
