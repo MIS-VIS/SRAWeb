@@ -35,8 +35,8 @@ class DVController extends Controller{
 
 
     public function index(DvFilterRequest $request){
-        dd($this->dv_service->getAll_SNF($request));
-        $dvList = $this->dv_service->getAll_SNF($request);
+        dd($this->dv_service->getAll_SNF());
+        $dvList = $this->dv_service->getAll_SNF();
         return view('admin.dv.dv-index')->with('dvList', $dvList);
 
     }
