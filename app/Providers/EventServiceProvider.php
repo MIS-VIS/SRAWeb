@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
+
 class EventServiceProvider extends ServiceProvider{
+
+
 
 
     protected $listen = [
@@ -13,6 +17,8 @@ class EventServiceProvider extends ServiceProvider{
             'App\Listeners\EventListener',
         ],
     ];
+
+
 
   
     public function boot(){
@@ -23,9 +29,14 @@ class EventServiceProvider extends ServiceProvider{
 
 
 
+
+
     protected $subscribe = [
         'App\Subscribers\DVSubscriber',
+        'App\Subscribers\UserSubscriber',
     ];
+
+
 
 
 

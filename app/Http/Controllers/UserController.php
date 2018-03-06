@@ -2,36 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Menu;
-use App\UserMenu;
-use App\SubMenu;
-use App\UserSubMenu;
-use App\Http\Requests\UserFormRequest;
-use Illuminate\Support\Facades\Input;
+
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Input;
+use App\Http\Requests\UserFormRequest;
+
+use App\Services\UserService;
+
 
 
 
 class UserController extends Controller{
    
 
-    protected $user;
-    protected $menu;
-    protected $user_menu;
-    protected $submenu;
-    protected $user_submenu;
+    protected $user_service;
 
 
 
-    public function __construct(User $user, Menu $menu, UserMenu $user_menu, SubMenu $submenu,UserSubMenu $user_submenu){
+    public function __construct(UserService $user_service){
 
-        $this->user = $user;
-        $this->menu = $menu;
-        $this->user_menu = $user_menu;
-        $this->submenu = $submenu;
-        $this->user_submenu = $user_submenu;
+        $this->user_service = $user_service;
 
     }
 
@@ -40,9 +30,7 @@ class UserController extends Controller{
 
     public function index(Request $request){
         
-        $userList = $this->user->indexFilter($request, 10);
-        Input::flash();
-        return view('admin.user.user-index', compact('userList'));
+        return $this->user_service->fetchAllPaginate_SNF($request);
 
     }
 

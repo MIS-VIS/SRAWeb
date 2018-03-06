@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
@@ -15,8 +14,6 @@ class DV extends Model{
     protected $table = 'dv';
     protected $dates = ['created_at', 'updated_at'];
     public $timestamps = false;
-    use Sluggable;
-
 
 
 
@@ -108,43 +105,56 @@ class DV extends Model{
 
 
 
-
-    public function sluggable(){
-
-        return [
-            'slug' => [
-                'source' => [ 'dv_proj_code', 'HashedSlug']
-            ]
-        ];
-
-    }
-
-
-
-
-
-
     /** SCOPES **/
+
 
     public function scopeSearch($query, $key){
 
-        return $query->where('dv_payee', 'LIKE', '%'. $key .'%')
-                     ->orwhere('dv_no', 'LIKE', '%'. $key .'%')
-                     ->orwhere('doc_no', 'LIKE', '%'. $key .'%')
-                     ->orwhere('dv_dept_code', 'LIKE', '%'. $key .'%')
-                     ->orwhere('dv_unit_code', 'LIKE', '%'. $key .'%')
-                     ->orwhere('dv_proj_code', 'LIKE', '%'. $key .'%')
-                     ->orwhere('dv_fund_source', 'LIKE', '%'. $key .'%');
+        $query->where(function ($query) use ($key) {
+            $query->where('dv_payee', 'LIKE', '%'. $key .'%')
+                 ->orwhere('dv_no', 'LIKE', '%'. $key .'%')
+                 ->orwhere('doc_no', 'LIKE', '%'. $key .'%')
+                 ->orwhere('dv_dept_code', 'LIKE', '%'. $key .'%')
+                 ->orwhere('dv_unit_code', 'LIKE', '%'. $key .'%')
+                 ->orwhere('dv_proj_code', 'LIKE', '%'. $key .'%')
+                 ->orwhere('dv_fund_source', 'LIKE', '%'. $key .'%');
+        });
 
     }
 
+
+
+
+
+    public function scopeFilters($query, $array = []){
+
+        foreach ($array as $key => $value) {
+            
+            if(!$value == null){
+
+                return $query->where($key, $value);
+
+            }
+
+        }
+
+    }
     
 
+
+
+
     public function scopeBetweenDvDate($query, $from, $to){
+
+        $from = Carbon::parse($from)->format('Y-m-d');
+
+        $to = Carbon::parse($to)->format('Y-m-d');
 
         return $query->whereBetween('dv_date', [$from, $to]);
 
     }
+
+
 
 
 
@@ -157,7 +167,16 @@ class DV extends Model{
 
 
 
-    public function scopeIncomings($query){
+    public function scopeGetByUser($query){
+
+        return $query->whereUserId(Auth::user()->user_id);
+
+    }
+
+
+
+
+    public function scopeGetByIncomings($query){
 
         return $query->whereDate('dv_date', Carbon::now()->format('Y-m-d'));
 
@@ -176,13 +195,6 @@ class DV extends Model{
 
 
     /** SETTERS **/
-    
-    public function setDvPayeeAttribute($value){
-
-        $this->attributes['dv_payee'] = strtoupper($value); 
-
-    }
-
 
 
     public function setDvAmountAttribute($value){
@@ -194,69 +206,11 @@ class DV extends Model{
 
 
 
+    public function setDvPayeeAttribute($value){
 
-    /** GETTERS **/
-
-    public function getDateRequests(Request $request){
-
-        return [
-
-            'fromDate' => Carbon::parse($request->fromDate)->format('Y-m-d'),
-            'toDate' => Carbon::parse($request->toDate)->format('Y-m-d')
-
-        ];
+        $this->attributes['dv_payee'] = strtoupper($value);
 
     }
-
-
-
-
-
-    public function getHashedSlugAttribute(){
-
-        return md5(microtime());
-
-    }
-
-
-
-
-
-    public static function getCreatedDefaultsAttribute(){
-
-        return [
-
-            'user_id' => Auth::user()->user_id,
-            'doc_no' => 'DV' . rand(1000000, 9999999),
-            'dv_date' => Carbon::now()->format('Y-m-d'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-            'machine_created' => gethostname(),
-            'machine_updated' => gethostname(),
-            'ip_created' => request()->ip(), 
-            'ip_updated' => request()->ip(), 
-
-        ];
-
-    }
-
-
-
-
-
-
-    public static function getUpdatedDefaultsAttribute(){
-
-        return [
-
-            'updated_at' => Carbon::now(),
-            'machine_updated' => gethostname(),
-            'ip_updated' => request()->ip(),
-
-        ];
-
-    }
-
 
 
 

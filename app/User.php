@@ -261,23 +261,7 @@ class User extends Authenticatable{
 
 
 
-    public function getBoolean($value){
-
-        if($value == 'true'){
-
-            return true;
-
-        }elseif($value == 'false'){
-
-            return false;
-
-        }else{
-
-            return null;
-
-        }
-
-    }
+    
 
 
 
@@ -311,13 +295,86 @@ class User extends Authenticatable{
 
 
 
+    /** SCOPES **/
 
 
-    public function hunt($slug){
+    public function scopeSearch($query, $key){
 
-        return $this->where('slug', $slug)->firstOrFail();
+        if(!$key == null){
+
+            return $query->where(function ($query) use ($key) {
+                        $query->where('firstname', 'LIKE', '%'. $key .'%')
+                              ->orwhere('middlename', 'LIKE', '%'. $key .'%')
+                              ->orwhere('lastname', 'LIKE', '%'. $key .'%')
+                              ->orwhere('username', 'LIKE', '%'. $key .'%');
+                        });
+
+        }
 
     }
+
+
+
+
+    public function scopeFilters($query, $array = []){
+
+        foreach ($array as $key => $value) {
+
+            if(!$value == null){
+
+                return $query->where($key, $value);
+
+            }
+
+        }
+
+    }
+
+
+
+    public function scopeFilterIsLogged($query, $value){
+
+        return $query->where('is_logged', $value);
+
+    }
+
+
+
+    public function scopePopulate($query){
+
+        return $query->orderBy('updated_at', 'DESC')->paginate(10);
+
+    }
+
+
+
+
+    public function scopeFindSlug($query){
+
+        return $query->where('slug', $slug)->firstOrFail();
+
+    }
+
+
+
+
+    /** UTILS **/
+
+    public function getBoolean($value){
+
+        if($value == 'true'){
+
+            return true;
+
+        }elseif($value == 'false'){
+
+            return false;
+
+        }
+
+
+    }
+
 
 
 
