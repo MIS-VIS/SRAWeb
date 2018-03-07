@@ -31,7 +31,6 @@ class DVController extends Controller{
 
         return $dvList = $this->dv_service->fetchAllPaginate_SNF($request);
         
-
     }
 
 

@@ -32,6 +32,7 @@ class UserMenu extends Model{
 
 
     //GETTERS
+    
     public function getLastUserMenuAttribute(){
 
         $usermenu = $this->select('user_menu_id')->orderBy('user_menu_id', 'desc')->first();

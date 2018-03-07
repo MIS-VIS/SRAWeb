@@ -7,7 +7,7 @@ use App\DV;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 
-
+use DB;
  
 class DVService{
 	
@@ -35,6 +35,8 @@ class DVService{
 
         $dv = $this->dv->newQuery();
 
+        DB::connection()->enableQueryLog();
+
         if(!$request->search == null){
 
             $dv->search($request->search);
@@ -58,6 +60,10 @@ class DVService{
         }
 
 		$dvList = $dv->populate();
+
+        $queries = DB::getQueryLog();
+
+        dd($queries);
 
 		return view('admin.dv.dv-index')->with('dvList', $dvList);
 

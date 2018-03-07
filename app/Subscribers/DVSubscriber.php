@@ -27,8 +27,6 @@ class DVSubscriber {
 
 
 
-
-
 	public function onUpdate($dv){
 
 		$this->updateDefaults($dv);

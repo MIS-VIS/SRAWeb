@@ -4,7 +4,6 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -17,7 +16,6 @@ class User extends Authenticatable{
 
 
     use Notifiable;
-    use Sluggable;
     protected $table = 'users';
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
     public $timestamps = false;
@@ -115,41 +113,6 @@ class User extends Authenticatable{
 
 
 
-    public function sluggable(){
-
-        return [
-            'slug' => [
-                'source' => ['firstname', 'middlename', 'lastname', 'HashedSlug']
-            ]
-        ];
-
-    }
-
-
-
-
-
-    public function getHashedSlugAttribute(){
-
-        return md5(microtime());
-
-    }
-
-
-
-
-
-    /** Setters **/
-
-    public function setPasswordAttribute($value){
-
-        $this->attributes['password'] = Hash::make($value);
-
-    }
-
-
-
-
     /** Getters **/
 
     public function getFullnameAttribute(){
@@ -173,10 +136,10 @@ class User extends Authenticatable{
     public function getLastUserAttribute(){
 
         $user = $this->select('user_id')->orderBy('user_id', 'desc')->first();
+
         return $user->user_id;
 
     }
-
 
 
 
@@ -199,35 +162,6 @@ class User extends Authenticatable{
 
 
 
-    public function getCreatedDefaultsAttribute(){
-
-        return [
-
-            'user_id' => $this->userIdIncrement,
-            'is_logged' => false,
-            'is_active' => true, 
-
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-            'machine_created' => gethostname(),
-            'machine_updated' => gethostname(),
-            'ip_created' => request()->ip(), 
-            'ip_updated' => request()->ip(),
-            'last_login_time' => null,
-            'last_login_machine' => null,
-            'last_login_ip' => null,
-            'user_created' => Auth::user()->user_id,
-            'user_updated' => Auth::user()->user_id,
-
-        ];
-
-    }
-
-
-
-
-
-
     public function getLoginDefaultsAttribute(){
 
         return [
@@ -237,7 +171,6 @@ class User extends Authenticatable{
         ];
 
     }
-
 
 
 
@@ -261,40 +194,6 @@ class User extends Authenticatable{
 
 
 
-    
-
-
-
-
-
-    /** QUERIES **/
-
-    public function indexFilter(Request $request, $paginate){
-
-        $user = $this->newQuery();
-        $search = $request->search;
-
-        if(!$search == null){
-            $user->where(function ($user) use ($search) {
-                $user->where('firstname', 'LIKE', '%'. $search .'%')
-                   ->orwhere('middlename', 'LIKE', '%'. $search .'%')
-                   ->orwhere('lastname', 'LIKE', '%'. $search .'%')
-                   ->orwhere('username', 'LIKE', '%'. $search .'%');
-            });
-        }
-
-        if(!$request->is_logged == null){
-            $user->where('is_logged', $this->getBoolean($request->is_logged));
-        }
-
-        return $user->orderBy('created_at', 'DESC')
-                    ->paginate($paginate);
-
-    }
-
-
-
-
     /** SCOPES **/
 
 
@@ -303,40 +202,29 @@ class User extends Authenticatable{
         if(!$key == null){
 
             return $query->where(function ($query) use ($key) {
-                        $query->where('firstname', 'LIKE', '%'. $key .'%')
-                              ->orwhere('middlename', 'LIKE', '%'. $key .'%')
-                              ->orwhere('lastname', 'LIKE', '%'. $key .'%')
-                              ->orwhere('username', 'LIKE', '%'. $key .'%');
-                        });
+                    $query->where('firstname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('middlename', 'LIKE', '%'. $key .'%')
+                          ->orwhere('lastname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('username', 'LIKE', '%'. $key .'%');
+            });
 
         }
 
     }
 
-
-
-
-    public function scopeFilters($query, $array = []){
-
-        foreach ($array as $key => $value) {
-
-            if(!$value == null){
-
-                return $query->where($key, $value);
-
-            }
-
-        }
-
-    }
 
 
 
     public function scopeFilterIsLogged($query, $value){
 
-        return $query->where('is_logged', $value);
+        if(!$value == null){
+
+            return $query->where('is_logged', $this->getBoolean($value));
+
+        }
 
     }
+
 
 
 
@@ -349,11 +237,21 @@ class User extends Authenticatable{
 
 
 
-    public function scopeFindSlug($query){
+    public function scopeFindSlug($query, $slug){
 
         return $query->where('slug', $slug)->firstOrFail();
 
     }
+
+
+
+
+    public function scopeUsernameExist($query, $value){
+
+        return $query->where('username', $value)->count();
+
+    }
+
 
 
 
@@ -371,7 +269,6 @@ class User extends Authenticatable{
             return false;
 
         }
-
 
     }
 
