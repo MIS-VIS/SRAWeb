@@ -26,10 +26,17 @@ class DVController extends Controller{
 
 
 
+    public function filter(DvFilterRequest $request){
+
+        return $this->dv_service->filter($request);
+        
+    }
+
+
 
     public function index(DvFilterRequest $request){
 
-        return $dvList = $this->dv_service->fetchAllPaginate_SNF($request);
+        return $this->dv_service->fetchAllPaginate_SNF($request);
         
     }
 
@@ -38,7 +45,7 @@ class DVController extends Controller{
 
     public function userIndex(DvFilterRequest $request){
 
-        return $dvUserList = $this->dv_service->fetchByUserPaginate_SNF($request);
+        return  $this->dv_service->fetchByUserPaginate_SNF($request);
          
 
     }
@@ -48,7 +55,7 @@ class DVController extends Controller{
 
     public function incomings(DvFilterRequest $request){
 
-        return $dvIncomings = $this->dv_service->fetchByIncomingsPaginate_SNF($request);
+        return $this->dv_service->fetchByIncomingsPaginate_SNF($request);
         
 
     }

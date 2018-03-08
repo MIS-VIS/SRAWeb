@@ -28,14 +28,13 @@ class DVService{
 
 
 
-
     public function fetchAllPaginate_SNF(Request $request){
 
-    	Input::flash();
+        //dd(str_slug($request->fullurl()));
+
+        Input::flash();
 
         $dv = $this->dv->newQuery();
-
-        DB::connection()->enableQueryLog();
 
         if(!$request->search == null){
 
@@ -45,11 +44,11 @@ class DVService{
 
         $dv->filters([
 
-        	'dv_fund_source' => $request->fund_source, 
-        	'dv_project_id' => $request->station,
-        	'dv_dept_code' => $request->department,
-        	'dv_unit_code' => $request->unit,
-        	'dv_proj_code' => $request->project_code,
+            'dv_fund_source' => $request->fund_source, 
+            'dv_project_id' => $request->station,
+            'dv_dept_code' => $request->department,
+            'dv_unit_code' => $request->unit,
+            'dv_proj_code' => $request->project_code,
 
         ]);
 
@@ -59,13 +58,19 @@ class DVService{
             
         }
 
-		$dvList = $dv->populate();
+        $dvList = $dv->populate();
 
-        $queries = DB::getQueryLog();
+        return view('admin.dv.dv-index')->with('dvList', $dvList);
 
-        dd($queries);
+    }
 
-		return view('admin.dv.dv-index')->with('dvList', $dvList);
+
+
+
+
+    public function filter(Request $request){
+
+        return "test";
 
     }
 
@@ -106,8 +111,6 @@ class DVService{
 
 
     public function fetchByIncomingsPaginate_SNF(Request $request){
-
-    	Input::flash();
 
         $dv = $this->dv->newQuery();
 
