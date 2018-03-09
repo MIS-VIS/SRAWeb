@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Input;
+use Cache;
 use App\DV;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
@@ -30,9 +31,48 @@ class DVService{
 
     public function fetchAllPaginate_SNF(Request $request){
 
-        //dd(str_slug($request->fullurl()));
+        DB::connection()->enableQueryLog();
 
+        $page = $request->page == null ? 0 : $request->page;
+
+        $dvList = Cache::rememberForever('dv:all:page:' . $page, function(){
+
+           return $this->dv->populate();
+
+        });
+            
+        // $redis = Cache::getRedis();
+
+        // $keys = $redis->keys('sraweb_cache:dv:all:page:*');
+
+        // foreach($keys as $key){
+
+        //     $redis->del($key);
+
+        // }
+
+        //dd($keys);
+
+        $queries = DB::getQueryLog();
+
+        $log = \Log::info($queries);
+
+        dd($log);
+
+        return view('admin.dv.dv-index')->with('dvList', $dvList);
+
+    }
+
+
+
+
+
+    public function filter(Request $request){
+
+        
         Input::flash();
+
+        DB::connection()->enableQueryLog();
 
         $dv = $this->dv->newQuery();
 
@@ -60,17 +100,11 @@ class DVService{
 
         $dvList = $dv->populate();
 
+        $test = Cache::get('list');
+
+        $queries = DB::getQueryLog();
+
         return view('admin.dv.dv-index')->with('dvList', $dvList);
-
-    }
-
-
-
-
-
-    public function filter(Request $request){
-
-        return "test";
 
     }
 
