@@ -35,6 +35,7 @@
             "app/Libraries/Main/JSHelper.php",
             "app/Libraries/Main/SanitizeHelper.php",
             "app/Libraries/Main/ModalHelper.php",
+            "app/Libraries/Main/CacheHelper.php",
             "app/Libraries/Statics/DVUtil.php",
             "app/Libraries/Statics/userUtil.php"
         ]

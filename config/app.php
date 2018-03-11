@@ -244,6 +244,7 @@ return [
         'JSHelper' => App\Libraries\Main\JSHelper::class,
         'SanitizeHelper' => App\Libraries\Main\SanitizeHelper::class,
         'ModalHelper' => App\Libraries\Main\ModalHelper::class,
+        'CacheHelper' => App\Libraries\Main\CacheHelper::class,
 
         //STATICS
         'DVUtil' => App\Libraries\Statics\DVUtil::class,

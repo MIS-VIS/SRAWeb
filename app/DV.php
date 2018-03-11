@@ -160,7 +160,7 @@ class DV extends Model{
 
     public function scopePopulate($query){
 
-        return $query->orderBy('created_at', 'DESC')->paginate(1);
+        return $query->orderBy('created_at', 'DESC')->paginate(10);
 
     }
 
