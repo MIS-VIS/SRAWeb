@@ -36,7 +36,7 @@
 
 </head>
 
-  <body class="layout layout-vertical layout-left-navigation layout-below-toolbar">
+  <body class="layout layout-vertical layout-left-navigation layout-below-toolbar" id="response-content">
     <div id="wrapper"> 
     @include('layout.admin-sidenav')
       <div class="content-wrapper">
@@ -59,7 +59,10 @@
   <script type="text/javascript" src="{{ asset('template/vendor/pnotify/pnotify.custom.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('template/vendor/fuse-html/fuse-html.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('template/js/main.js') }}"></script>
-  
+    
+  <!-- PJAX -->
+  <script type="text/javascript" src="{{ asset('template/vendor/pjax/jquery.pjax.js') }}"></script>
+
   <!-- DATEPICKER -->
   <script type="text/javascript" src="{{ asset('template/vendor/jquery/dist/jquery.datepair.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('template/vendor/jquery/dist/bootstrap-datepicker.min.js') }}"></script>
@@ -67,15 +70,14 @@
   <!-- RICH TEXT -->
   <script type="text/javascript" src="{{ asset('template/vendor/summernote/summernote-bs4.min.js') }}"></script>
 
-  <!-- CUSTOM JS -->
-  <script type="text/javascript" src="{{ asset('template/js/custom.js') }}"></script>
-
   <!-- SELECT SEARCH -->
   <script type="text/javascript" src="{{ asset('template/vendor/select2/select2.min.js') }}"></script>
 
   <!-- PRICE FORMAT -->
   <script type="text/javascript" src="{{ asset('template/vendor/price-format/jquery.priceformat.min.js') }}"></script>
 
+  <!-- CUSTOM JS -->
+  <script type="text/javascript" src="{{ asset('template/js/custom.js') }}"></script>
    
   @yield('modals')
   @yield('scripts')

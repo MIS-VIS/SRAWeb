@@ -148,7 +148,10 @@ class DVService{
 
      public function show($slug){
 
-        $dv = $this->dv->findSlug($slug);
+        $dv = Cache::rememberForever('dv:find:'. $slug, function() use ($slug) {
+            return $this->dv->findSlug($slug);
+        });
+
         return view('admin.dv.dv-show')->with('dv', $dv);
 
     }
@@ -159,7 +162,10 @@ class DVService{
 
     public function edit($slug){
 
-        $dv = $this->dv->findSlug($slug);
+        $dv = Cache::rememberForever('dv:find:'. $slug, function() use ($slug) {
+            return $this->dv->findSlug($slug);
+        });
+
         return view('admin.dv.dv-edit')->with('dv', $dv);
 
     }

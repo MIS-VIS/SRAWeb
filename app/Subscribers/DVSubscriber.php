@@ -38,6 +38,7 @@ class DVSubscriber {
 		CacheHelper::deletePattern('sraweb_cache:dv:all:*');
 		CacheHelper::deletePattern('sraweb_cache:dv:byUser:'. $dv->user_id .':*');
 		CacheHelper::deletePattern('sraweb_cache:dv:incomings:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:find:'. $dv->slug .'');
 
 		Session::flash('SESSION_DV_UPDATE_SLUG', $dv->slug);
         Session::flash('SESSION_DV_UPDATE', 'Your data has been successfully updated!');
@@ -53,6 +54,7 @@ class DVSubscriber {
 		CacheHelper::deletePattern('sraweb_cache:dv:all:*');
 		CacheHelper::deletePattern('sraweb_cache:dv:byUser:'. $dv->user_id .':*');
 		CacheHelper::deletePattern('sraweb_cache:dv:incomings:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:find:'. $dv->slug .'');
 
 		Session::flash('SESSION_SET_DV_NO_SLUG', $dv->slug);
         Session::flash('SESSION_SET_DV_NO', 'DV No. Successfully Set !');
@@ -66,6 +68,7 @@ class DVSubscriber {
 		CacheHelper::deletePattern('sraweb_cache:dv:all:*');
 		CacheHelper::deletePattern('sraweb_cache:dv:byUser:'. $dv->user_id .':*');
 		CacheHelper::deletePattern('sraweb_cache:dv:incomings:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:find:'. $dv->slug .'');
 
 		Session::flash('SESSION_SET_DV_NO_SLUG', $dv->slug);
         Session::flash('SESSION_SET_DV_NO', 'DV No. Successfully Set !');
