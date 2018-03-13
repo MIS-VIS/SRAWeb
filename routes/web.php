@@ -31,7 +31,6 @@ Route::group(['prefix'=>'admin', 'as' => 'admin.' , 'middleware' => 'admin'], fu
 	Route::resource('user', 'UserController');
 
 	// DV Routes
-	Route::get('/dv/filter', 'DVController@filter')->name('dv.filter');
 	Route::get('/dv/userList', 'DVController@userIndex')->name('dv.userIndex');
 	Route::get('/dv/incomings', 'DVController@incomings')->name('dv.incomings');
 	Route::post('/dv/setDvNo', 'DVController@setDvNo')->name('dv.setDvNo');

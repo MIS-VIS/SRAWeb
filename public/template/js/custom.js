@@ -1,8 +1,26 @@
+
+/** PJAX **/
+$(document).pjax('a', '#response-content');
+
+$(document).on('submit', 'form', function(event) {
+  	$.pjax.submit(event, '#response-content');
+});
+
+
 /** DATEPICKER **/
- $('#datepicker .date').datepicker({
+$(document).on('ready pjax:success', function() { 
+	 $('#datepicker .date').datepicker({
         'format': 'dd-mm-yyyy',
         'autoclose': true
- });
+ 	});
+});
+
+$('#datepicker .date').datepicker({
+    'format': 'dd-mm-yyyy',
+    'autoclose': true
+});
+ 
+
 
 
 /** LOADER **/
@@ -14,5 +32,4 @@ function showLoading() {
     clearTimeout(loadingTimeout); 
     $("#loader").fadeOut();
  });
-
 

@@ -2,10 +2,14 @@
  
 namespace App\Services;
 
+use Auth;
 use Input;
+use Cache;
 use App\DV;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
+
+use App\Libraries\Main\CacheHelper;
 
 use DB;
  
@@ -30,35 +34,33 @@ class DVService{
 
     public function fetchAllPaginate_SNF(Request $request){
 
-        //dd(str_slug($request->fullurl()));
+        $key = str_slug($request->fullUrl(), '_');
 
         Input::flash();
 
-        $dv = $this->dv->newQuery();
+        $dvList = Cache::rememberForever('dv:all:' . $key, function() use ($request){
 
-        if(!$request->search == null){
+           $dv = $this->dv->newQuery();
 
-            $dv->search($request->search);
+            if(!$request->search == null){
+                $dv->search($request->search);
+            }
 
-        }
+            $dv->filters([
+                'dv_fund_source' => $request->fund_source, 
+                'dv_project_id' => $request->station,
+                'dv_dept_code' => $request->department,
+                'dv_unit_code' => $request->unit,
+                'dv_proj_code' => $request->project_code,
+            ]);
 
-        $dv->filters([
+            if(!$request->fromDate == null || !$request->toDate == null){
+                $dv->BetweenDvDate($request->fromDate, $request->toDate);
+            }
 
-            'dv_fund_source' => $request->fund_source, 
-            'dv_project_id' => $request->station,
-            'dv_dept_code' => $request->department,
-            'dv_unit_code' => $request->unit,
-            'dv_proj_code' => $request->project_code,
+            return $dv->populate();
 
-        ]);
-
-        if(!$request->fromDate == null || !$request->toDate == null){
-
-            $dv->BetweenDvDate($request->fromDate, $request->toDate);
-            
-        }
-
-        $dvList = $dv->populate();
+        });
 
         return view('admin.dv.dv-index')->with('dvList', $dvList);
 
@@ -68,39 +70,32 @@ class DVService{
 
 
 
-    public function filter(Request $request){
-
-        return "test";
-
-    }
-
-
-
-
-
     public function fetchByUserPaginate_SNF(Request $request){
+
+        $key = str_slug($request->fullUrl(), '_');
 
     	Input::flash();
 
-        $dv = $this->dv->newQuery();
+        $dvUserList = Cache::rememberForever('dv:byUser:'. Auth::user()->user_id .':'. $key, function() use ($request){
 
-        if(!$request->search == null){
-            $dv->search($request->search);
-        }
+            $dv = $this->dv->newQuery();
 
-        $dv->filters([
+            if(!$request->search == null){
+                $dv->search($request->search);
+            }
 
-        	'dv_fund_source' => $request->fund_source,
-        	'dv_proj_code' => $request->project_code,
+            $dv->filters([
+                'dv_fund_source' => $request->fund_source,
+                'dv_proj_code' => $request->project_code,
+            ]);
 
+            if(!$request->fromDate == null || !$request->toDate == null){
+                $dv->BetweenDvDate($request->fromDate, $request->toDate);
+            }
 
-        ]);
+            return $dv->getByUser()->populate();
 
-        if(!$request->fromDate == null || !$request->toDate == null){
-            $dv->BetweenDvDate($request->fromDate, $request->toDate);
-        }
-
-        $dvUserList = $dv->getByUser()->populate();
+        });
 
         return view('admin.dv.dv-userIndex')->with('dvUserList', $dvUserList);
 
@@ -111,22 +106,28 @@ class DVService{
 
 
     public function fetchByIncomingsPaginate_SNF(Request $request){
+        
+        $key = str_slug($request->fullUrl(), '_');
 
-        $dv = $this->dv->newQuery();
+        Input::flash();
 
-        if(!$request->search == null){
-            $dv->search($request->search);
-        }
+        $dvIncomings = Cache::rememberForever('dv:incomings:'. $key, function() use ($request){
 
-        $dv->filters([
+            $dv = $this->dv->newQuery();
 
-        	'dv_dept_code' => $request->department,
+            if(!$request->search == null){
+                $dv->search($request->search);
+            }
 
-        ]);
+            $dv->filters([
+            	'dv_dept_code' => $request->department,
+            ]);
 
-         $dvIncomings = $dv->getByIncomings()->populate();
+            return $dv->getByIncomings()->populate();
 
-         return view('admin.dv.dv-incomings')->with('dvIncomings', $dvIncomings);
+        });
+
+        return view('admin.dv.dv-incomings')->with('dvIncomings', $dvIncomings);
 
     }
 
@@ -145,10 +146,12 @@ class DVService{
 
 
 
-
      public function show($slug){
 
-        $dv = $this->dv->findSlug($slug);
+        $dv = Cache::rememberForever('dv:find:'. $slug, function() use ($slug) {
+            return $this->dv->findSlug($slug);
+        });
+
         return view('admin.dv.dv-show')->with('dv', $dv);
 
     }
@@ -159,7 +162,10 @@ class DVService{
 
     public function edit($slug){
 
-        $dv = $this->dv->findSlug($slug);
+        $dv = Cache::rememberForever('dv:find:'. $slug, function() use ($slug) {
+            return $this->dv->findSlug($slug);
+        });
+
         return view('admin.dv.dv-edit')->with('dv', $dv);
 
     }

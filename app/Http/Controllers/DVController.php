@@ -26,13 +26,6 @@ class DVController extends Controller{
 
 
 
-    public function filter(DvFilterRequest $request){
-
-        return $this->dv_service->filter($request);
-        
-    }
-
-
 
     public function index(DvFilterRequest $request){
 

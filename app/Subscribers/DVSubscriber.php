@@ -7,7 +7,7 @@ namespace App\Subscribers;
 use Auth;
 use Session;
 use Carbon\Carbon;
-
+use App\Libraries\Main\CacheHelper;
 
 
 
@@ -20,6 +20,10 @@ class DVSubscriber {
 
 		$this->createDefaults($dv);
 
+		CacheHelper::deletePattern('sraweb_cache:dv:all:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:byUser:'. $dv->user_id .':*');
+		CacheHelper::deletePattern('sraweb_cache:dv:incomings:*');
+
 		Session::flash('SESSION_DV_STORE_SLUG', $dv->slug);
       	Session::flash('SESSION_DV_STORE', 'Your data has been successfully saved!');
 
@@ -30,6 +34,11 @@ class DVSubscriber {
 	public function onUpdate($dv){
 
 		$this->updateDefaults($dv);
+
+		CacheHelper::deletePattern('sraweb_cache:dv:all:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:byUser:'. $dv->user_id .':*');
+		CacheHelper::deletePattern('sraweb_cache:dv:incomings:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:find:'. $dv->slug .'');
 
 		Session::flash('SESSION_DV_UPDATE_SLUG', $dv->slug);
         Session::flash('SESSION_DV_UPDATE', 'Your data has been successfully updated!');
@@ -42,6 +51,11 @@ class DVSubscriber {
 
 		$this->updateDefaults($dv);
 
+		CacheHelper::deletePattern('sraweb_cache:dv:all:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:byUser:'. $dv->user_id .':*');
+		CacheHelper::deletePattern('sraweb_cache:dv:incomings:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:find:'. $dv->slug .'');
+
 		Session::flash('SESSION_SET_DV_NO_SLUG', $dv->slug);
         Session::flash('SESSION_SET_DV_NO', 'DV No. Successfully Set !');
 
@@ -50,6 +64,11 @@ class DVSubscriber {
 
 
 	public function onDelete($dv){
+
+		CacheHelper::deletePattern('sraweb_cache:dv:all:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:byUser:'. $dv->user_id .':*');
+		CacheHelper::deletePattern('sraweb_cache:dv:incomings:*');
+		CacheHelper::deletePattern('sraweb_cache:dv:find:'. $dv->slug .'');
 
 		Session::flash('SESSION_SET_DV_NO_SLUG', $dv->slug);
         Session::flash('SESSION_SET_DV_NO', 'DV No. Successfully Set !');
@@ -70,6 +89,18 @@ class DVSubscriber {
 		$dv->machine_created = gethostname();
 		$dv->machine_updated = gethostname();
 		$dv->ip_created = request()->ip();
+		$dv->ip_updated = request()->ip();
+		$dv->save();
+
+	}
+
+
+
+
+	public function updateDefaults($dv){
+
+		$dv->updated_at = Carbon::now();
+		$dv->machine_updated = gethostname();
 		$dv->ip_updated = request()->ip();
 		$dv->save();
 

@@ -12,7 +12,8 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.5",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "jacobbennett/pjax": "~1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -35,6 +36,7 @@
             "app/Libraries/Main/JSHelper.php",
             "app/Libraries/Main/SanitizeHelper.php",
             "app/Libraries/Main/ModalHelper.php",
+            "app/Libraries/Main/CacheHelper.php",
             "app/Libraries/Statics/DVUtil.php",
             "app/Libraries/Statics/userUtil.php"
         ]

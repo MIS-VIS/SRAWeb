@@ -21,7 +21,7 @@
             <div class="page-content-card" id="dv-card">
                 <div class="p-5 col-12">
 
-    	        {!!ContentHelper::loader('loader')!!} 
+    	        {!!ContentHelper::loader('loader')!!}
                 
                 {!! Form::open(['route' => 'admin.dv.store', 'method' => 'POST', 'class' => 'row', 'id' => 'dvForm']) !!}
 
